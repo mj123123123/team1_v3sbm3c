@@ -1,0 +1,39 @@
+/* Table name: TRECOM */
+DROP TABLE TRECOM;
+
+CREATE TABLE TRECOM(
+    TRECOMNO       NUMBER(8)      NOT NULL,
+    TCATENO    NUMBER(10)      NULL, -- FK
+    MEMBERNO      NUMBER(10)      NULL, --FK  
+    SEQ     NUMBER(2)   DEFAULT 1   NOT NULL,
+    RDATE   DATE    NOT NULL,
+    
+    
+    FOREIGN KEY (TCATENO) REFERENCES TCATE (TCATENO),
+    FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
+    PRIMARY KEY (TRECOMNO)
+);
+
+COMMENT ON TABLE TRECOM is '여행 추천 시스템';
+COMMENT ON COLUMN TRECOM.TRECOMNO is '추천 번호';
+COMMENT ON COLUMN TRECOM.TCATENO is '여행 카테고리 번호';
+COMMENT ON COLUMN TRECOM.MEMBERNO is '회원 번호';
+COMMENT ON COLUMN TRECOM.SEQ is '추천 우선순위';
+COMMENT ON COLUMN TRECOM.RDATE is '추천 날짜';
+
+
+DROP SEQUENCE TRECOM_SEQ;
+
+CREATE SEQUENCE TRECOM_SEQ
+  START WITH 1              -- 시작 번호
+  INCREMENT BY 1            -- 증가값
+  MAXVALUE 99999            -- 최대값: 99999 --> NUMBER(5) 대응
+  CACHE 2                   -- 2번은 메모리에서만 계산
+  NOCYCLE;                  -- 다시 1부터 생성되는 것을 방지
+  
+-- CREATE
+
+-- READ(LIST)
+
+-- DELETE
+
