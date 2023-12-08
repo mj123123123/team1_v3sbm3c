@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -28,16 +27,16 @@
 
 <div class='container_main'>
 	<div class='top_img'>
-		<div class="top_menu_label">Test Blog version 4.0</div>
+		<div class="top_menu_label">나를 찾는 여행 version 4.0</div>
 	</div>
 	<!-- <div class='top_img'></div> 종료 -->
 
 
 	<nav class="navbar navbar-expand-md navbar-dark bg-warning">
-		<a class="navbar-brand" href="/">
-			<img src='/css/images/home.png' title="시작페이지" style='display: block; padding-left: 5px;'>
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle Navigation">
+		<a class="navbar-brand" href="/"><img src='/css/images/home.png' title="시작페이지"
+			style='display: block; padding-left: 5px;'></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+			aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle Navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -48,14 +47,14 @@
 					<c:set var="fcateno" value="${fcateVO.fcateno }" />
 					<c:set var="name" value="${fcateVO.name }" />
 					<li class="nav-item">
-						<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
+						<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link"
+						href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
 					</li>
 				</c:forEach>
 
 				<li class="nav-item">
 					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/festival/list_all.do">축제/행사 전체 글 목록</a>
 				</li>
-
 				<li class="nav-item dropdown">
 					<%-- 회원 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">회원</a>
 					<div class="dropdown-menu">
@@ -82,11 +81,12 @@
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item dropdown">
-							<%-- 관리자 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">관리자</a>
+							<%-- 관리자 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown"
+							href="#">관리자</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href='/fcate/list_all.do'>축제/행사 카테고리 전체 목록</a>
-								<a class="dropdown-item" href='/member/list.do'>회원 목록</a>
-								<a class="dropdown-item" href='/admin/logout.do'>관리자 ${sessionScope.admin_id } 로그아웃</a>
+								<a class="dropdown-item" href='/cate/list_all.do'>카테고리 전체 목록</a> <a class="dropdown-item"
+									href='/member/list.do'>회원 목록</a> <a class="dropdown-item" href='/admin/logout.do'>관리자
+									${sessionScope.admin_id } 로그아웃</a>
 							</div>
 						</li>
 					</c:otherwise>
