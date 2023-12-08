@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,14 +63,16 @@ public class FestivalCont {
 	// http://localhost:9093/festival/create.do?fcateno=2
 	// http://localhost:9093/festival/create.do?fcateno=3
 	@RequestMapping(value = "/festival/create.do", method = RequestMethod.GET)
-	public ModelAndView create(HttpServletRequest request, int fcateno) {
+	public ModelAndView create(HttpServletRequest request,
+			@RequestParam(name = "fcateno", required = false) Integer fcateno) {
 		ModelAndView mav = new ModelAndView();
 
-		FcateVO fcateVO = this.fcateProc.read(fcateno); // create.jsp에 카테고리 정보를 출력하기위한 목적
-		mav.addObject("fcateVO", fcateVO);
-//    request.setAttribute("fcateVO", fcateVO);
+		if (fcateno != null) {
+			FcateVO fcateVO = this.fcateProc.read(fcateno);
+			mav.addObject("fcateVO", fcateVO);
+		}
 
-		mav.setViewName("/festival/create"); // /webapp/WEB-INF/views/festival/create.jsp
+		mav.setViewName("/festival/create");
 
 		return mav;
 	}
