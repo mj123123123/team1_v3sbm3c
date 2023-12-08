@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.frecommend.FrecommendDAOInter">
+	<!-- 등록 -->
+	<insert id="create"
+		parameterType="dev.mvc.frecommend.FrecommendVO">
+		<selectKey keyProperty="frecommendno" resultType="int"
+			order="BEFORE">
+			SELECT FRECOMMEND_SEQ.nextval as frecommendno FROM dual
+		</selectKey>
+		INSERT INTO frecommend(frecommendno, memberno, fcateno, seq, rdate)
+		VALUES(#{frecommendno}, #{memberno}, #{fcateno}, #{seq}, sysdate)
+	</insert>
+ 
+	<!-- 전체 추천 조회 -->
+	<select id="list_all"
+		resultType="dev.mvc.frecommend.FrecommendVO">
+		SELECT frecommendno, memberno, fcateno, seq, rdate FROM frecommend ORDER BY
+		seq ASC
+	</select>
+
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM frecommend WHERE memberno = #{memberno}
+	</delete>
+</mapper>
