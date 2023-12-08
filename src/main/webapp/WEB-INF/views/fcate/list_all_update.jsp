@@ -37,8 +37,8 @@
     <label>글수</label>
     <input type="text" name="cnt" value="${fcateVO.cnt }" required="required" autofocus="autofocus" 
                class="" style="width: 20%">
-    <button type="submit" class="btn btn-secondary btn-sm">저장</button>
-    <button type="button" onclick="history.back();" class="btn btn-secondary btn-sm">취소</button> 
+    <button type="submit" class="btn btn-dark btn-sm">저장</button>
+    <button type="button" onclick="history.back();" class="btn btn-dark btn-sm">취소</button> 
   </div>
 </form>
 
