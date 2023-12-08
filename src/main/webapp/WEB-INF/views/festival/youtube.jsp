@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Festival world</title>
-
+<link rel="shortcut icon" href="/images/festival.png" />
 <link href="/css/style.css" rel='Stylesheet' type='text/css'>
 
 </head>
@@ -41,9 +41,9 @@
 					<input type='text' name='word' id='word' value='' class='input_word'>
 				</c:otherwise>
 			</c:choose>
-			<button type='submit' class='btn btn-secondary btn-sm'>검색</button>
+			<button type='submit' class='btn btn-dark btn-sm'>검색</button>
 			<c:if test="${param.word.length() > 0 }">
-				<button type='button' class='btn btn-secondary btn-sm'
+				<button type='button' class='btn btn-dark btn-sm'
 					onclick="location.href='./list_by_fcateno.do?fcateno=${fcateVO.fcateno}&word='">검색 취소</button>
 			</c:if>
 		</form>
@@ -59,10 +59,10 @@
 			<textarea name='youtube' class="form-control" rows="12" style='width: 100%;'>${festivalVO.youtube }</textarea>
 		</div>
 		<div class="content_body_bottom">
-			<button type="submit" class="btn btn-secondary btn-sm">저장</button>
+			<button type="submit" class="btn btn-dark btn-sm">저장</button>
 			<button type="button" onclick="frm_youtube.youtube.value=''; frm_youtube.submit();"
-				class="btn btn-secondary btn-sm">Youtube 삭제</button>
-			<button type="button" onclick="history.back();" class="btn btn-secondary btn-sm">취소</button>
+				class="btn btn-dark btn-sm">Youtube 삭제</button>
+			<button type="button" onclick="history.back();" class="btn btn-dark btn-sm">취소</button>
 		</div>
 
 	</FORM>

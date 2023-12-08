@@ -8,8 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=5.0, width=device-width" />
 <title>Festival world</title>
-<%-- <link rel="shortcut icon" href="/images/star.png" />
-/static 기준 --%>
+<link rel="shortcut icon" href="/images/festival.png" />
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 <!-- /static 기준 -->
 
@@ -49,9 +48,9 @@
 					<input type='text' name='word' id='word' value='' class='input_word'>
 				</c:otherwise>
 			</c:choose>
-			<button type='submit' class='btn btn-secondary btn-sm'>검색</button>
+			<button type='submit' class='btn btn-dark btn-sm'>검색</button>
 			<c:if test="${param.word.length() > 0 }">
-				<button type='button' class='btn btn-secondary btn-sm'
+				<button type='button' class='btn btn-dark btn-sm'
 					onclick="location.href='./list_by_fcateno.do?fcateno=${fcateVO.fcateno}&word='">검색 취소</button>
 			</c:if>
 		</form>
@@ -67,10 +66,10 @@
 			<textarea name='map' class="form-control" rows="12" style='width: 100%;'>${contentsVO.map }</textarea>
 		</div>
 		<div class="content_body_bottom">
-			<button type="submit" class="btn btn-secondary btn-sm">저장</button>
-			<button type="button" onclick="frm_map.map.value=''; frm_map.submit();" class="btn btn-secondary btn-sm">지도
+			<button type="submit" class="btn btn-dark btn-sm">저장</button>
+			<button type="button" onclick="frm_map.map.value=''; frm_map.submit();" class="btn btn-dark btn-sm">지도
 				삭제</button>
-			<button type="button" onclick="history.back();" class="btn btn-secondary btn-sm">취소</button>
+			<button type="button" onclick="history.back();" class="btn btn-dark btn-sm">취소</button>
 		</div>
 
 	</FORM>

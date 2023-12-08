@@ -8,8 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, width=device-width" />
 <title>Festival world</title>
-<%-- <link rel="shortcut icon" href="/images/star.png" /> /static 기준
- --%>
+<link rel="shortcut icon" href="/images/festival.png" />
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 <!-- /static 기준 -->
 
@@ -70,9 +69,9 @@
               (${festivalVO.rdate.substring(0, 16) })
             </td>
             <td class="td_bs">
-              <a href="#" title="삭제"><img src="/festival/images/map.png" class="icon"></a>
-              <a href="#" title="삭제"><img src="/festival/images/youtube.png" class="icon"></a>
-              <a href="#" title="삭제"><img src="/festival/images/delete.png" class="icon"></a>
+              <a href="/festival/map.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}" title="지도"><img src="/festival/images/map.png" class="icon"></a>
+              <a href="/festival/youtube.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}" title="유튜브"><img src="/festival/images/youtube.png" class="icon"></a>
+              <a href="/festival/delete.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}" title="삭제"><img src="/festival/images/delete.png" class="icon"></a>
             </td>
           </tr>
         </c:forEach>

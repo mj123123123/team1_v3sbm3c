@@ -14,7 +14,7 @@
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>Festival world</title>
-<link rel="shortcut icon" href="/images/shortcut.png" /> <%-- /static 기준 --%>
+<link rel="shortcut icon" href="/images/festival.png" />
 <link href="/css/style.css" rel="Stylesheet" type="text/css"> <!-- /static 기준 -->
 
 </head>
@@ -46,9 +46,9 @@
           <input type='text' name='word' id='word' value='' class='input_word'>
         </c:otherwise>
       </c:choose>
-      <button type='submit' class='btn btn-secondary btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색</button>
+      <button type='submit' class='btn btn-dark btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색</button>
       <c:if test="${param.word.length() > 0 }">
-        <button type='button' class='btn btn-secondary btn-sm' 
+        <button type='button' class='btn btn-dark btn-sm' 
                     onclick="location.href='./list_by_fcateno.do?fcateno=${fcateVO.fcateno}&word='" style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색 취소</button>  
       </c:if>    
     </form>
@@ -83,8 +83,8 @@
     </div>
        
     <div class="content_body_bottom">
-      <button type="submit" class="btn btn-secondary btn-sm">저장</button>
-      <button type="button" onclick="history.back();" class="btn btn-secondary btn-sm">취소</button>
+      <button type="submit" class="btn btn-dark btn-sm">저장</button>
+      <button type="button" onclick="history.back();" class="btn btn-dark btn-sm">취소</button>
     </div>
   
   </FORM>

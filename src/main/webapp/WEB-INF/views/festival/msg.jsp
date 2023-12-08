@@ -6,8 +6,8 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
-<link rel="shortcut icon" href="/images/shortcut.png" /> <%-- /static 기준 --%>
+<title>Festival world</title>
+<link rel="shortcut icon" href="/images/festival.png" />
 <link href="/css/style.css" rel="Stylesheet" type="text/css"> <!-- /static 기준 -->
 
 </head> 
@@ -80,13 +80,13 @@
         <br>
         <c:choose>
             <c:when test="${cnt == 0 }">
-                <button type='button' onclick="history.back()" class="btn btn-secondary btn-sm">다시 시도</button>    
+                <button type='button' onclick="history.back()" class="btn btn-dark btn-sm">다시 시도</button>    
             </c:when>
         </c:choose>
         
-        <button type='button' onclick="location.href='./create.do?fcateno=${fcateno}'" class="btn btn-secondary btn-sm">새로운 컨텐츠 등록</button>
-        <button type='button' onclick="location.href='./list_by_fcateno.do?fcateno=${fcateno}'" class="btn btn-secondary btn-sm">목록</button>
-        <button type='button' onclick="location.href='./list_by_fcateno_grid.do?fcateno=${fcateno}'" class="btn btn-secondary btn-sm">갤러리 목록</button>
+        <button type='button' onclick="location.href='./create.do?fcateno=${fcateno}'" class="btn btn-dark btn-sm">새로운 컨텐츠 등록</button>
+        <button type='button' onclick="location.href='./list_by_fcateno.do?fcateno=${fcateno}'" class="btn btn-dark btn-sm">목록</button>
+        <button type='button' onclick="location.href='./list_by_fcateno_grid.do?fcateno=${fcateno}'" class="btn btn-dark btn-sm">갤러리 목록</button>
       </li>
     </UL>
   </fieldset>
