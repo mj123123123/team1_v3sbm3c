@@ -50,7 +50,7 @@
             </c:forEach>
             
             <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
-              <a class="nav-link top_menu_link" href="/festival/list_all.do">전체 글 목록</a>
+              <a class="nav-link top_menu_link" href="/festival/list_all.do">축제/행사 전체 글 목록</a>
             </li>
 
             <li class="nav-item dropdown"> <%-- 회원 서브 메뉴 --%>
