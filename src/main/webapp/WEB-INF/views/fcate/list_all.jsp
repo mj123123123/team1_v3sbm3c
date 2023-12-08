@@ -62,7 +62,7 @@
 				<tr>
 					<td class="td_bs">${info.count }</td>
 					<td>
-						<a href="./read.do?fcateno=${fcateno }" style="display: block;">${fcateVO.name }</a>
+						<a href="../festival/list_all.do" style="display: block;">${fcateVO.name }</a>
 					</td>
 					<td class="td_bs">${fcateVO.cnt }</td>
 					<td class="td_bs">${fcateVO.rdate.substring(0, 10) }</td>
