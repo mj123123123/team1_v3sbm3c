@@ -390,7 +390,7 @@ public class FestivalCont {
 	 * @return
 	 */
 	@RequestMapping(value = "/festival/read.do", method = RequestMethod.GET)
-	public ModelAndView read(int contentsno) { // int fcateno = (int)request.getParameter("fcateno");
+	public ModelAndView read(int contentsno) { // int contentsno = (int)request.getParameter("contentsno");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/festival/read"); // /WEB-INF/views/festival/read.jsp
 
@@ -409,7 +409,7 @@ public class FestivalCont {
 		String size1_label = Tool.unit(size1);
 		festivalVO.setSize1_label(size1_label);
 
-		mav.addObject("festivalProc", festivalVO);
+		mav.addObject("festivalVO", festivalVO);
 
 		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
 		mav.addObject("fcateVO", fcateVO);
@@ -539,44 +539,44 @@ public class FestivalCont {
 	 * 
 	 * @return
 	 */
-//	@RequestMapping(value = "/festival/update_text.do", method = RequestMethod.POST)
-//	public ModelAndView update_text(HttpSession session, FestivalVO festivalVO) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		// System.out.println("-> word: " + festivalVO.getWord());
-//
-//		if (this.adminProc.isAdmin(session)) { // 관리자 로그인 확인
-//			HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//			hashMap.put("contentsno", festivalVO.getContentsno());
-//			hashMap.put("passwd", festivalVO.getPasswd());
-//
-//			if (this.festivalProc.password_check(hashMap) == 1) { // 패스워드 일치
-//				this.festivalProc.update_text(festivalVO); // 글수정
-//
-//				// mav 객체 이용
-//				mav.addObject("contentsno", festivalVO.getContentsno());
-//				mav.addObject("fcateno", festivalVO.getFcateno());
-//				mav.setViewName("redirect:/festival/read.do"); // 페이지 자동 이동
-//
-//			} else { // 패스워드 불일치
-//				mav.addObject("code", "passwd_fail");
-//				mav.addObject("cnt", 0);
-//				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter 적용
-//				mav.setViewName("redirect:/festival/msg.do"); // POST -> GET -> JSP 출력
-//			}
-//		} else { // 정상적인 로그인이 아닌 경우 로그인 유도
-//			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-//			mav.setViewName("redirect:/contents/msg.do");
-//		}
-//
-//		mav.addObject("now_page", festivalVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
-//
-//		// URL에 파라미터의 전송
-//		// mav.setViewName("redirect:/contents/read.do?contentsno=" +
-//		// festivalVO.getContentsno() + "&fcateno=" + festivalVO.getFcateno());
-//
-//		return mav; // forward
-//	}
+	@RequestMapping(value = "/festival/update_text.do", method = RequestMethod.POST)
+	public ModelAndView update_text(HttpSession session, FestivalVO festivalVO) {
+		ModelAndView mav = new ModelAndView();
+
+		// System.out.println("-> word: " + festivalVO.getWord());
+
+		if (this.adminProc.isAdmin(session)) { // 관리자 로그인 확인
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("contentsno", festivalVO.getContentsno());
+			hashMap.put("passwd", festivalVO.getPasswd());
+
+			if (this.festivalProc.password_check(hashMap) == 1) { // 패스워드 일치
+				this.festivalProc.update_text(festivalVO); // 글수정
+
+				// mav 객체 이용
+				mav.addObject("contentsno", festivalVO.getContentsno());
+				mav.addObject("fcateno", festivalVO.getFcateno());
+				mav.setViewName("redirect:/festival/read.do"); // 페이지 자동 이동
+
+			} else { // 패스워드 불일치
+				mav.addObject("code", "passwd_fail");
+				mav.addObject("cnt", 0);
+				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter 적용
+				mav.setViewName("redirect:/festival/msg.do"); // POST -> GET -> JSP 출력
+			}
+		} else { // 정상적인 로그인이 아닌 경우 로그인 유도
+			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+			mav.setViewName("redirect:/contents/msg.do");
+		}
+
+		mav.addObject("now_page", festivalVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
+
+		// URL에 파라미터의 전송
+		// mav.setViewName("redirect:/contents/read.do?contentsno=" +
+		// festivalVO.getContentsno() + "&fcateno=" + festivalVO.getFcateno());
+
+		return mav; // forward
+	}
 
 	/**
 	 * 파일 수정 폼 http://localhost:9093/festival/update_file.do?contentsno=1
