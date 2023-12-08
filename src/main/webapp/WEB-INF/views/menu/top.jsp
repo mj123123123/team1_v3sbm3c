@@ -83,7 +83,7 @@
                 <li class="nav-item dropdown"> <%-- 관리자 서브 메뉴 --%>
                   <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">관리자</a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href='/cate/list_all.do'>카테고리 전체 목록</a>
+                    <a class="dropdown-item" href='/fcate/list_all.do'>축제/행사 카테고리 전체 목록</a>
                     <a class="dropdown-item" href='/member/list.do'>회원 목록</a>
                     <a class="dropdown-item" href='/admin/logout.do'>관리자 ${sessionScope.admin_id } 로그아웃</a>
                   </div>
