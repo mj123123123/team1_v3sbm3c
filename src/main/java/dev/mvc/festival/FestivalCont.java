@@ -480,31 +480,31 @@ public class FestivalCont {
 	}
 
 	/**
-	 * Youtube 등록/수정/삭제 처리 http://localhost:9093/festival/map.do
-	 * 
-	 * @param contentsno 글 번호
-	 * @param youtube    Youtube url의 소스 코드
-	 * @return
-	 */
-	@RequestMapping(value = "/festival/youtube.do", method = RequestMethod.POST)
-	public ModelAndView youtube_update(int contentsno, String youtube) {
-		ModelAndView mav = new ModelAndView();
-
-		if (youtube.trim().length() > 0) { // 삭제 중인지 확인, 삭제가 아니면 youtube 크기 변경
-			youtube = Tool.youtubeResize(youtube, 640); // youtube 영상의 크기를 width 기준 640 px로 변경
-		}
-
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("contentsno", contentsno);
-		hashMap.put("youtube", youtube);
-
-		this.festivalProc.youtube(hashMap);
-
-		mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno);
-		// /webapp/WEB-INF/views/festival/read.jsp
-
-		return mav;
-	}
+	   * Youtube 등록/수정/삭제 처리
+	   * http://localhost:9092/festival/map.do
+	   * @param contentsno 글 번호
+	   * @param youtube Youtube url의 소스 코드
+	   * @return
+	   */
+	  @RequestMapping(value="/festival/youtube.do", method = RequestMethod.POST)
+	  public ModelAndView youtube_update(int contentsno, String youtube) {
+	    ModelAndView mav = new ModelAndView();
+	    
+	    if (youtube.trim().length() > 0) {  // 삭제 중인지 확인, 삭제가 아니면 youtube 크기 변경
+	      youtube = Tool.youtubeResize(youtube, 640);  // youtube 영상의 크기를 width 기준 640 px로 변경
+	    }    
+	    
+	    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+	    hashMap.put("contentsno", contentsno);
+	    hashMap.put("youtube", youtube);
+	    
+	    this.festivalProc.youtube(hashMap);
+	    
+	    mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno); 
+	    // /webapp/WEB-INF/views/festival/read.jsp
+	    
+	    return mav;
+	  }
 
 	/**
 	 * 수정 폼 http://localhost:9093/festival/update_text.do?contentsno=1
@@ -566,13 +566,13 @@ public class FestivalCont {
 			}
 		} else { // 정상적인 로그인이 아닌 경우 로그인 유도
 			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-			mav.setViewName("redirect:/contents/msg.do");
+			mav.setViewName("redirect:/festival/msg.do");
 		}
 
 		mav.addObject("now_page", festivalVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
 
 		// URL에 파라미터의 전송
-		// mav.setViewName("redirect:/contents/read.do?contentsno=" +
+		// mav.setViewName("redirect:/festival/read.do?contentsno=" +
 		// festivalVO.getContentsno() + "&fcateno=" + festivalVO.getFcateno());
 
 		return mav; // forward
@@ -702,7 +702,7 @@ public class FestivalCont {
 			FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
 			mav.addObject("fcateVO", fcateVO);
 
-			mav.setViewName("/contents/delete"); // /WEB-INF/views/contents/delete.jsp
+			mav.setViewName("/festival/delete"); // /WEB-INF/views/festival/delete.jsp
 
 		} else {
 			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
