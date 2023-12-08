@@ -1,794 +1,794 @@
-//package dev.mvc.festival;
-//
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpSession;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Qualifier;
-//import org.springframework.stereotype.Component;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.multipart.MultipartFile;
-//import org.springframework.web.servlet.ModelAndView;
-//
-////import dev.mvc.admin.AdminProcInter;
-//import dev.mvc.fcate.FcateProcInter;
-//import dev.mvc.fcate.FcateVO;
-//import dev.mvc.tool.Tool;
-//import dev.mvc.tool.Upload;
-//
-//@Controller
-//public class FestivalCont {
-//
-//	@Autowired
-//	@Qualifier("dev.mvc.fcate.FcateProc") // @Component("dev.mvc.fcate.FcateProc")
-//	private FcateProcInter fcateProc;
-//
-////	@Autowired
-////	@Qualifier("dev.mvc.admin.AdminProc") // @Component("dev.mvc.admin.AdminProc")
-////	private AdminProcInter adminProc;
-//
-//	@Autowired
-//	@Qualifier("dev.mvc.festival.ContentsProc") // @Component("dev.mvc.festival.festivalProc")
-//	private FestivalProcInter festivalProc;
-//
-//	public FestivalCont() {
-//		System.out.println("-> ContentsCont created.");
-//	}
-//
-//	/**
-//	 * POST ìš”ì²­ì‹œ JSP í˜ì´ì§€ì—ì„œ JSTL í˜¸ì¶œ ê¸°ëŠ¥ ì§€ì›, ìƒˆë¡œê³ ì¹¨ ë°©ì§€, ELì—ì„œ paramìœ¼ë¡œ ì ‘ê·¼ POST â†’ url â†’ GET â†’
-//	 * ë°ì´í„° ì „ì†¡
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/msg.do", method = RequestMethod.GET)
-//	public ModelAndView msg(String url) {
+package dev.mvc.festival;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import dev.mvc.admin.AdminProcInter;
+//import dev.mvc.admin.AdminProcInter;
+import dev.mvc.fcate.FcateProcInter;
+import dev.mvc.fcate.FcateVO;
+import dev.mvc.tool.Tool;
+import dev.mvc.tool.Upload;
+
+@Controller
+public class FestivalCont {
+
+	@Autowired
+	@Qualifier("dev.mvc.fcate.FcateProc") // @Component("dev.mvc.fcate.FcateProc")
+	private FcateProcInter fcateProc;
+
+	@Autowired
+	@Qualifier("dev.mvc.admin.AdminProc") // @Component("dev.mvc.admin.AdminProc")
+	private AdminProcInter adminProc;
+
+	@Autowired
+	@Qualifier("dev.mvc.festival.FestivalProc") // @Component("dev.mvc.festival.festivalProc")
+	private FestivalProcInter festivalProc;
+
+	public FestivalCont() {
+		System.out.println("-> FestivalCont created.");
+	}
+
+	/**
+	 * POST ¿äÃ»½Ã JSP ÆäÀÌÁö¿¡¼­ JSTL È£Ãâ ±â´É Áö¿ø, »õ·Î°íÄ§ ¹æÁö, EL¿¡¼­ paramÀ¸·Î Á¢±Ù POST ¡æ url ¡æ GET ¡æ
+	 * µ¥ÀÌÅÍ Àü¼Û
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/msg.do", method = RequestMethod.GET)
+	public ModelAndView msg(String url) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName(url); // forward
+
+		return mav; // forward
+	}
+
+	// µî·Ï Æû, contents Å×ÀÌºíÀº FK·Î fcateno¸¦ »ç¿ëÇÔ.
+	// http://localhost:9093/festival/create.do X
+	// http://localhost:9093/festival/create.do?fcateno=1 // fcateno º¯¼ö°ªÀ» º¸³»´Â ¸ñÀû
+	// http://localhost:9093/festival/create.do?fcateno=2
+	// http://localhost:9093/festival/create.do?fcateno=3
+	@RequestMapping(value = "/festival/create.do", method = RequestMethod.GET)
+	public ModelAndView create(HttpServletRequest request, int fcateno) {
+		ModelAndView mav = new ModelAndView();
+
+		FcateVO fcateVO = this.fcateProc.read(fcateno); // create.jsp¿¡ Ä«Å×°í¸® Á¤º¸¸¦ Ãâ·ÂÇÏ±âÀ§ÇÑ ¸ñÀû
+		mav.addObject("fcateVO", fcateVO);
+//    request.setAttribute("fcateVO", fcateVO);
+
+		mav.setViewName("/festival/create"); // /webapp/WEB-INF/views/festival/create.jsp
+
+		return mav;
+	}
+
+	/**
+	 * µî·Ï Ã³¸® http://localhost:9093/festival/create.do
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/create.do", method = RequestMethod.POST)
+	public ModelAndView create(HttpServletRequest request, HttpSession session, FestivalVO festivalVO) {
+		ModelAndView mav = new ModelAndView();
+
+		if (adminProc.isAdmin(session)) { // °ü¸®ÀÚ·Î ·Î±×ÀÎÇÑ°æ¿ì
+			// ------------------------------------------------------------------------------
+			// ÆÄÀÏ Àü¼Û ÄÚµå ½ÃÀÛ
+			// ------------------------------------------------------------------------------
+			String file1 = ""; // ¿øº» ÆÄÀÏ¸í image
+			String file1saved = ""; // ÀúÀåµÈ ÆÄÀÏ¸í, image
+			String thumb1 = ""; // preview image
+
+			String upDir = Festival.getUploadDir(); // ÆÄÀÏÀ» ¾÷·ÎµåÇÒ Æú´õ ÁØºñ
+			System.out.println("-> upDir: " + upDir);
+
+			// Àü¼Û ÆÄÀÏÀÌ ¾ø¾îµµ file1MF °´Ã¼°¡ »ı¼ºµÊ.
+			// <input type='file' class="form-control" name='file1MF' id='file1MF'
+			// value='' placeholder="ÆÄÀÏ ¼±ÅÃ">
+			MultipartFile mf = festivalVO.getFile1MF();
+
+			file1 = mf.getOriginalFilename(); // ¿øº» ÆÄÀÏ¸í »êÃâ, 01.jpg
+			System.out.println("-> ¿øº» ÆÄÀÏ¸í »êÃâ file1: " + file1);
+
+			if (Tool.checkUploadFile(file1) == true) { // ¾÷·Îµå °¡´ÉÇÑ ÆÄÀÏÀÎÁö °Ë»ç
+				long size1 = mf.getSize(); // ÆÄÀÏ Å©±â
+
+				if (size1 > 0) { // ÆÄÀÏ Å©±â Ã¼Å©
+					// ÆÄÀÏ ÀúÀå ÈÄ ¾÷·ÎµåµÈ ÆÄÀÏ¸íÀÌ ¸®ÅÏµÊ, spring.jsp, spring_1.jpg...
+					file1saved = Upload.saveFileSpring(mf, upDir);
+
+					if (Tool.isImage(file1saved)) { // ÀÌ¹ÌÁöÀÎÁö °Ë»ç
+						// thumb ÀÌ¹ÌÁö »ı¼ºÈÄ ÆÄÀÏ¸í ¸®ÅÏµÊ, width: 200, height: 150
+						thumb1 = Tool.preview(upDir, file1saved, 200, 150);
+					}
+
+				}
+
+				festivalVO.setFile1(file1); // ¼ø¼ö ¿øº» ÆÄÀÏ¸í
+				festivalVO.setFile1saved(file1saved); // ÀúÀåµÈ ÆÄÀÏ¸í(ÆÄÀÏ¸í Áßº¹ Ã³¸®)
+				festivalVO.setThumb1(thumb1); // ¿øº»ÀÌ¹ÌÁö Ãà¼ÒÆÇ
+				festivalVO.setSize1(size1); // ÆÄÀÏ Å©±â
+				// ------------------------------------------------------------------------------
+				// ÆÄÀÏ Àü¼Û ÄÚµå Á¾·á
+				// ------------------------------------------------------------------------------
+
+				// Call By Reference: ¸Ş¸ğ¸® °øÀ¯, Hashcode Àü´Ş
+				int adminno = (int) session.getAttribute("adminno"); // adminno FK
+				festivalVO.setAdminno(adminno);
+				int cnt = this.festivalProc.create(festivalVO);
+
+				// ------------------------------------------------------------------------------
+				// PKÀÇ return
+				// ------------------------------------------------------------------------------
+				// System.out.println("--> contentsno: " + festivalVO.getFestivalno());
+				// mav.addObject("contentsno", contentsno.getContentsno()); // redirect
+				// parameter Àû¿ë
+				// ------------------------------------------------------------------------------
+
+				if (cnt == 1) {
+					mav.addObject("code", "create_success");
+					// fcateProc.increaseCnt(contentsno.getFcateno()); // ±Û¼ö Áõ°¡
+				} else {
+					mav.addObject("code", "create_fail");
+				}
+				mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+
+				// System.out.println("--> fcateno: " + festivalVO.getFcateno());
+				// redirect½Ã¿¡ hidden tag·Î º¸³½°ÍµéÀÌ Àü´ŞÀÌ ¾ÈµÊÀ¸·Î request¿¡ ´Ù½Ã ÀúÀå
+				mav.addObject("fcateno", festivalVO.getFcateno()); // redirect parameter Àû¿ë
+
+				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter Àû¿ë
+				mav.setViewName("redirect:/festival/msg.do"); // Post -> Get - param...
+			} else {
+				mav.addObject("cnt", "0"); // ¾÷·Îµå ÇÒ ¼ö ¾ø´Â ÆÄÀÏ
+				mav.addObject("code", "check_upload_file_fail"); // ¾÷·Îµå ÇÒ ¼ö ¾ø´Â ÆÄÀÏ
+				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter Àû¿ë
+				mav.setViewName("redirect:/festival/msg.do"); // Post -> Get - param...
+			}
+		} else {
+			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+			mav.setViewName("redirect:/festival/msg.do");
+		}
+
+		return mav; // forward
+	}
+
+	/**
+	 * ÀüÃ¼ ¸ñ·Ï, °ü¸®ÀÚ¸¸ »ç¿ë °¡´É http://localhost:9093/festival/list_all.do
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/list_all.do", method = RequestMethod.GET)
+	public ModelAndView list_all(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		if (this.adminProc.isAdmin(session) == true) {
+			mav.setViewName("/festival/list_all"); // /WEB-INF/views/festival/list_all.jsp
+
+			ArrayList<FestivalVO> list = this.festivalProc.list_all();
+
+			// for¹®À» »ç¿ëÇÏ¿© °´Ã¼¸¦ ÃßÃâ, Call By Reference ±â¹İÀÇ ¿øº» °´Ã¼ °ª º¯°æ
+			for (FestivalVO festivalVO : list) {
+				String title = festivalVO.getTitle();
+				String content = festivalVO.getContent();
+
+				title = Tool.convertChar(title); // Æ¯¼ö ¹®ÀÚ Ã³¸®
+				content = Tool.convertChar(content);
+
+				festivalVO.setTitle(title);
+				festivalVO.setContent(content);
+
+			}
+
+			mav.addObject("list", list);
+
+		} else {
+			mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+
+		}
+
+		return mav;
+	}
+
+	/**
+	 * Æ¯Á¤ Ä«Å×°í¸®ÀÇ °Ë»ö ¸ñ·Ï http://localhost:9093/festival/list_by_fcateno.do?fcateno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/list_by_fcateno.do", method = RequestMethod.GET)
+	public ModelAndView list_by_fcateno(int fcateno, String word) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("/festival/list_by_fcateno"); // /WEB-INF/views/festival/list_by_fcateno.jsp
+
+		FcateVO fcateVO = this.fcateProc.read(fcateno); // create.jsp¿¡ Ä«Å×°í¸® Á¤º¸¸¦ Ãâ·ÂÇÏ±âÀ§ÇÑ ¸ñÀû
+		mav.addObject("fcateVO", fcateVO);
+		// request.setAttribute("fcateVO", fcateVO);
+
+		// °Ë»öÇÏÁö ¾Ê´Â °æ¿ì
+		// ArrayList<FestivalVO> list = this.festivalProc.list_by_fcateno(fcateno);
+
+		// °Ë»öÇÏ´Â °æ¿ì
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("fcateno", fcateno);
+		hashMap.put("word", word);
+
+		ArrayList<FestivalVO> list = this.festivalProc.list_by_fcateno_search(hashMap);
+
+		// for¹®À» »ç¿ëÇÏ¿© °´Ã¼¸¦ ÃßÃâ, Call By Reference ±â¹İÀÇ ¿øº» °´Ã¼ °ª º¯°æ
+		for (FestivalVO festivalVO : list) {
+			String title = festivalVO.getTitle();
+			String content = festivalVO.getContent();
+
+			title = Tool.convertChar(title); // Æ¯¼ö ¹®ÀÚ Ã³¸®
+			content = Tool.convertChar(content);
+
+			festivalVO.setTitle(title);
+			festivalVO.setContent(content);
+
+		}
+
+		mav.addObject("list", list);
+
+		return mav;
+	}
+
+	/**
+	 * ¸ñ·Ï + °Ë»ö + ÆäÀÌÂ¡ Áö¿ø °Ë»öÇÏÁö ¾Ê´Â °æ¿ì
+	 * http://localhost:9093/festival/list_by_fcateno.do?fcateno=2&word=&now_page=1
+	 * °Ë»öÇÏ´Â °æ¿ì
+	 * http://localhost:9093/festival/list_by_fcateno.do?fcateno=2&word=Å½Çè&now_page=1
+	 * 
+	 * @param fcateno
+	 * @param word
+	 * @param now_page
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/list_by_fcateno.do", method = RequestMethod.GET)
+	public ModelAndView list_by_fcateno(FestivalVO festivalVO) {
+		ModelAndView mav = new ModelAndView();
+
+		// °Ë»ö ¸ñ·Ï
+		ArrayList<FestivalVO> list = festivalProc.list_by_fcateno_search_paging(festivalVO);
+
+		// for¹®À» »ç¿ëÇÏ¿© °´Ã¼¸¦ ÃßÃâ, Call By Reference ±â¹İÀÇ ¿øº» °´Ã¼ °ª º¯°æ
+		for (FestivalVO vo : list) {
+			String title = vo.getTitle();
+			String content = vo.getContent();
+
+			title = Tool.convertChar(title); // Æ¯¼ö ¹®ÀÚ Ã³¸®
+			content = Tool.convertChar(content);
+
+			vo.setTitle(title);
+			vo.setContent(content);
+
+		}
+
+		mav.addObject("list", list);
+
+		FcateVO fcateVO = fcateProc.read(festivalVO.getFcateno());
+		mav.addObject("fcateVO", fcateVO);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("fcateno", festivalVO.getFcateno());
+		hashMap.put("word", festivalVO.getWord());
+
+		int search_count = this.festivalProc.search_count(hashMap); // °Ë»öµÈ ·¹ÄÚµå °¹¼ö -> ÀüÃ¼ ÆäÀÌÁö ±Ô¸ğ ÆÄ¾Ç
+		mav.addObject("search_count", search_count);
+
+		/*
+		 * SPANÅÂ±×¸¦ ÀÌ¿ëÇÑ ¹Ú½º ¸ğµ¨ÀÇ Áö¿ø, 1 ÆäÀÌÁöºÎÅÍ ½ÃÀÛ ÇöÀç ÆäÀÌÁö: 11 / 22 [ÀÌÀü] 11 12 13 14 15 16 17
+		 * 18 19 20 [´ÙÀ½]
+		 * 
+		 * @param fcateno Ä«Å×°í¸®¹øÈ£
+		 * 
+		 * @param now_page ÇöÀç ÆäÀÌÁö
+		 * 
+		 * @param word °Ë»ö¾î
+		 * 
+		 * @param list_file ¸ñ·Ï ÆÄÀÏ¸í
+		 * 
+		 * @return ÆäÀÌÂ¡¿ëÀ¸·Î »ı¼ºµÈ HTML/CSS tag ¹®ÀÚ¿­
+		 */
+		String paging = festivalProc.pagingBox(festivalVO.getFcateno(), festivalVO.getNow_page(), festivalVO.getWord(),
+				"list_by_fcateno.do", search_count);
+		mav.addObject("paging", paging);
+
+		// mav.addObject("now_page", now_page);
+
+		mav.setViewName("/festival/list_by_fcateno"); // /festival/list_by_fcateno.jsp
+
+		return mav;
+	}
+
+	/**
+	 * ¸ñ·Ï + °Ë»ö + ÆäÀÌÂ¡ Áö¿ø + Grid °Ë»öÇÏÁö ¾Ê´Â °æ¿ì
+	 * http://localhost:9093/festival/list_by_fcateno_grid.do?fcateno=2&word=&now_page=1
+	 * °Ë»öÇÏ´Â °æ¿ì
+	 * http://localhost:9093/festival/list_by_fcateno_grid.do?fcateno=2&word=Å½Çè&now_page=1
+	 * 
+	 * @param fcateno
+	 * @param word
+	 * @param now_page
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/list_by_fcateno_grid.do", method = RequestMethod.GET)
+	public ModelAndView list_by_fcateno_grid(FestivalVO festivalVO) {
+		ModelAndView mav = new ModelAndView();
+
+		// °Ë»ö ¸ñ·Ï
+		ArrayList<FestivalVO> list = festivalProc.list_by_fcateno_search_paging(festivalVO);
+
+		// for¹®À» »ç¿ëÇÏ¿© °´Ã¼¸¦ ÃßÃâ, Call By Reference ±â¹İÀÇ ¿øº» °´Ã¼ °ª º¯°æ
+		for (FestivalVO vo : list) {
+			String title = vo.getTitle();
+			String content = vo.getContent();
+
+			title = Tool.convertChar(title); // Æ¯¼ö ¹®ÀÚ Ã³¸®
+			content = Tool.convertChar(content);
+
+			vo.setTitle(title);
+			vo.setContent(content);
+
+		}
+
+		mav.addObject("list", list);
+
+		FcateVO fcateVO = fcateProc.read(festivalVO.getFcateno());
+		mav.addObject("fcateVO", fcateVO);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("fcateno", festivalVO.getFcateno());
+		hashMap.put("word", festivalVO.getWord());
+
+		int search_count = this.festivalProc.search_count(hashMap); // °Ë»öµÈ ·¹ÄÚµå °¹¼ö -> ÀüÃ¼ ÆäÀÌÁö ±Ô¸ğ ÆÄ¾Ç
+		mav.addObject("search_count", search_count);
+
+		/*
+		 * SPANÅÂ±×¸¦ ÀÌ¿ëÇÑ ¹Ú½º ¸ğµ¨ÀÇ Áö¿ø, 1 ÆäÀÌÁöºÎÅÍ ½ÃÀÛ ÇöÀç ÆäÀÌÁö: 11 / 22 [ÀÌÀü] 11 12 13 14 15 16 17
+		 * 18 19 20 [´ÙÀ½]
+		 * 
+		 * @param fcateno Ä«Å×°í¸®¹øÈ£
+		 * 
+		 * @param now_page ÇöÀç ÆäÀÌÁö
+		 * 
+		 * @param word °Ë»ö¾î
+		 * 
+		 * @param list_file ¸ñ·Ï ÆÄÀÏ¸í
+		 * 
+		 * @return ÆäÀÌÂ¡¿ëÀ¸·Î »ı¼ºµÈ HTML/CSS tag ¹®ÀÚ¿­
+		 */
+		String paging = festivalProc.pagingBox(festivalVO.getFcateno(), festivalVO.getNow_page(), festivalVO.getWord(),
+				"list_by_fcateno_grid.do", search_count);
+		mav.addObject("paging", paging);
+
+		// mav.addObject("now_page", now_page);
+
+		mav.setViewName("/festival/list_by_fcateno_grid"); // /festival/list_by_fcateno_grid.jsp
+
+		return mav;
+	}
+
+	/**
+	 * Á¶È¸ http://localhost:9093/festival/read.do?contentsno=17
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/read.do", method = RequestMethod.GET)
+	public ModelAndView read(int contentsno) { // int fcateno = (int)request.getParameter("fcateno");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/festival/read"); // /WEB-INF/views/festival/read.jsp
+
+		FestivalVO festivalVO = this.festivalProc.read(contentsno);
+
+		String title = festivalVO.getTitle();
+		String content = festivalVO.getContent();
+
+		title = Tool.convertChar(title); // Æ¯¼ö ¹®ÀÚ Ã³¸®
+		content = Tool.convertChar(content);
+
+		festivalVO.setTitle(title);
+		festivalVO.setContent(content);
+
+		long size1 = festivalVO.getSize1();
+		String size1_label = Tool.unit(size1);
+		festivalVO.setSize1_label(size1_label);
+
+		mav.addObject("festivalProc", festivalVO);
+
+		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
+		mav.addObject("fcateVO", fcateVO);
+
+		return mav;
+	}
+
+	/**
+	 * ¸Ê µî·Ï/¼öÁ¤/»èÁ¦ Æû http://localhost:9093/festival/map.do?contentsno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/map.do", method = RequestMethod.GET)
+	public ModelAndView map(int contentsno) {
+		ModelAndView mav = new ModelAndView();
+
+		FestivalVO festivalVO = this.festivalProc.read(contentsno); // map Á¤º¸ ÀĞ¾î ¿À±â
+		mav.addObject("festivalVO", festivalVO); // request.setAttribute("festivalVO", festivalVO);
+
+		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno()); // ±×·ì Á¤º¸ ÀĞ±â
+		mav.addObject("fcateVO", fcateVO);
+
+		mav.setViewName("/festival/map"); // /WEB-INF/views/festival/map.jsp
+
+		return mav;
+	}
+
+	/**
+	 * MAP µî·Ï/¼öÁ¤/»èÁ¦ Ã³¸® http://localhost:9093/festival/map.do
+	 * 
+	 * @param festivalVO
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/map.do", method = RequestMethod.POST)
+	public ModelAndView map_update(int contentsno, String map) {
+		ModelAndView mav = new ModelAndView();
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("contentsno", contentsno);
+		hashMap.put("map", map);
+
+		this.festivalProc.map(hashMap);
+
+		mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno);
+		// /webapp/WEB-INF/views/festival/read.jsp
+
+		return mav;
+	}
+
+	/**
+	 * Youtube µî·Ï/¼öÁ¤/»èÁ¦ Æû http://localhost:9093/festival/map.do?contentsno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/youtube.do", method = RequestMethod.GET)
+	public ModelAndView youtube(int contentsno) {
+		ModelAndView mav = new ModelAndView();
+
+		FestivalVO festivalVO = this.festivalProc.read(contentsno); // map Á¤º¸ ÀĞ¾î ¿À±â
+		mav.addObject("festivalVO", festivalVO); // request.setAttribute("festivalVO", festivalVO);
+
+		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno()); // ±×·ì Á¤º¸ ÀĞ±â
+		mav.addObject("fcateVO", fcateVO);
+
+		mav.setViewName("/festival/youtube"); // /WEB-INF/views/festival/youtube.jsp
+
+		return mav;
+	}
+
+	/**
+	 * Youtube µî·Ï/¼öÁ¤/»èÁ¦ Ã³¸® http://localhost:9093/festival/map.do
+	 * 
+	 * @param contentsno ±Û ¹øÈ£
+	 * @param youtube    Youtube urlÀÇ ¼Ò½º ÄÚµå
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/youtube.do", method = RequestMethod.POST)
+	public ModelAndView youtube_update(int contentsno, String youtube) {
+		ModelAndView mav = new ModelAndView();
+
+		if (youtube.trim().length() > 0) { // »èÁ¦ ÁßÀÎÁö È®ÀÎ, »èÁ¦°¡ ¾Æ´Ï¸é youtube Å©±â º¯°æ
+			youtube = Tool.youtubeResize(youtube, 640); // youtube ¿µ»óÀÇ Å©±â¸¦ width ±âÁØ 640 px·Î º¯°æ
+		}
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("contentsno", contentsno);
+		hashMap.put("youtube", youtube);
+
+		this.festivalProc.youtube(hashMap);
+
+		mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno);
+		// /webapp/WEB-INF/views/festival/read.jsp
+
+		return mav;
+	}
+
+	/**
+	 * ¼öÁ¤ Æû http://localhost:9093/festival/update_text.do?contentsno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/update_text.do", method = RequestMethod.GET)
+	public ModelAndView update_text(HttpSession session, int contentsno) {
+		ModelAndView mav = new ModelAndView();
+
+		if (adminProc.isAdmin(session)) { // °ü¸®ÀÚ·Î ·Î±×ÀÎÇÑ°æ¿ì
+			FestivalVO festivalVO = this.festivalProc.read(contentsno);
+			mav.addObject("festivalVO", festivalVO);
+
+			FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
+			mav.addObject("fcateVO", fcateVO);
+
+			mav.setViewName("/festival/update_text"); // /WEB-INF/views/festival/update_text.jsp
+			// String content = "Àå¼Ò:\nÀÎ¿ø:\nÁØºñ¹°:\nºñ¿ë:\n±âÅ¸:\n";
+			// mav.addObject("content", content);
+
+		} else {
+			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+			mav.setViewName("redirect:/festival/msg.do");
+		}
+
+		return mav; // forward
+	}
+
+	/**
+	 * ¼öÁ¤ Ã³¸® http://localhost:9093/festival/update_text.do?contentsno=1
+	 * 
+	 * @return
+	 */
+//	@RequestMapping(value = "/festival/update_text.do", method = RequestMethod.POST)
+//	public ModelAndView update_text(HttpSession session, FestivalVO festivalVO) {
 //		ModelAndView mav = new ModelAndView();
 //
-//		mav.setViewName(url); // forward
+//		// System.out.println("-> word: " + festivalVO.getWord());
+//
+//		if (this.adminProc.isAdmin(session)) { // °ü¸®ÀÚ ·Î±×ÀÎ È®ÀÎ
+//			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+//			hashMap.put("contentsno", festivalVO.getContentsno());
+//			hashMap.put("passwd", festivalVO.getPasswd());
+//
+//			if (this.festivalProc.password_check(hashMap) == 1) { // ÆĞ½º¿öµå ÀÏÄ¡
+//				this.festivalProc.update_text(festivalVO); // ±Û¼öÁ¤
+//
+//				// mav °´Ã¼ ÀÌ¿ë
+//				mav.addObject("contentsno", festivalVO.getContentsno());
+//				mav.addObject("fcateno", festivalVO.getFcateno());
+//				mav.setViewName("redirect:/festival/read.do"); // ÆäÀÌÁö ÀÚµ¿ ÀÌµ¿
+//
+//			} else { // ÆĞ½º¿öµå ºÒÀÏÄ¡
+//				mav.addObject("code", "passwd_fail");
+//				mav.addObject("cnt", 0);
+//				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter Àû¿ë
+//				mav.setViewName("redirect:/festival/msg.do"); // POST -> GET -> JSP Ãâ·Â
+//			}
+//		} else { // Á¤»óÀûÀÎ ·Î±×ÀÎÀÌ ¾Æ´Ñ °æ¿ì ·Î±×ÀÎ À¯µµ
+//			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+//			mav.setViewName("redirect:/contents/msg.do");
+//		}
+//
+//		mav.addObject("now_page", festivalVO.getNow_page()); // POST -> GET: µ¥ÀÌÅÍ ºĞ½ÇÀÌ ¹ß»ıÇÔÀ¸·Î ´Ù½ÃÇÏ¹ø µ¥ÀÌÅÍ ÀúÀå ¡Ú
+//
+//		// URL¿¡ ÆÄ¶ó¹ÌÅÍÀÇ Àü¼Û
+//		// mav.setViewName("redirect:/contents/read.do?contentsno=" +
+//		// festivalVO.getContentsno() + "&fcateno=" + festivalVO.getFcateno());
 //
 //		return mav; // forward
 //	}
-//
-//	// ë“±ë¡ í¼, contents í…Œì´ë¸”ì€ FKë¡œ fcatenoë¥¼ ì‚¬ìš©í•¨.
-//	// http://localhost:9093/festival/create.do X
-//	// http://localhost:9093/festival/create.do?fcateno=1 // fcateno ë³€ìˆ˜ê°’ì„ ë³´ë‚´ëŠ” ëª©ì 
-//	// http://localhost:9093/festival/create.do?fcateno=2
-//	// http://localhost:9093/festival/create.do?fcateno=3
-//	@RequestMapping(value = "/festival/create.do", method = RequestMethod.GET)
-//	public ModelAndView create(int fcateno) {
-////  public ModelAndView create(HttpServletRequest request,  int fcateno) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		FcateVO fcateVO = this.fcateProc.read(fcateno); // create.jspì— ì¹´í…Œê³ ë¦¬ ì •ë³´ë¥¼ ì¶œë ¥í•˜ê¸°ìœ„í•œ ëª©ì 
-//		mav.addObject("fcateVO", fcateVO);
-////    request.setAttribute("fcateVO", fcateVO);
-//
-//		mav.setViewName("/festival/create"); // /webapp/WEB-INF/views/festival/create.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * ë“±ë¡ ì²˜ë¦¬ http://localhost:9093/festival/create.do
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/create.do", method = RequestMethod.POST)
-////	public ModelAndView create(HttpServletRequest request, HttpSession session, ContentsVO contentsVO) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		if (adminProc.isAdmin(session)) { // ê´€ë¦¬ìë¡œ ë¡œê·¸ì¸í•œê²½ìš°
-////			// ------------------------------------------------------------------------------
-////			// íŒŒì¼ ì „ì†¡ ì½”ë“œ ì‹œì‘
-////			// ------------------------------------------------------------------------------
-////			String file1 = ""; // ì›ë³¸ íŒŒì¼ëª… image
-////			String file1saved = ""; // ì €ì¥ëœ íŒŒì¼ëª…, image
-////			String thumb1 = ""; // preview image
-////
-////			String upDir = Contents.getUploadDir(); // íŒŒì¼ì„ ì—…ë¡œë“œí•  í´ë” ì¤€ë¹„
-////			System.out.println("-> upDir: " + upDir);
-////
-////			// ì „ì†¡ íŒŒì¼ì´ ì—†ì–´ë„ file1MF ê°ì²´ê°€ ìƒì„±ë¨.
-////			// <input type='file' class="form-control" name='file1MF' id='file1MF'
-////			// value='' placeholder="íŒŒì¼ ì„ íƒ">
-////			MultipartFile mf = contentsVO.getFile1MF();
-////
-////			file1 = mf.getOriginalFilename(); // ì›ë³¸ íŒŒì¼ëª… ì‚°ì¶œ, 01.jpg
-////			System.out.println("-> ì›ë³¸ íŒŒì¼ëª… ì‚°ì¶œ file1: " + file1);
-////
-////			if (Tool.checkUploadFile(file1) == true) { // ì—…ë¡œë“œ ê°€ëŠ¥í•œ íŒŒì¼ì¸ì§€ ê²€ì‚¬
-////				long size1 = mf.getSize(); // íŒŒì¼ í¬ê¸°
-////
-////				if (size1 > 0) { // íŒŒì¼ í¬ê¸° ì²´í¬
-////					// íŒŒì¼ ì €ì¥ í›„ ì—…ë¡œë“œëœ íŒŒì¼ëª…ì´ ë¦¬í„´ë¨, spring.jsp, spring_1.jpg...
-////					file1saved = Upload.saveFileSpring(mf, upDir);
-////
-////					if (Tool.isImage(file1saved)) { // ì´ë¯¸ì§€ì¸ì§€ ê²€ì‚¬
-////						// thumb ì´ë¯¸ì§€ ìƒì„±í›„ íŒŒì¼ëª… ë¦¬í„´ë¨, width: 200, height: 150
-////						thumb1 = Tool.preview(upDir, file1saved, 200, 150);
-////					}
-////
-////				}
-////
-////				contentsVO.setFile1(file1); // ìˆœìˆ˜ ì›ë³¸ íŒŒì¼ëª…
-////				contentsVO.setFile1saved(file1saved); // ì €ì¥ëœ íŒŒì¼ëª…(íŒŒì¼ëª… ì¤‘ë³µ ì²˜ë¦¬)
-////				contentsVO.setThumb1(thumb1); // ì›ë³¸ì´ë¯¸ì§€ ì¶•ì†ŒíŒ
-////				contentsVO.setSize1(size1); // íŒŒì¼ í¬ê¸°
-////				// ------------------------------------------------------------------------------
-////				// íŒŒì¼ ì „ì†¡ ì½”ë“œ ì¢…ë£Œ
-////				// ------------------------------------------------------------------------------
-////
-////				// Call By Reference: ë©”ëª¨ë¦¬ ê³µìœ , Hashcode ì „ë‹¬
-////				int adminno = (int) session.getAttribute("adminno"); // adminno FK
-////				contentsVO.setAdminno(adminno);
-////				int cnt = this.contentsProc.create(contentsVO);
-////
-////				// ------------------------------------------------------------------------------
-////				// PKì˜ return
-////				// ------------------------------------------------------------------------------
-////				// System.out.println("--> contentsno: " + contentsVO.getContentsno());
-////				// mav.addObject("contentsno", contentsVO.getContentsno()); // redirect
-////				// parameter ì ìš©
-////				// ------------------------------------------------------------------------------
-////
-////				if (cnt == 1) {
-////					mav.addObject("code", "create_success");
-////					// fcateProc.increaseCnt(contentsVO.getFcateno()); // ê¸€ìˆ˜ ì¦ê°€
-////				} else {
-////					mav.addObject("code", "create_fail");
-////				}
-////				mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
-////
-////				// System.out.println("--> fcateno: " + contentsVO.getFcateno());
-////				// redirectì‹œì— hidden tagë¡œ ë³´ë‚¸ê²ƒë“¤ì´ ì „ë‹¬ì´ ì•ˆë¨ìœ¼ë¡œ requestì— ë‹¤ì‹œ ì €ì¥
-////				mav.addObject("fcateno", contentsVO.getFcateno()); // redirect parameter ì ìš©
-////
-////				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter ì ìš©
-////				mav.setViewName("redirect:/festival/msg.do"); // Post -> Get - param...
-////			} else {
-////				mav.addObject("cnt", "0"); // ì—…ë¡œë“œ í•  ìˆ˜ ì—†ëŠ” íŒŒì¼
-////				mav.addObject("code", "check_upload_file_fail"); // ì—…ë¡œë“œ í•  ìˆ˜ ì—†ëŠ” íŒŒì¼
-////				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter ì ìš©
-////				mav.setViewName("redirect:/festival/msg.do"); // Post -> Get - param...
-////			}
-////		} else {
-////			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-////			mav.setViewName("redirect:/festival/msg.do");
-////		}
-////
-////		return mav; // forward
-////	}
-//
-//	/**
-//	 * ì „ì²´ ëª©ë¡, ê´€ë¦¬ìë§Œ ì‚¬ìš© ê°€ëŠ¥ http://localhost:9093/festival/list_all.do
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/list_all.do", method = RequestMethod.GET)
-////	public ModelAndView list_all(HttpSession session) {
-////		ModelAndView mav = new ModelAndView();
-//
-////		if (this.adminProc.isAdmin(session) == true) {
-////			mav.setViewName("/festival/list_all"); // /WEB-INF/views/festival/list_all.jsp
-////
-////			ArrayList<ContentsVO> list = this.contentsProc.list_all();
-////
-////			// forë¬¸ì„ ì‚¬ìš©í•˜ì—¬ ê°ì²´ë¥¼ ì¶”ì¶œ, Call By Reference ê¸°ë°˜ì˜ ì›ë³¸ ê°ì²´ ê°’ ë³€ê²½
-////			for (ContentsVO contentsVO : list) {
-////				String title = contentsVO.getTitle();
-////				String content = contentsVO.getContent();
-////
-////				title = Tool.convertChar(title); // íŠ¹ìˆ˜ ë¬¸ì ì²˜ë¦¬
-////				content = Tool.convertChar(content);
-////
-////				contentsVO.setTitle(title);
-////				contentsVO.setContent(content);
-////
-////			}
-////
-////			mav.addObject("list", list);
-////
-////		} else {
-////			mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-////
-////		}
-////
-////		return mav;
-////	}
-//
-//	/**
-//	 * íŠ¹ì • ì¹´í…Œê³ ë¦¬ì˜ ê²€ìƒ‰ ëª©ë¡ http://localhost:9093/festival/list_by_fcateno.do?fcateno=1
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/list_by_fcateno.do", method = RequestMethod.GET)
-////	public ModelAndView list_by_fcateno(int fcateno, String word) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		mav.setViewName("/festival/list_by_fcateno"); // /WEB-INF/views/festival/list_by_fcateno.jsp
-////
-////		FcateVO fcateVO = this.fcateProc.read(fcateno); // create.jspì— ì¹´í…Œê³ ë¦¬ ì •ë³´ë¥¼ ì¶œë ¥í•˜ê¸°ìœ„í•œ ëª©ì 
-////		mav.addObject("fcateVO", fcateVO);
-////		// request.setAttribute("fcateVO", fcateVO);
-////
-////		// ê²€ìƒ‰í•˜ì§€ ì•ŠëŠ” ê²½ìš°
-////		// ArrayList<ContentsVO> list = this.contentsProc.list_by_fcateno(fcateno);
-////
-////		// ê²€ìƒ‰í•˜ëŠ” ê²½ìš°
-////		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-////		hashMap.put("fcateno", fcateno);
-////		hashMap.put("word", word);
-////
-////		ArrayList<ContentsVO> list = this.contentsProc.list_by_fcateno_search(hashMap);
-////
-////		// forë¬¸ì„ ì‚¬ìš©í•˜ì—¬ ê°ì²´ë¥¼ ì¶”ì¶œ, Call By Reference ê¸°ë°˜ì˜ ì›ë³¸ ê°ì²´ ê°’ ë³€ê²½
-////		for (ContentsVO contentsVO : list) {
-////			String title = contentsVO.getTitle();
-////			String content = contentsVO.getContent();
-////
-////			title = Tool.convertChar(title); // íŠ¹ìˆ˜ ë¬¸ì ì²˜ë¦¬
-////			content = Tool.convertChar(content);
-////
-////			contentsVO.setTitle(title);
-////			contentsVO.setContent(content);
-////
-////		}
-////
-////		mav.addObject("list", list);
-////
-////		return mav;
-////	}
-//
-//	/**
-//	 * ëª©ë¡ + ê²€ìƒ‰ + í˜ì´ì§• ì§€ì› ê²€ìƒ‰í•˜ì§€ ì•ŠëŠ” ê²½ìš°
-//	 * http://localhost:9093/festival/list_by_fcateno.do?fcateno=2&word=&now_page=1
-//	 * ê²€ìƒ‰í•˜ëŠ” ê²½ìš°
-//	 * http://localhost:9093/festival/list_by_fcateno.do?fcateno=2&word=íƒí—˜&now_page=1
-//	 * 
-//	 * @param fcateno
-//	 * @param word
-//	 * @param now_page
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/list_by_fcateno.do", method = RequestMethod.GET)
-//	public ModelAndView list_by_fcateno(FestivalVO festivalVO) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		// ê²€ìƒ‰ ëª©ë¡
-//		ArrayList<FestivalVO> list = festivalProc.list_by_fcateno_search_paging(festivalVO);
-//
-//		// forë¬¸ì„ ì‚¬ìš©í•˜ì—¬ ê°ì²´ë¥¼ ì¶”ì¶œ, Call By Reference ê¸°ë°˜ì˜ ì›ë³¸ ê°ì²´ ê°’ ë³€ê²½
-//		for (FestivalVO vo : list) {
-//			String title = vo.getTitle();
-//			String content = vo.getContent();
-//
-//			title = Tool.convertChar(title); // íŠ¹ìˆ˜ ë¬¸ì ì²˜ë¦¬
-//			content = Tool.convertChar(content);
-//
-//			vo.setTitle(title);
-//			vo.setContent(content);
-//
-//		}
-//
-//		mav.addObject("list", list);
-//
-//		FcateVO fcateVO = fcateProc.read(festivalVO.getFcateno());
-//		mav.addObject("fcateVO", fcateVO);
-//
-//		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//		hashMap.put("fcateno", festivalVO.getFcateno());
-//		hashMap.put("word", festivalVO.getWord());
-//
-//		int search_count = this.contentsProc.search_count(hashMap); // ê²€ìƒ‰ëœ ë ˆì½”ë“œ ê°¯ìˆ˜ -> ì „ì²´ í˜ì´ì§€ ê·œëª¨ íŒŒì•…
-//		mav.addObject("search_count", search_count);
-//
-//		/*
-//		 * SPANíƒœê·¸ë¥¼ ì´ìš©í•œ ë°•ìŠ¤ ëª¨ë¸ì˜ ì§€ì›, 1 í˜ì´ì§€ë¶€í„° ì‹œì‘ í˜„ì¬ í˜ì´ì§€: 11 / 22 [ì´ì „] 11 12 13 14 15 16 17
-//		 * 18 19 20 [ë‹¤ìŒ]
-//		 * 
-//		 * @param fcateno ì¹´í…Œê³ ë¦¬ë²ˆí˜¸
-//		 * 
-//		 * @param now_page í˜„ì¬ í˜ì´ì§€
-//		 * 
-//		 * @param word ê²€ìƒ‰ì–´
-//		 * 
-//		 * @param list_file ëª©ë¡ íŒŒì¼ëª…
-//		 * 
-//		 * @return í˜ì´ì§•ìš©ìœ¼ë¡œ ìƒì„±ëœ HTML/CSS tag ë¬¸ìì—´
-//		 */
-//		String paging = contentsProc.pagingBox(festivalVO.getFcateno(), festivalVO.getNow_page(), festivalVO.getWord(),
-//				"list_by_fcateno.do", search_count);
-//		mav.addObject("paging", paging);
-//
-//		// mav.addObject("now_page", now_page);
-//
-//		mav.setViewName("/festival/list_by_fcateno"); // /festival/list_by_fcateno.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * ëª©ë¡ + ê²€ìƒ‰ + í˜ì´ì§• ì§€ì› + Grid ê²€ìƒ‰í•˜ì§€ ì•ŠëŠ” ê²½ìš°
-//	 * http://localhost:9093/festival/list_by_fcateno_grid.do?fcateno=2&word=&now_page=1
-//	 * ê²€ìƒ‰í•˜ëŠ” ê²½ìš°
-//	 * http://localhost:9093/festival/list_by_fcateno_grid.do?fcateno=2&word=íƒí—˜&now_page=1
-//	 * 
-//	 * @param fcateno
-//	 * @param word
-//	 * @param now_page
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/list_by_fcateno_grid.do", method = RequestMethod.GET)
-//	public ModelAndView list_by_fcateno_grid(FestivalVO festivalVO) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		// ê²€ìƒ‰ ëª©ë¡
-//		ArrayList<FestivalVO> list = contentsProc.list_by_fcateno_search_paging(festivalVO);
-//
-//		// forë¬¸ì„ ì‚¬ìš©í•˜ì—¬ ê°ì²´ë¥¼ ì¶”ì¶œ, Call By Reference ê¸°ë°˜ì˜ ì›ë³¸ ê°ì²´ ê°’ ë³€ê²½
-//		for (FestivalVO vo : list) {
-//			String title = vo.getTitle();
-//			String content = vo.getContent();
-//
-//			title = Tool.convertChar(title); // íŠ¹ìˆ˜ ë¬¸ì ì²˜ë¦¬
-//			content = Tool.convertChar(content);
-//
-//			vo.setTitle(title);
-//			vo.setContent(content);
-//
-//		}
-//
-//		mav.addObject("list", list);
-//
-//		FcateVO fcateVO = fcateProc.read(festivalVO.getFcateno());
-//		mav.addObject("fcateVO", fcateVO);
-//
-//		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//		hashMap.put("fcateno", festivalVO.getFcateno());
-//		hashMap.put("word", festivalVO.getWord());
-//
-//		int search_count = this.contentsProc.search_count(hashMap); // ê²€ìƒ‰ëœ ë ˆì½”ë“œ ê°¯ìˆ˜ -> ì „ì²´ í˜ì´ì§€ ê·œëª¨ íŒŒì•…
-//		mav.addObject("search_count", search_count);
-//
-//		/*
-//		 * SPANíƒœê·¸ë¥¼ ì´ìš©í•œ ë°•ìŠ¤ ëª¨ë¸ì˜ ì§€ì›, 1 í˜ì´ì§€ë¶€í„° ì‹œì‘ í˜„ì¬ í˜ì´ì§€: 11 / 22 [ì´ì „] 11 12 13 14 15 16 17
-//		 * 18 19 20 [ë‹¤ìŒ]
-//		 * 
-//		 * @param fcateno ì¹´í…Œê³ ë¦¬ë²ˆí˜¸
-//		 * 
-//		 * @param now_page í˜„ì¬ í˜ì´ì§€
-//		 * 
-//		 * @param word ê²€ìƒ‰ì–´
-//		 * 
-//		 * @param list_file ëª©ë¡ íŒŒì¼ëª…
-//		 * 
-//		 * @return í˜ì´ì§•ìš©ìœ¼ë¡œ ìƒì„±ëœ HTML/CSS tag ë¬¸ìì—´
-//		 */
-//		String paging = contentsProc.pagingBox(festivalVO.getFcateno(), festivalVO.getNow_page(), festivalVO.getWord(),
-//				"list_by_fcateno_grid.do", search_count);
-//		mav.addObject("paging", paging);
-//
-//		// mav.addObject("now_page", now_page);
-//
-//		mav.setViewName("/festival/list_by_fcateno_grid"); // /festival/list_by_fcateno_grid.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * ì¡°íšŒ http://localhost:9093/festival/read.do?contentsno=17
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/read.do", method = RequestMethod.GET)
-//	public ModelAndView read(int contentsno) { // int fcateno = (int)request.getParameter("fcateno");
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("/festival/read"); // /WEB-INF/views/festival/read.jsp
-//
-//		FestivalVO festivalVO = this.contentsProc.read(contentsno);
-//
-//		String title = festivalVO.getTitle();
-//		String content = festivalVO.getContent();
-//
-//		title = Tool.convertChar(title); // íŠ¹ìˆ˜ ë¬¸ì ì²˜ë¦¬
-//		content = Tool.convertChar(content);
-//
-//		festivalVO.setTitle(title);
-//		festivalVO.setContent(content);
-//
-//		long size1 = festivalVO.getSize1();
-//		String size1_label = Tool.unit(size1);
-//		festivalVO.setSize1_label(size1_label);
-//
-//		mav.addObject("contentsVO", festivalVO);
-//
-//		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
-//		mav.addObject("fcateVO", fcateVO);
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * ë§µ ë“±ë¡/ìˆ˜ì •/ì‚­ì œ í¼ http://localhost:9093/festival/map.do?contentsno=1
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/map.do", method = RequestMethod.GET)
-//	public ModelAndView map(int contentsno) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		FestivalVO festivalVO = this.contentsProc.read(contentsno); // map ì •ë³´ ì½ì–´ ì˜¤ê¸°
-//		mav.addObject("contentsVO", festivalVO); // request.setAttribute("contentsVO", contentsVO);
-//
-//		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno()); // ê·¸ë£¹ ì •ë³´ ì½ê¸°
-//		mav.addObject("fcateVO", fcateVO);
-//
-//		mav.setViewName("/festival/map"); // /WEB-INF/views/festival/map.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * MAP ë“±ë¡/ìˆ˜ì •/ì‚­ì œ ì²˜ë¦¬ http://localhost:9093/festival/map.do
-//	 * 
-//	 * @param contentsVO
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/map.do", method = RequestMethod.POST)
-//	public ModelAndView map_update(int contentsno, String map) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//		hashMap.put("contentsno", contentsno);
-//		hashMap.put("map", map);
-//
-//		this.contentsProc.map(hashMap);
-//
-//		mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno);
-//		// /webapp/WEB-INF/views/festival/read.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * Youtube ë“±ë¡/ìˆ˜ì •/ì‚­ì œ í¼ http://localhost:9093/festival/map.do?contentsno=1
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/youtube.do", method = RequestMethod.GET)
-//	public ModelAndView youtube(int contentsno) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		FestivalVO festivalVO = this.contentsProc.read(contentsno); // map ì •ë³´ ì½ì–´ ì˜¤ê¸°
-//		mav.addObject("contentsVO", festivalVO); // request.setAttribute("contentsVO", contentsVO);
-//
-//		FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno()); // ê·¸ë£¹ ì •ë³´ ì½ê¸°
-//		mav.addObject("fcateVO", fcateVO);
-//
-//		mav.setViewName("/festival/youtube"); // /WEB-INF/views/festival/youtube.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * Youtube ë“±ë¡/ìˆ˜ì •/ì‚­ì œ ì²˜ë¦¬ http://localhost:9093/festival/map.do
-//	 * 
-//	 * @param contentsno ê¸€ ë²ˆí˜¸
-//	 * @param youtube    Youtube urlì˜ ì†ŒìŠ¤ ì½”ë“œ
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/festival/youtube.do", method = RequestMethod.POST)
-//	public ModelAndView youtube_update(int contentsno, String youtube) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		if (youtube.trim().length() > 0) { // ì‚­ì œ ì¤‘ì¸ì§€ í™•ì¸, ì‚­ì œê°€ ì•„ë‹ˆë©´ youtube í¬ê¸° ë³€ê²½
-//			youtube = Tool.youtubeResize(youtube, 640); // youtube ì˜ìƒì˜ í¬ê¸°ë¥¼ width ê¸°ì¤€ 640 pxë¡œ ë³€ê²½
-//		}
-//
-//		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//		hashMap.put("contentsno", contentsno);
-//		hashMap.put("youtube", youtube);
-//
-//		this.contentsProc.youtube(hashMap);
-//
-//		mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno);
-//		// /webapp/WEB-INF/views/festival/read.jsp
-//
-//		return mav;
-//	}
-//
-//	/**
-//	 * ìˆ˜ì • í¼ http://localhost:9093/festival/update_text.do?contentsno=1
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/update_text.do", method = RequestMethod.GET)
-////	public ModelAndView update_text(HttpSession session, int contentsno) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		if (adminProc.isAdmin(session)) { // ê´€ë¦¬ìë¡œ ë¡œê·¸ì¸í•œê²½ìš°
-////			ContentsVO contentsVO = this.contentsProc.read(contentsno);
-////			mav.addObject("contentsVO", contentsVO);
-////
-////			FcateVO fcateVO = this.fcateProc.read(contentsVO.getFcateno());
-////			mav.addObject("fcateVO", fcateVO);
-////
-////			mav.setViewName("/festival/update_text"); // /WEB-INF/views/festival/update_text.jsp
-////			// String content = "ì¥ì†Œ:\nì¸ì›:\nì¤€ë¹„ë¬¼:\në¹„ìš©:\nê¸°íƒ€:\n";
-////			// mav.addObject("content", content);
-////
-////		} else {
-////			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-////			mav.setViewName("redirect:/festival/msg.do");
-////		}
-////
-////		return mav; // forward
-////	}
-//
-//	/**
-//	 * ìˆ˜ì • ì²˜ë¦¬ http://localhost:9093/festival/update_text.do?contentsno=1
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/update_text.do", method = RequestMethod.POST)
-////	public ModelAndView update_text(HttpSession session, ContentsVO contentsVO) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		// System.out.println("-> word: " + contentsVO.getWord());
-////
-////		if (this.adminProc.isAdmin(session)) { // ê´€ë¦¬ì ë¡œê·¸ì¸ í™•ì¸
-////			HashMap<String, Object> hashMap = new HashMap<String, Object>();
-////			hashMap.put("contentsno", contentsVO.getContentsno());
-////			hashMap.put("passwd", contentsVO.getPasswd());
-////
-////			if (this.contentsProc.password_check(hashMap) == 1) { // íŒ¨ìŠ¤ì›Œë“œ ì¼ì¹˜
-////				this.contentsProc.update_text(contentsVO); // ê¸€ìˆ˜ì •
-////
-////				// mav ê°ì²´ ì´ìš©
-////				mav.addObject("contentsno", contentsVO.getContentsno());
-////				mav.addObject("fcateno", contentsVO.getFcateno());
-////				mav.setViewName("redirect:/festival/read.do"); // í˜ì´ì§€ ìë™ ì´ë™
-////
-////			} else { // íŒ¨ìŠ¤ì›Œë“œ ë¶ˆì¼ì¹˜
-////				mav.addObject("code", "passwd_fail");
-////				mav.addObject("cnt", 0);
-////				mav.addObject("url", "/festival/msg"); // msg.jsp, redirect parameter ì ìš©
-////				mav.setViewName("redirect:/festival/msg.do"); // POST -> GET -> JSP ì¶œë ¥
-////			}
-////		} else { // ì •ìƒì ì¸ ë¡œê·¸ì¸ì´ ì•„ë‹Œ ê²½ìš° ë¡œê·¸ì¸ ìœ ë„
-////			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-////			mav.setViewName("redirect:/contents/msg.do");
-////		}
-////
-////		mav.addObject("now_page", contentsVO.getNow_page()); // POST -> GET: ë°ì´í„° ë¶„ì‹¤ì´ ë°œìƒí•¨ìœ¼ë¡œ ë‹¤ì‹œí•˜ë²ˆ ë°ì´í„° ì €ì¥ â˜…
-////
-////		// URLì— íŒŒë¼ë¯¸í„°ì˜ ì „ì†¡
-////		// mav.setViewName("redirect:/contents/read.do?contentsno=" +
-////		// contentsVO.getContentsno() + "&fcateno=" + contentsVO.getFcateno());
-////
-////		return mav; // forward
-////	}
-//
-//	/**
-//	 * íŒŒì¼ ìˆ˜ì • í¼ http://localhost:9093/festival/update_file.do?contentsno=1
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/update_file.do", method = RequestMethod.GET)
-////	public ModelAndView update_file(HttpSession session, int contentsno) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		if (adminProc.isAdmin(session)) { // ê´€ë¦¬ìë¡œ ë¡œê·¸ì¸í•œê²½ìš°
-////			ContentsVO contentsVO = this.contentsProc.read(contentsno);
-////			mav.addObject("contentsVO", contentsVO);
-////
-////			FcateVO fcateVO = this.fcateProc.read(contentsVO.getFcateno());
-////			mav.addObject("fcateVO", fcateVO);
-////
-////			mav.setViewName("/festival/update_file"); // /WEB-INF/views/festival/update_file.jsp
-////
-////		} else {
-////			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-////			mav.setViewName("redirect:/festival/msg.do");
-////		}
-////
-////		return mav; // forward
-////	}
-//
-//	/**
-//	 * íŒŒì¼ ìˆ˜ì • ì²˜ë¦¬ http://localhost:9093/festival/update_file.do
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/update_file.do", method = RequestMethod.POST)
-////	public ModelAndView update_file(HttpSession session, ContentsVO contentsVO) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		if (this.adminProc.isAdmin(session)) {
-////			// ì‚­ì œí•  íŒŒì¼ ì •ë³´ë¥¼ ì½ì–´ì˜´, ê¸°ì¡´ì— ë“±ë¡ëœ ë ˆì½”ë“œ ì €ì¥ìš©
-////			ContentsVO contentsVO_old = contentsProc.read(contentsVO.getContentsno());
-////
-////			// -------------------------------------------------------------------
-////			// íŒŒì¼ ì‚­ì œ ì‹œì‘
-////			// -------------------------------------------------------------------
-////			String file1saved = contentsVO_old.getFile1saved(); // ì‹¤ì œ ì €ì¥ëœ íŒŒì¼ëª…
-////			String thumb1 = contentsVO_old.getThumb1(); // ì‹¤ì œ ì €ì¥ëœ preview ì´ë¯¸ì§€ íŒŒì¼ëª…
-////			long size1 = 0;
-////
-////			String upDir = Contents.getUploadDir(); // C:/kd/deploy/resort_v3sbm3c/festival/storage/
-////
-////			Tool.deleteFile(upDir, file1saved); // ì‹¤ì œ ì €ì¥ëœ íŒŒì¼ì‚­ì œ
-////			Tool.deleteFile(upDir, thumb1); // preview ì´ë¯¸ì§€ ì‚­ì œ
-////			// -------------------------------------------------------------------
-////			// íŒŒì¼ ì‚­ì œ ì¢…ë£Œ
-////			// -------------------------------------------------------------------
-////
-////			// -------------------------------------------------------------------
-////			// íŒŒì¼ ì „ì†¡ ì‹œì‘
-////			// -------------------------------------------------------------------
-////			String file1 = ""; // ì›ë³¸ íŒŒì¼ëª… image
-////
-////			// ì „ì†¡ íŒŒì¼ì´ ì—†ì–´ë„ file1MF ê°ì²´ê°€ ìƒì„±ë¨.
-////			// <input type='file' class="form-control" name='file1MF' id='file1MF'
-////			// value='' placeholder="íŒŒì¼ ì„ íƒ">
-////			MultipartFile mf = contentsVO.getFile1MF();
-////
-////			file1 = mf.getOriginalFilename(); // ì›ë³¸ íŒŒì¼ëª…
-////			size1 = mf.getSize(); // íŒŒì¼ í¬ê¸°
-////
-////			if (size1 > 0) { // í¼ì—ì„œ ìƒˆë¡­ê²Œ ì˜¬ë¦¬ëŠ” íŒŒì¼ì´ ìˆëŠ”ì§€ íŒŒì¼ í¬ê¸°ë¡œ ì²´í¬ â˜…
-////				// íŒŒì¼ ì €ì¥ í›„ ì—…ë¡œë“œëœ íŒŒì¼ëª…ì´ ë¦¬í„´ë¨, spring.jsp, spring_1.jpg...
-////				file1saved = Upload.saveFileSpring(mf, upDir);
-////
-////				if (Tool.isImage(file1saved)) { // ì´ë¯¸ì§€ì¸ì§€ ê²€ì‚¬
-////					// thumb ì´ë¯¸ì§€ ìƒì„±í›„ íŒŒì¼ëª… ë¦¬í„´ë¨, width: 250, height: 200
-////					thumb1 = Tool.preview(upDir, file1saved, 250, 200);
-////				}
-////
-////			} else { // íŒŒì¼ì´ ì‚­ì œë§Œ ë˜ê³  ìƒˆë¡œ ì˜¬ë¦¬ì§€ ì•ŠëŠ” ê²½ìš°
-////				file1 = "";
-////				file1saved = "";
-////				thumb1 = "";
-////				size1 = 0;
-////			}
-////
-////			contentsVO.setFile1(file1);
-////			contentsVO.setFile1saved(file1saved);
-////			contentsVO.setThumb1(thumb1);
-////			contentsVO.setSize1(size1);
-////			// -------------------------------------------------------------------
-////			// íŒŒì¼ ì „ì†¡ ì½”ë“œ ì¢…ë£Œ
-////			// -------------------------------------------------------------------
-////
-////			this.contentsProc.update_file(contentsVO); // Oracle ì²˜ë¦¬
-////
-////			mav.addObject("contentsno", contentsVO.getContentsno());
-////			mav.addObject("fcateno", contentsVO.getFcateno());
-////			mav.setViewName("redirect:/festival/read.do"); // request -> paramìœ¼ë¡œ ì ‘ê·¼ ì „í™˜
-////
-////		} else {
-////			mav.addObject("url", "/admin/login_need"); // login_need.jsp, redirect parameter ì ìš©
-////			mav.setViewName("redirect:/festival/msg.do"); // GET
-////		}
-////
-////		// redirectí•˜ê²Œë˜ë©´ ì „ë¶€ ë°ì´í„°ê°€ ì‚­ì œë¨ìœ¼ë¡œ mav ê°ì²´ì— ë‹¤ì‹œ ì €ì¥
-////		mav.addObject("now_page", contentsVO.getNow_page());
-////
-////		return mav; // forward
-////	}
-//
-//	/**
-//	 * íŒŒì¼ ì‚­ì œ í¼ http://localhost:9093/festival/delete.do?contentsno=1
-//	 * 
-//	 * @return
-//	 */
-////	@RequestMapping(value = "/festival/delete.do", method = RequestMethod.GET)
-////	public ModelAndView delete(HttpSession session, int contentsno) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		if (adminProc.isAdmin(session)) { // ê´€ë¦¬ìë¡œ ë¡œê·¸ì¸í•œê²½ìš°
-////			ContentsVO contentsVO = this.contentsProc.read(contentsno);
-////			mav.addObject("contentsVO", contentsVO);
-////
-////			FcateVO fcateVO = this.fcateProc.read(contentsVO.getFcateno());
-////			mav.addObject("fcateVO", fcateVO);
-////
-////			mav.setViewName("/contents/delete"); // /WEB-INF/views/contents/delete.jsp
-////
-////		} else {
-////			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-////			mav.setViewName("redirect:/festival/msg.do");
-////		}
-////
-////		return mav; // forward
-////	}
-////
-////	/**
-////	 * ì‚­ì œ ì²˜ë¦¬ http://localhost:9093/festival/delete.do
-////	 * 
-////	 * @return
-////	 */
-////	@RequestMapping(value = "/festival/delete.do", method = RequestMethod.POST)
-////	public ModelAndView delete(ContentsVO contentsVO) {
-////		ModelAndView mav = new ModelAndView();
-////
-////		// -------------------------------------------------------------------
-////		// íŒŒì¼ ì‚­ì œ ì‹œì‘
-////		// -------------------------------------------------------------------
-////		// ì‚­ì œí•  íŒŒì¼ ì •ë³´ë¥¼ ì½ì–´ì˜´.
-////		ContentsVO contentsVO_read = contentsProc.read(contentsVO.getContentsno());
-////
-////		String file1saved = contentsVO.getFile1saved();
-////		String thumb1 = contentsVO.getThumb1();
-////
-////		String uploadDir = Contents.getUploadDir();
-////		Tool.deleteFile(uploadDir, file1saved); // ì‹¤ì œ ì €ì¥ëœ íŒŒì¼ì‚­ì œ
-////		Tool.deleteFile(uploadDir, thumb1); // preview ì´ë¯¸ì§€ ì‚­ì œ
-////		// -------------------------------------------------------------------
-////		// íŒŒì¼ ì‚­ì œ ì¢…ë£Œ
-////		// -------------------------------------------------------------------
-////
-////		this.contentsProc.delete(contentsVO.getContentsno()); // DBMS ì‚­ì œ
-////
-////		// -------------------------------------------------------------------------------------
-////		// ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ë§ˆì§€ë§‰ ë ˆì½”ë“œ ì‚­ì œì‹œì˜ í˜ì´ì§€ ë²ˆí˜¸ -1 ì²˜ë¦¬
-////		// -------------------------------------------------------------------------------------
-////		// ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ë§ˆì§€ë§‰ 10ë²ˆì§¸ ë ˆì½”ë“œë¥¼ ì‚­ì œí›„
-////		// í•˜ë‚˜ì˜ í˜ì´ì§€ê°€ 3ê°œì˜ ë ˆì½”ë“œë¡œ êµ¬ì„±ë˜ëŠ” ê²½ìš° í˜„ì¬ 9ê°œì˜ ë ˆì½”ë“œê°€ ë‚¨ì•„ ìˆìœ¼ë©´
-////		// í˜ì´ì§€ìˆ˜ë¥¼ 4 -> 3ìœ¼ë¡œ ê°ì†Œ ì‹œì¼œì•¼í•¨, ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ë§ˆì§€ë§‰ ë ˆì½”ë“œ ì‚­ì œì‹œ ë‚˜ë¨¸ì§€ëŠ” 0 ë°œìƒ
-////		int now_page = contentsVO.getNow_page();
-////
-////		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-////		hashMap.put("fcateno", contentsVO.getFcateno());
-////		hashMap.put("word", contentsVO.getWord());
-////
-////		if (contentsProc.search_count(hashMap) % Contents.RECORD_PER_PAGE == 0) {
-////			now_page = now_page - 1; // ì‚­ì œì‹œ DBMSëŠ” ë°”ë¡œ ì ìš©ë˜ë‚˜ í¬ë¡¬ì€ ìƒˆë¡œê³ ì¹¨ë“±ì˜ í•„ìš”ë¡œ ë‹¨ê³„ê°€ ì‘ë™ í•´ì•¼í•¨.
-////			if (now_page < 1) {
-////				now_page = 1; // ì‹œì‘ í˜ì´ì§€
-////			}
-////		}
-////		// -------------------------------------------------------------------------------------
-////
-////		mav.addObject("fcateno", contentsVO.getFcateno());
-////		mav.addObject("now_page", now_page);
-////		mav.setViewName("redirect:/festival/list_by_fcateno.do");
-////
-////		return mav;
-////	}
-////
-////	// http://localhost:9093/festival/delete_by_fcateno.do?fcateno=1
-////	// íŒŒì¼ ì‚­ì œ -> ë ˆì½”ë“œ ì‚­ì œ
-////	@RequestMapping(value = "/festival/delete_by_fcateno.do", method = RequestMethod.GET)
-////	public String delete_by_fcateno(int fcateno) {
-////		ArrayList<ContentsVO> list = this.contentsProc.list_by_fcateno(fcateno);
-////
-////		for (ContentsVO contentsVO : list) {
-////			// -------------------------------------------------------------------
-////			// íŒŒì¼ ì‚­ì œ ì‹œì‘
-////			// -------------------------------------------------------------------
-////			String file1saved = contentsVO.getFile1saved();
-////			String thumb1 = contentsVO.getThumb1();
-////
-////			String uploadDir = Contents.getUploadDir();
-////			Tool.deleteFile(uploadDir, file1saved); // ì‹¤ì œ ì €ì¥ëœ íŒŒì¼ì‚­ì œ
-////			Tool.deleteFile(uploadDir, thumb1); // preview ì´ë¯¸ì§€ ì‚­ì œ
-////			// -------------------------------------------------------------------
-////			// íŒŒì¼ ì‚­ì œ ì¢…ë£Œ
-////			// -------------------------------------------------------------------
-////		}
-////
-////		int cnt = this.contentsProc.delete_by_fcateno(fcateno);
-////		System.out.println("-> count: " + cnt);
-////
-////		return "";
-////
-////	}
-//
-//}
+
+	/**
+	 * ÆÄÀÏ ¼öÁ¤ Æû http://localhost:9093/festival/update_file.do?contentsno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/update_file.do", method = RequestMethod.GET)
+	public ModelAndView update_file(HttpSession session, int contentsno) {
+		ModelAndView mav = new ModelAndView();
+
+		if (adminProc.isAdmin(session)) { // °ü¸®ÀÚ·Î ·Î±×ÀÎÇÑ°æ¿ì
+			FestivalVO festivalVO = this.festivalProc.read(contentsno);
+			mav.addObject("festivalVO", festivalVO);
+
+			FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
+			mav.addObject("fcateVO", fcateVO);
+
+			mav.setViewName("/festival/update_file"); // /WEB-INF/views/festival/update_file.jsp
+
+		} else {
+			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+			mav.setViewName("redirect:/festival/msg.do");
+		}
+
+		return mav; // forward
+	}
+
+	/**
+	 * ÆÄÀÏ ¼öÁ¤ Ã³¸® http://localhost:9093/festival/update_file.do
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/update_file.do", method = RequestMethod.POST)
+	public ModelAndView update_file(HttpSession session, FestivalVO festivalVO) {
+		ModelAndView mav = new ModelAndView();
+
+		if (this.adminProc.isAdmin(session)) {
+			// »èÁ¦ÇÒ ÆÄÀÏ Á¤º¸¸¦ ÀĞ¾î¿È, ±âÁ¸¿¡ µî·ÏµÈ ·¹ÄÚµå ÀúÀå¿ë
+			FestivalVO festivalVO_old = festivalProc.read(festivalVO.getContentsno());
+
+			// -------------------------------------------------------------------
+			// ÆÄÀÏ »èÁ¦ ½ÃÀÛ
+			// -------------------------------------------------------------------
+			String file1saved = festivalVO_old.getFile1saved(); // ½ÇÁ¦ ÀúÀåµÈ ÆÄÀÏ¸í
+			String thumb1 = festivalVO_old.getThumb1(); // ½ÇÁ¦ ÀúÀåµÈ preview ÀÌ¹ÌÁö ÆÄÀÏ¸í
+			long size1 = 0;
+
+			String upDir = Festival.getUploadDir(); // C:/kd/deploy/resort_v3sbm3c/festival/storage/
+
+			Tool.deleteFile(upDir, file1saved); // ½ÇÁ¦ ÀúÀåµÈ ÆÄÀÏ»èÁ¦
+			Tool.deleteFile(upDir, thumb1); // preview ÀÌ¹ÌÁö »èÁ¦
+			// -------------------------------------------------------------------
+			// ÆÄÀÏ »èÁ¦ Á¾·á
+			// -------------------------------------------------------------------
+
+			// -------------------------------------------------------------------
+			// ÆÄÀÏ Àü¼Û ½ÃÀÛ
+			// -------------------------------------------------------------------
+			String file1 = ""; // ¿øº» ÆÄÀÏ¸í image
+
+			// Àü¼Û ÆÄÀÏÀÌ ¾ø¾îµµ file1MF °´Ã¼°¡ »ı¼ºµÊ.
+			// <input type='file' class="form-control" name='file1MF' id='file1MF'
+			// value='' placeholder="ÆÄÀÏ ¼±ÅÃ">
+			MultipartFile mf = festivalVO.getFile1MF();
+
+			file1 = mf.getOriginalFilename(); // ¿øº» ÆÄÀÏ¸í
+			size1 = mf.getSize(); // ÆÄÀÏ Å©±â
+
+			if (size1 > 0) { // Æû¿¡¼­ »õ·Ó°Ô ¿Ã¸®´Â ÆÄÀÏÀÌ ÀÖ´ÂÁö ÆÄÀÏ Å©±â·Î Ã¼Å© ¡Ú
+				// ÆÄÀÏ ÀúÀå ÈÄ ¾÷·ÎµåµÈ ÆÄÀÏ¸íÀÌ ¸®ÅÏµÊ, spring.jsp, spring_1.jpg...
+				file1saved = Upload.saveFileSpring(mf, upDir);
+
+				if (Tool.isImage(file1saved)) { // ÀÌ¹ÌÁöÀÎÁö °Ë»ç
+					// thumb ÀÌ¹ÌÁö »ı¼ºÈÄ ÆÄÀÏ¸í ¸®ÅÏµÊ, width: 250, height: 200
+					thumb1 = Tool.preview(upDir, file1saved, 250, 200);
+				}
+
+			} else { // ÆÄÀÏÀÌ »èÁ¦¸¸ µÇ°í »õ·Î ¿Ã¸®Áö ¾Ê´Â °æ¿ì
+				file1 = "";
+				file1saved = "";
+				thumb1 = "";
+				size1 = 0;
+			}
+
+			festivalVO.setFile1(file1);
+			festivalVO.setFile1saved(file1saved);
+			festivalVO.setThumb1(thumb1);
+			festivalVO.setSize1(size1);
+			// -------------------------------------------------------------------
+			// ÆÄÀÏ Àü¼Û ÄÚµå Á¾·á
+			// -------------------------------------------------------------------
+
+			this.festivalProc.update_file(festivalVO); // Oracle Ã³¸®
+
+			mav.addObject("contentsno", festivalVO.getContentsno());
+			mav.addObject("fcateno", festivalVO.getFcateno());
+			mav.setViewName("redirect:/festival/read.do"); // request -> paramÀ¸·Î Á¢±Ù ÀüÈ¯
+
+		} else {
+			mav.addObject("url", "/admin/login_need"); // login_need.jsp, redirect parameter Àû¿ë
+			mav.setViewName("redirect:/festival/msg.do"); // GET
+		}
+
+		// redirectÇÏ°ÔµÇ¸é ÀüºÎ µ¥ÀÌÅÍ°¡ »èÁ¦µÊÀ¸·Î mav °´Ã¼¿¡ ´Ù½Ã ÀúÀå
+		mav.addObject("now_page", festivalVO.getNow_page());
+
+		return mav; // forward
+	}
+
+	/**
+	 * ÆÄÀÏ »èÁ¦ Æû http://localhost:9093/festival/delete.do?contentsno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/delete.do", method = RequestMethod.GET)
+	public ModelAndView delete(HttpSession session, int contentsno) {
+		ModelAndView mav = new ModelAndView();
+
+		if (adminProc.isAdmin(session)) { // °ü¸®ÀÚ·Î ·Î±×ÀÎÇÑ°æ¿ì
+			FestivalVO festivalVO = this.festivalProc.read(contentsno);
+			mav.addObject("festivalVO", festivalVO);
+
+			FcateVO fcateVO = this.fcateProc.read(festivalVO.getFcateno());
+			mav.addObject("fcateVO", fcateVO);
+
+			mav.setViewName("/contents/delete"); // /WEB-INF/views/contents/delete.jsp
+
+		} else {
+			mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+			mav.setViewName("redirect:/festival/msg.do");
+		}
+
+		return mav; // forward
+	}
+
+	/**
+	 * »èÁ¦ Ã³¸® http://localhost:9093/festival/delete.do
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/delete.do", method = RequestMethod.POST)
+	public ModelAndView delete(FestivalVO festivalVO) {
+		ModelAndView mav = new ModelAndView();
+
+		// -------------------------------------------------------------------
+		// ÆÄÀÏ »èÁ¦ ½ÃÀÛ
+		// -------------------------------------------------------------------
+		// »èÁ¦ÇÒ ÆÄÀÏ Á¤º¸¸¦ ÀĞ¾î¿È.
+		FestivalVO festivalVO_read = festivalProc.read(festivalVO.getContentsno());
+
+		String file1saved = festivalVO.getFile1saved();
+		String thumb1 = festivalVO.getThumb1();
+
+		String uploadDir = Festival.getUploadDir();
+		Tool.deleteFile(uploadDir, file1saved); // ½ÇÁ¦ ÀúÀåµÈ ÆÄÀÏ»èÁ¦
+		Tool.deleteFile(uploadDir, thumb1); // preview ÀÌ¹ÌÁö »èÁ¦
+		// -------------------------------------------------------------------
+		// ÆÄÀÏ »èÁ¦ Á¾·á
+		// -------------------------------------------------------------------
+
+		this.festivalProc.delete(festivalVO.getContentsno()); // DBMS »èÁ¦
+
+		// -------------------------------------------------------------------------------------
+		// ¸¶Áö¸· ÆäÀÌÁöÀÇ ¸¶Áö¸· ·¹ÄÚµå »èÁ¦½ÃÀÇ ÆäÀÌÁö ¹øÈ£ -1 Ã³¸®
+		// -------------------------------------------------------------------------------------
+		// ¸¶Áö¸· ÆäÀÌÁöÀÇ ¸¶Áö¸· 10¹øÂ° ·¹ÄÚµå¸¦ »èÁ¦ÈÄ
+		// ÇÏ³ªÀÇ ÆäÀÌÁö°¡ 3°³ÀÇ ·¹ÄÚµå·Î ±¸¼ºµÇ´Â °æ¿ì ÇöÀç 9°³ÀÇ ·¹ÄÚµå°¡ ³²¾Æ ÀÖÀ¸¸é
+		// ÆäÀÌÁö¼ö¸¦ 4 -> 3À¸·Î °¨¼Ò ½ÃÄÑ¾ßÇÔ, ¸¶Áö¸· ÆäÀÌÁöÀÇ ¸¶Áö¸· ·¹ÄÚµå »èÁ¦½Ã ³ª¸ÓÁö´Â 0 ¹ß»ı
+		int now_page = festivalVO.getNow_page();
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("fcateno", festivalVO.getFcateno());
+		hashMap.put("word", festivalVO.getWord());
+
+		if (festivalProc.search_count(hashMap) % Festival.RECORD_PER_PAGE == 0) {
+			now_page = now_page - 1; // »èÁ¦½Ã DBMS´Â ¹Ù·Î Àû¿ëµÇ³ª Å©·ÒÀº »õ·Î°íÄ§µîÀÇ ÇÊ¿ä·Î ´Ü°è°¡ ÀÛµ¿ ÇØ¾ßÇÔ.
+			if (now_page < 1) {
+				now_page = 1; // ½ÃÀÛ ÆäÀÌÁö
+			}
+		}
+		// -------------------------------------------------------------------------------------
+
+		mav.addObject("fcateno", festivalVO.getFcateno());
+		mav.addObject("now_page", now_page);
+		mav.setViewName("redirect:/festival/list_by_fcateno.do");
+
+		return mav;
+	}
+
+	// http://localhost:9093/festival/delete_by_fcateno.do?fcateno=1
+	// ÆÄÀÏ »èÁ¦ -> ·¹ÄÚµå »èÁ¦
+	@RequestMapping(value = "/festival/delete_by_fcateno.do", method = RequestMethod.GET)
+	public String delete_by_fcateno(int fcateno) {
+		ArrayList<FestivalVO> list = this.festivalProc.list_by_fcateno(fcateno);
+
+		for (FestivalVO festivalVO : list) {
+			// -------------------------------------------------------------------
+			// ÆÄÀÏ »èÁ¦ ½ÃÀÛ
+			// -------------------------------------------------------------------
+			String file1saved = festivalVO.getFile1saved();
+			String thumb1 = festivalVO.getThumb1();
+
+			String uploadDir = Festival.getUploadDir();
+			Tool.deleteFile(uploadDir, file1saved); // ½ÇÁ¦ ÀúÀåµÈ ÆÄÀÏ»èÁ¦
+			Tool.deleteFile(uploadDir, thumb1); // preview ÀÌ¹ÌÁö »èÁ¦
+			// -------------------------------------------------------------------
+			// ÆÄÀÏ »èÁ¦ Á¾·á
+			// -------------------------------------------------------------------
+		}
+
+		int cnt = this.festivalProc.delete_by_fcateno(fcateno);
+		System.out.println("-> count: " + cnt);
+
+		return "";
+
+	}
+
+}
