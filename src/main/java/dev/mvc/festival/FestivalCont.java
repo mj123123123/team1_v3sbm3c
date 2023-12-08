@@ -317,7 +317,7 @@ public class FestivalCont {
 	}
 
 	/**
-	 * 목록 + 검색 + 페이징 지원 + Grid 검색하지 않는 경우
+	 * 목록 + 검색 + 페이징 지원 + Grid 
 	 * http://localhost:9093/festival/list_by_fcateno_grid.do?fcateno=2&word=&now_page=1
 	 * 검색하는 경우
 	 * http://localhost:9093/festival/list_by_fcateno_grid.do?fcateno=2&word=탐험&now_page=1
@@ -480,31 +480,31 @@ public class FestivalCont {
 	}
 
 	/**
-	   * Youtube 등록/수정/삭제 처리
-	   * http://localhost:9092/festival/map.do
-	   * @param contentsno 글 번호
-	   * @param youtube Youtube url의 소스 코드
-	   * @return
-	   */
-	  @RequestMapping(value="/festival/youtube.do", method = RequestMethod.POST)
-	  public ModelAndView youtube_update(int contentsno, String youtube) {
-	    ModelAndView mav = new ModelAndView();
-	    
-	    if (youtube.trim().length() > 0) {  // 삭제 중인지 확인, 삭제가 아니면 youtube 크기 변경
-	      youtube = Tool.youtubeResize(youtube, 640);  // youtube 영상의 크기를 width 기준 640 px로 변경
-	    }    
-	    
-	    HashMap<String, Object> hashMap = new HashMap<String, Object>();
-	    hashMap.put("contentsno", contentsno);
-	    hashMap.put("youtube", youtube);
-	    
-	    this.festivalProc.youtube(hashMap);
-	    
-	    mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno); 
-	    // /webapp/WEB-INF/views/festival/read.jsp
-	    
-	    return mav;
-	  }
+	 * Youtube 등록/수정/삭제 처리 http://localhost:9092/festival/map.do
+	 * 
+	 * @param contentsno 글 번호
+	 * @param youtube    Youtube url의 소스 코드
+	 * @return
+	 */
+	@RequestMapping(value = "/festival/youtube.do", method = RequestMethod.POST)
+	public ModelAndView youtube_update(int contentsno, String youtube) {
+		ModelAndView mav = new ModelAndView();
+
+		if (youtube.trim().length() > 0) { // 삭제 중인지 확인, 삭제가 아니면 youtube 크기 변경
+			youtube = Tool.youtubeResize(youtube, 640); // youtube 영상의 크기를 width 기준 640 px로 변경
+		}
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("contentsno", contentsno);
+		hashMap.put("youtube", youtube);
+
+		this.festivalProc.youtube(hashMap);
+
+		mav.setViewName("redirect:/festival/read.do?contentsno=" + contentsno);
+		// /webapp/WEB-INF/views/festival/read.jsp
+
+		return mav;
+	}
 
 	/**
 	 * 수정 폼 http://localhost:9093/festival/update_text.do?contentsno=1
