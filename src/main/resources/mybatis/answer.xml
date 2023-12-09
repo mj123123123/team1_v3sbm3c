@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.answer.AnswerDAOInter">
+  <insert id="create" parameterType="dev.mvc.answer.AnswerVO">
+    INSERT INTO answer(ansno, qnano, ans, adminno, rdate) VALUES (answer_seq.nextval, #{qnano}, #{ans}, #{adminno}, sysdate)
+  </insert>
+
+  <!-- 모든 질문목록 -->
+  <select id="list_all" resultType="dev.mvc.answer.AnswerVO">
+    SELECT ansno, qnano, ans, adminno, rdate FROM answer ORDER BY ansno DESC
+  </select>
+  
+  <!-- 특정 관리자가 작성한 답글 -->
+  <select id="list_by_adminno" resultType="dev.mvc.answer.AnswerVO" parameterType="int">
+    SELECT ansno, qnano, ans, adminno, rdate FROM answer
+    WHERE adminno = #{adminno}
+    ORDER BY ansno DESC
+  </select> 
+  
+  <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.answer.AnswerVO" parameterType="int">
+    SELECT ansno, qnano, ans, adminno, rdate FROM answer
+    WHERE ansno = #{ansno}
+  </select>
+    
+  <!-- 글 수정 -->
+  <update id="update_answer" parameterType="dev.mvc.answer.AnswerVO">
+    UPDATE answer
+    SET ans=#{ans},
+    WHERE ansno = #{ansno}
+  </update>
+</mapper>
