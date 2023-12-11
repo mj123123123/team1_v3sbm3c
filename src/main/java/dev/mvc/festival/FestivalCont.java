@@ -725,7 +725,7 @@ public class FestivalCont {
 		// 파일 삭제 시작
 		// -------------------------------------------------------------------
 		// 삭제할 파일 정보를 읽어옴.
-		FestivalVO contentsVO_read = festivalProc.read(festivalVO.getContentsno());
+		FestivalVO festivalVO_read = festivalProc.read(festivalVO.getContentsno());
 
 		String file1saved = festivalVO.getFile1saved();
 		String thumb1 = festivalVO.getThumb1();
