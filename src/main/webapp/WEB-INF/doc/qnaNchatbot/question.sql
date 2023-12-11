@@ -8,6 +8,8 @@ CREATE TABLE QUESTION(
     TITLE       VARCHAR(50)     NOT NULL,
     QUEST       VARCHAR(300)    NOT NULL,
     RDATE       DATE            NOT NULL,
+    FOREIGN KEY (TCATENO) REFERENCES TCATE (TCATENO),
+    FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
     PRIMARY KEY (QUESTNO)
 );
 
@@ -35,11 +37,17 @@ commit;
 -- INSERT
 INSERT INTO question(questno, memberno, tcateno, title, quest, rdate) VALUES (question_seq.nextval, 1, 1, '제목', '내용', sysdate);
 
+INSERT INTO question(questno, memberno, tcateno, title, quest, rdate) VALUES (question_seq.nextval, 1, 1, '먹거리 추천', '글 어떻게 쓰나요?', sysdate);
+INSERT INTO question(questno, memberno, tcateno, title, quest, rdate) VALUES (question_seq.nextval, 1, 2, '해변 휴양 글', '내용이 다릅니다. 수정해주세요.', sysdate);
+INSERT INTO question(questno, memberno, tcateno, title, quest, rdate) VALUES (question_seq.nextval, 1, 3, '도심', '호캉스 글 올려도 되나요?', sysdate);
+INSERT INTO question(questno, memberno, tcateno, title, quest, rdate) VALUES (question_seq.nextval, 1, 3, '질문이요~', '사진 수정해주세요~', sysdate);
 
 -- SELECT
-SELECT questno, memberno, tcateno, title, quest, rdate FROM question ORDER BY questno DESC;
-SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcateno = 2 ORDER BY questno DESC;
-SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcateno = 2 AND quest LIKE '%결제%' ORDER BY questno DESC;
+SELECT questno, memberno, tcateno, title, quest, rdate FROM question ORDER BY questno ASC;
+SELECT questno, memberno, tcateno, title, quest, rdate FROM question ORDER BY tcateno ASC;
+SELECT questno, memberno, tcateno, title, quest, rdate FROM question ORDER BY memberno ASC;
+SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcateno = 3 ORDER BY questno ASC;
+SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcateno = 2 AND quest LIKE '%내용%' ORDER BY questno ASC;
 
 -- DELETE
 -- DELETE FROM question WHERE questno = 1;
@@ -49,7 +57,7 @@ SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcate
 
 -- COUNT
 SELECT COUNT(*) as cnt FROM question WHERE tcateno = 1;
-SELECT COUNT(*) as cnt FROM question WHERE tcateno = 1 AND quest LIKE '%결제%';
+SELECT COUNT(*) as cnt FROM question WHERE tcateno = 3 AND quest LIKE '%사진%';
 
 
 -- UPDATE

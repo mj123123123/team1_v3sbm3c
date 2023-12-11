@@ -21,7 +21,7 @@
     ORDER BY questno DESC
   </select> 
   
-  <!-- 특정 회원의 등록된 질문목록 -->
+  <!-- 특정 회원의 등록된 질문목록, 관리자만 사용 가능 -->
   <select id="list_by_memberno" resultType="dev.mvc.question.QuestionVO" parameterType="int">
     SELECT questno, memberno, tcateno, title, quest, rdate FROM question 
     WHERE memberno = #{memberno}

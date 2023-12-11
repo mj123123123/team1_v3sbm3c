@@ -102,6 +102,10 @@
 						</c:otherwise>
 					</c:choose>
 				</li>
+        
+        <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
+              <a class="nav-link top_menu_link" href="/question/list_all.do">질문 목록</a>
+        </li>     
 			</ul>
 		</div>
 	</nav>
