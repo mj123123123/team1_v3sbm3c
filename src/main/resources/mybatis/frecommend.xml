@@ -10,14 +10,14 @@
 		#{seq}, sysdate)
 	</insert>
 
-	<!-- 목록 -->
+	<!-- 전체 목록 -->
 	<select id="list_all" resultType="dev.mvc.frecommend.FrecommendVO">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
 		FROM frecommend
 		ORDER BY recommendno DESC
 	</select>
 
-	<!-- 추천 차종 조회 -->
+	<!-- 조회 -->
 	<select id="read" resultType="dev.mvc.frecommend.FrecommendVO"
 		parameterType="int">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
@@ -26,7 +26,7 @@
 	</select>
 
 	<!-- memberno(회원 번호)를 이용한 조회 -->
-	<select id="read_by_customerno"
+	<select id="read_memberno"
 		resultType="dev.mvc.frecommend.FrecommendVO" parameterType="int">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
 		FROM frecommend
