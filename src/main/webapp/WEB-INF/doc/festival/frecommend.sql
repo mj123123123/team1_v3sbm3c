@@ -10,7 +10,7 @@ CREATE TABLE FRECOMMEND(
         SEQ                                   NUMBER(2)         DEFAULT 1         NOT NULL,
         RDATE                                 DATE         NOT NULL,
   FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
-  FOREIGN KEY (FCATENO) REFERENCES CATE (FCATENO)
+  FOREIGN KEY (FCATENO) REFERENCES FCATE (FCATENO)
 );
 
 COMMENT ON TABLE FRECOMMEND is '추천';
@@ -30,10 +30,10 @@ CREATE SEQUENCE FRECOMMEND_SEQ
   NOCYCLE;                     -- 다시 1부터 생성되는 것을 방지
 
 -- 존재하는 memberno, FCATENO 등록
-INSERT INTO frecommend(frecommendno, memberno, FCATENO, seq, rdate)
-VALUES(FRECOMMEND_SEQ.nextval, 1, 15, 1, sysdate);
+INSERT INTO frecommend(frecommendno, memberno, fcateno, seq, rdate)
+VALUES(FRECOMMEND_SEQ.nextval, 1, 7, 1, sysdate);
 
-SELECT frecommendno, memberno, FCATENO, seq, rdate 
+SELECT frecommendno, memberno, fcateno, seq, rdate 
 FROM frecommend 
 ORDER BY frecommendno ASC;
 -- 1번회원은 1번 카테고리를 추천필요.
