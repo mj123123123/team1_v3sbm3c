@@ -4,7 +4,8 @@ public class FrecommendVO {
 	
 	private int frecommendno;
 	private int memberno;
-	private int fcate;                            
+	private int fcateno;   
+	private int contentsno; 
 	private int seq;
 	private String rdate;
 	
@@ -20,11 +21,17 @@ public class FrecommendVO {
 	public void setMemberno(int memberno) {
 		this.memberno = memberno;
 	}
-	public int getFcate() {
-		return fcate;
+	public int getFcateno() {
+		return fcateno;
 	}
-	public void setFcate(int fcate) {
-		this.fcate = fcate;
+	public void setFcateno(int fcateno) {
+		this.fcateno = fcateno;
+	}
+	public int getContentsno() {
+		return contentsno;
+	}
+	public void setContentsno(int contentsno) {
+		this.contentsno = contentsno;
 	}
 	public int getSeq() {
 		return seq;
@@ -41,9 +48,11 @@ public class FrecommendVO {
 	
 	@Override
 	public String toString() {
-		return "FrecommendVO [frecommendno=" + frecommendno + ", memberno=" + memberno + ", fcate=" + fcate + ", seq="
-				+ seq + ", rdate=" + rdate + "]";
+		return "FrecommendVO [frecommendno=" + frecommendno + ", memberno=" + memberno + ", fcateno=" + fcateno
+				+ ", contentsno=" + contentsno + ", seq=" + seq + ", rdate=" + rdate + "]";
 	}
 	
-
+	
+	
+	
 }
