@@ -40,7 +40,7 @@ public class AdminCont {
   
 //  /**
 //   * 로그인 폼
-//   * http://localhost:9093/admin/login.do
+//   * http://localhost:9091/admin/login.do
 //   * @return
 //   */
 //  @RequestMapping(value="/admin/login.do", method=RequestMethod.GET)
@@ -54,7 +54,7 @@ public class AdminCont {
 
 //  /**
 //   * 로그인 처리
-//   * http://localhost:9093/admin/login.do
+//   * http://localhost:9091/admin/login.do
 //   * @return
 //   */
 //  @RequestMapping(value="/admin/login.do", method=RequestMethod.POST)
@@ -101,7 +101,7 @@ public class AdminCont {
   
   /**
    * Cookie 로그인 폼
-   * http://localhost:9093/admin/login.do
+   * http://localhost:9091/admin/login.do
    * @return
    */
   @RequestMapping(value="/admin/login.do", method=RequestMethod.GET)
@@ -125,7 +125,7 @@ public class AdminCont {
   * @param passwd_save 폼에 입력된 passwd 저장 여부
   * @return
   */
-  // http://localhost:9093/admin/login.do 
+  // http://localhost:9091/admin/login.do 
   @RequestMapping(value = "/admin/login.do", 
                             method = RequestMethod.POST)
   public ModelAndView login_proc(
