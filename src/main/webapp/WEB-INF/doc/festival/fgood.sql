@@ -1,4 +1,4 @@
-CREATE TABLE FGOOD(
+CREATE TABLE GOOD(
 		goodno                       NUMBER(10)		 NOT NULL PRIMARY KEY,
 		memberno                     NUMBER(10)	     NOT NULL,
 		contentsno                   NUMBER(10)	     NOT NULL,
