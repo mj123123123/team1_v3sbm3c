@@ -144,7 +144,7 @@
 					<c:if test="${file1.trim().length() > 0 }">
             첨부 파일: <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label}) 
             <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'><img
-							src="/festival/images/download.png"></a>
+							src="/festival/images/download.png" class="icon"></a>
 					</c:if>
 				</div>
 			</li>
