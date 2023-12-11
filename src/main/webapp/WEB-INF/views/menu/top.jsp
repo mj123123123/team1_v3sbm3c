@@ -33,8 +33,9 @@
 
 
 	<nav class="navbar navbar-expand-md navbar-dark bg-warning">
-		<a class="navbar-brand" href="/"><img src='/css/images/home.png' title="시작페이지"
-			style='display: block; padding-left: 5px;'></a>
+		<a class="navbar-brand" href="/">
+			<img src='/css/images/home.png' title="시작페이지" style='display: block; padding-left: 5px;'>
+		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
 			aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle Navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -48,7 +49,7 @@
 					<c:set var="name" value="${fcateVO.name }" />
 					<li class="nav-item">
 						<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link"
-						href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
+							href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
 					</li>
 				</c:forEach>
 
@@ -65,6 +66,9 @@
 								<a class="dropdown-item" href="#">비밀번호 찾기</a>
 							</c:when>
 							<c:otherwise>
+								<a class="dropdown-item"
+									href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }">관심분야 등록하고
+									추천받기</a>
 								<a class="dropdown-item" href="/member/read.do">가입 정보</a>
 								<a class="dropdown-item" href="/member/passwd_update.do">비밀번호 변경</a>
 								<a class="dropdown-item" href="/member/read.do">회원 정보 수정</a>
@@ -82,11 +86,11 @@
 					<c:otherwise>
 						<li class="nav-item dropdown">
 							<%-- 관리자 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown"
-							href="#">관리자</a>
+								href="#">관리자</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href='/fcate/list_all.do'>축제/행사 카테고리 전체 목록</a> <a class="dropdown-item"
-									href='/member/list.do'>회원 목록</a> <a class="dropdown-item" href='/admin/logout.do'>관리자
-									${sessionScope.admin_id } 로그아웃</a>
+								<a class="dropdown-item" href='/fcate/list_all.do'>축제/행사 카테고리 전체 목록</a>
+								<a class="dropdown-item" href='/member/list.do'>회원 목록</a>
+								<a class="dropdown-item" href='/admin/logout.do'>관리자 ${sessionScope.admin_id } 로그아웃</a>
 							</div>
 						</li>
 					</c:otherwise>
@@ -102,10 +106,10 @@
 						</c:otherwise>
 					</c:choose>
 				</li>
-        
-        <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
-              <a class="nav-link top_menu_link" href="/question/list_all.do">질문 목록</a>
-        </li>     
+
+				<li class="nav-item">
+					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/question/list_all.do">질문 목록</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
