@@ -17,7 +17,7 @@
   <div class='title_line'>${fcateVO.name } > 글 등록</div>
   
   <aside class="aside_right">
-    <a href="./create.do?cateno=${fcateVO.fcateno }">등록</a>
+    <a href="./create.do?fcateno=${fcateVO.fcateno }">등록</a>
     <span class='menu_divide' >│</span>
     <a href="javascript:location.reload();">새로고침</a>
     <span class='menu_divide' >│</span>
