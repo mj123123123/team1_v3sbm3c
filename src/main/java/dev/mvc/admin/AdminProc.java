@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component("dev.mvc.admin.AdminProc")
 public class AdminProc implements AdminProcInter {
-  @Autowired
+  @Autowired // AdminDAOInter interface를 구현한 클래스의 객체를 만들어 자동으로 할당해라.
   private AdminDAOInter adminDAO;
   
   @Override
