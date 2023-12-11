@@ -5,23 +5,39 @@
 	<!-- 등록 -->
 	<insert id="create"
 		parameterType="dev.mvc.frecommend.FrecommendVO">
-		<selectKey keyProperty="frecommendno" resultType="int"
-			order="BEFORE">
-			SELECT FRECOMMEND_SEQ.nextval as frecommendno FROM dual
-		</selectKey>
-		INSERT INTO frecommend(frecommendno, memberno, fcateno, seq, rdate)
-		VALUES(#{frecommendno}, #{memberno}, #{fcateno}, #{seq}, sysdate)
+		INSERT INTO frecommend(frecommendno, memberno, fcateno, contentsno, seq, rdate)
+		VALUES(frecommend_seq.nextval, #{memberno}, #{fcateno}, #{contentsno},
+		#{seq}, sysdate)
 	</insert>
- 
-	<!-- 전체 추천 조회 -->
-	<select id="list_all"
-		resultType="dev.mvc.frecommend.FrecommendVO">
-		SELECT frecommendno, memberno, fcateno, seq, rdate FROM frecommend ORDER BY
-		seq ASC
+
+	<!-- 전체 목록 -->
+	<select id="list_all" resultType="dev.mvc.frecommend.FrecommendVO">
+		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
+		FROM frecommend
+		ORDER BY recommendno DESC
 	</select>
+
+	<!-- 조회 -->
+	<select id="read" resultType="dev.mvc.frecommend.FrecommendVO"
+		parameterType="int">
+		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
+		FROM frecommend
+		WHERE recommendno =#{recommendno}
+	</select>
+
+	<!-- memberno(회원 번호)를 이용한 조회 -->
+	<select id="read_memberno"
+		resultType="dev.mvc.frecommend.FrecommendVO" parameterType="int">
+		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
+		FROM frecommend
+		WHERE customerno = #{customerno}
+	</select>
+
 
 	<!-- 삭제 -->
 	<delete id="delete" parameterType="int">
-		DELETE FROM frecommend WHERE memberno = #{memberno}
+		DELETE FROM frecommend
+		WHERE frecommendno=#{frecommendno}
 	</delete>
+
 </mapper>
