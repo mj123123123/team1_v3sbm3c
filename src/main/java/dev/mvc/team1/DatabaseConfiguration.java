@@ -29,7 +29,7 @@ public class DatabaseConfiguration {
     public HikariConfig hikariConfig() {
         return new HikariConfig();
     }
-    
+      
     @Bean
     public DataSource dataSource() throws Exception{
         DataSource dataSource = new HikariDataSource(hikariConfig());
