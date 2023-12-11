@@ -1,7 +1,7 @@
 /**********************************/
 /* Table Name: 추천 */
 /**********************************/
-DROP TABLE FRECOMMEND;
+DROP TABLE FRECOMMEND;   
 
 CREATE TABLE FRECOMMEND(
         FRECOMMENDNO                           NUMBER(8)         NOT NULL         PRIMARY KEY,
@@ -32,6 +32,8 @@ CREATE SEQUENCE FRECOMMEND_SEQ
 -- 존재하는 memberno, FCATENO 등록
 INSERT INTO frecommend(frecommendno, memberno, fcateno, seq, rdate)
 VALUES(FRECOMMEND_SEQ.nextval, 1, 7, 1, sysdate);
+
+COMMIT;
 
 SELECT frecommendno, memberno, fcateno, seq, rdate 
 FROM frecommend 
