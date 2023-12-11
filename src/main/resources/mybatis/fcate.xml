@@ -44,7 +44,7 @@
 
 	<!-- return: 삭제한 레코드 갯수 리턴, parameterType: 삭제할 레코드 정보 -->
 	<delete id="delete" parameterType="int">
-		DELETE FROM fcate WHERE fcateno=#{fcateno}
+		DELETE FROM fcate WHERE fcateno=#{fcateno}		
 	</delete>
 
 	<!-- 우선 순위 높임, 10 등 -> 1 등 -->

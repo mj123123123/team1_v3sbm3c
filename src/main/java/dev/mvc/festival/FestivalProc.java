@@ -9,26 +9,26 @@ import org.springframework.stereotype.Component;
 
 import dev.mvc.tool.Tool;
 
-@Component("dev.mvc.contents.ContentsProc")
+@Component("dev.mvc.festival.FestivalProc")
 public class FestivalProc implements FestivalProcInter {
-  @Autowired  // ContentsDAOInter interface를 구현한 클래스의 객체를 만들어 자동으로 할당해라.
-  private FestivalDAOInter contentsDAO;
+  @Autowired  // FestivalDAOInter interface를 구현한 클래스의 객체를 만들어 자동으로 할당해라.
+  private FestivalDAOInter festivalDAO;
 
   @Override  // 추상 메소드를 구현했음.
   public int create(FestivalVO festivalVO) {
-    int cnt = this.contentsDAO.create(festivalVO);
+    int cnt = this.festivalDAO.create(festivalVO);
     return cnt;
   }
 
   @Override
   public ArrayList<FestivalVO> list_all() {
-    ArrayList<FestivalVO> list = this.contentsDAO.list_all();
+    ArrayList<FestivalVO> list = this.festivalDAO.list_all();
     return list;
   }
 
   @Override
   public ArrayList<FestivalVO> list_by_fcateno(int fcateno) {
-    ArrayList<FestivalVO> list = this.contentsDAO.list_by_fcateno(fcateno);
+    ArrayList<FestivalVO> list = this.festivalDAO.list_by_fcateno(fcateno);
     return list;
   }
   
@@ -37,31 +37,31 @@ public class FestivalProc implements FestivalProcInter {
    */
   @Override
   public FestivalVO read(int contentsno) {
-    FestivalVO festivalVO = this.contentsDAO.read(contentsno);
+    FestivalVO festivalVO = this.festivalDAO.read(contentsno);
     return festivalVO;
   }
 
   @Override
   public int map(HashMap<String, Object> map) {
-    int cnt = this.contentsDAO.map(map);
+    int cnt = this.festivalDAO.map(map);
     return cnt;
   }
 
   @Override
   public int youtube(HashMap<String, Object> map) {
-    int cnt = this.contentsDAO.youtube(map);
+    int cnt = this.festivalDAO.youtube(map);
     return cnt;
   }
 
   @Override
   public ArrayList<FestivalVO> list_by_fcateno_search(HashMap<String, Object> hashMap) {
-    ArrayList<FestivalVO> list = this.contentsDAO.list_by_fcateno_search(hashMap);
+    ArrayList<FestivalVO> list = this.festivalDAO.list_by_fcateno_search(hashMap);
     return list;
   }
 
   @Override
   public int search_count(HashMap<String, Object> hashMap) {
-    int cnt = this.contentsDAO.search_count(hashMap);
+    int cnt = this.festivalDAO.search_count(hashMap);
     return cnt;
   }
 
@@ -103,7 +103,7 @@ public class FestivalProc implements FestivalProcInter {
     festivalVO.setStart_num(start_num);
     festivalVO.setEnd_num(end_num);
     
-    ArrayList<FestivalVO> list = this.contentsDAO.list_by_fcateno_search_paging(festivalVO);
+    ArrayList<FestivalVO> list = this.festivalDAO.list_by_fcateno_search_paging(festivalVO);
     
     return list;
   }
@@ -245,37 +245,37 @@ public class FestivalProc implements FestivalProcInter {
 
     @Override
     public int password_check(HashMap<String, Object> hashMap) {
-      int cnt = this.contentsDAO.password_check(hashMap);
+      int cnt = this.festivalDAO.password_check(hashMap);
       return cnt;
     }
 
     @Override
     public int update_text(FestivalVO festivalVO) {
-      int cnt = this.contentsDAO.update_text(festivalVO);
+      int cnt = this.festivalDAO.update_text(festivalVO);
       return cnt;
     }
     
     @Override
     public int update_file(FestivalVO festivalVO) {
-        int cnt = this.contentsDAO.update_file(festivalVO);
+        int cnt = this.festivalDAO.update_file(festivalVO);
         return cnt;
     }
     
     @Override
     public int delete(int contentsno) {
-      int cnt = this.contentsDAO.delete(contentsno);
+      int cnt = this.festivalDAO.delete(contentsno);
       return cnt;
     }
 
     @Override
     public int count_by_fcateno(int fcateno) {
-      int cnt = this.contentsDAO.count_by_fcateno(fcateno);
+      int cnt = this.festivalDAO.count_by_fcateno(fcateno);
       return cnt;
     }
     
     @Override
     public int delete_by_fcateno(int fcateno) {
-      int cnt = this.contentsDAO.delete_by_fcateno(fcateno);
+      int cnt = this.festivalDAO.delete_by_fcateno(fcateno);
       return cnt;
     }
   

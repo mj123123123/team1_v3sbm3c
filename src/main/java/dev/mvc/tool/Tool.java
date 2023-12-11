@@ -58,7 +58,7 @@ public class Tool {
       if (file.endsWith("jpg") || file.endsWith(".jpeg") || file.endsWith(".png") || file.endsWith("gif")
           || file.endsWith("txt") || file.endsWith("hwp") || file.endsWith("xls") || file.endsWith("xlsx")
           || file.endsWith("ppt") || file.endsWith("pptx") || file.endsWith("zip") || file.endsWith("tar")
-          || file.endsWith("gz") || file.endsWith("ipynb") || file.endsWith("doc")) {
+          || file.endsWith("gz") || file.endsWith("ipynb") || file.endsWith("doc") || file.endsWith("")) {
         sw = true;
       }
     }
@@ -390,13 +390,13 @@ public class Tool {
           // path="C:\\kd\\ws_java\\resort_v2sbm3c\\src\\main\\resources\\static";
           
           // Windows 배포, 폴더 생성
-          path = "C:/kd/deploy/resort_v3sbm3c";
+          path = "C:/kd/deploy/team1_v3sbm3c";
 
       } else {
           // Linux 배포
           // 기본 명령어
           // pwd: 현재 경로 확인, mkdir deploy: 폴더 생성, cd deploy: 폴더 이동, rmdir resort_v2sbm3c: 폴더 삭제, cd ..: 상위 폴더로 이동 
-          path = "/home/ubuntu/deploy/resort_v3sbm3c";
+          path = "/home/ubuntu/deploy/team1_v3sbm3c";
       }
       // System.out.println("path: " + path);
       
