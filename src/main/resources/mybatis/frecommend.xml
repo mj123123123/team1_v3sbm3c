@@ -14,7 +14,7 @@
 	<select id="list_all" resultType="dev.mvc.frecommend.FrecommendVO">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
 		FROM frecommend
-		ORDER BY recommendno DESC
+		ORDER BY frecommendno DESC
 	</select>
 
 	<!-- 조회 -->
@@ -22,7 +22,7 @@
 		parameterType="int">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
 		FROM frecommend
-		WHERE recommendno =#{recommendno}
+		WHERE frecommendno =#{frecommendno}
 	</select>
 
 	<!-- memberno(회원 번호)를 이용한 조회 -->
@@ -30,7 +30,7 @@
 		resultType="dev.mvc.frecommend.FrecommendVO" parameterType="int">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
 		FROM frecommend
-		WHERE customerno = #{customerno}
+		WHERE memberno = #{memberno}
 	</select>
 
 
