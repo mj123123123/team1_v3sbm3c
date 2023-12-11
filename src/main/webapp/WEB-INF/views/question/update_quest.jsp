@@ -25,7 +25,7 @@
 <body>
 <c:import url="/menu/top.do" />
 
-  <DIV class='title_line'> ${tcateVO.name } > ${title } > 수정</DIV>
+  <DIV class='title_line'> ${title } > 수정</DIV>
   <aside class="aside_right">
     <a href="./create.do?questno=${questionVO.questno }">등록</a>
     <span class='menu_divide' >│</span>

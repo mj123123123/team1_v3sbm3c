@@ -41,29 +41,10 @@
     WHERE questno = #{questno}
   </update>
   
-  <!-- 특정 카테고리에 속한 레코드 갯수를 리턴 -->
-  <select id="count_by_tcateno" resultType="int" parameterType="int">
-    SELECT COUNT(*) as cnt 
-    FROM question 
-    WHERE categoryno=#{tcateno}
-  </select>
-  
-  <!-- 특정 카테고리에 속한 모든 레코드 삭제 -->
-  <delete id="delete_by_tcateno" parameterType="int">
+  <!-- 레코드 삭제 -->
+  <delete id="delete" parameterType="int">
     DELETE FROM question
     WHERE tcateno=#{tcateno}
   </delete>
   
-  <!-- 특정 회원이 작성한 레코드 갯수를 리턴 -->
-  <select id="count_by_memberno" resultType="int" parameterType="int">
-    SELECT COUNT(*) as cnt 
-    FROM question 
-    WHERE memberno=#{memberno}
-  </select>
-  
-  <!-- 특정 회원이 작성한 모든 레코드 삭제 -->
-  <delete id="delete_by_memberno" parameterType="int">
-    DELETE FROM question
-    WHERE memberno=#{memberno}
-  </delete>
 </mapper>

@@ -62,7 +62,7 @@ public class QuestionCont {
   public ModelAndView create(int tcateno) {
     ModelAndView mav = new ModelAndView();
 
-    //TcateVO tcateVO = this.questionProc.read(tcateno);
+    //TcateVO tcateVO = this.tcateProc.read(tcateno);
     //mav.addObject("tcateVO", tcateVO);
     
     mav.setViewName("/question/create"); // /webapp/WEB-INF/views/question/create.jsp
@@ -93,10 +93,8 @@ public class QuestionCont {
       mav.addObject("cnt", cnt);
       mav.addObject("questno", questionVO.getQuestno());
       
-      mav.addObject("url", "/question/msg.do");
+      mav.addObject("url", "/question/msg");
       mav.setViewName("redirect:/question/msg.do"); 
-      
-      
     } else {
       mav.addObject("url", "/member/login_need"); // /WEB-INF/views/member/login_need.jsp
       mav.setViewName("redirect:/question/msg.do"); 
@@ -268,7 +266,7 @@ public class QuestionCont {
       HashMap<String, Object> hashMap = new HashMap<String, Object>();
       hashMap.put("questno", questionVO.getQuestno());
       
-      this.questionProc.update_quest(questionVO); // 글수정  
+      this.questionProc.update_quest(questionVO); // 글 수정  
       
       // mav 객체 이용
       mav.addObject("questno", questionVO.getQuestno());
@@ -320,7 +318,7 @@ public class QuestionCont {
   public ModelAndView delete(QuestionVO questionVO) {
     ModelAndView mav = new ModelAndView();
    
-    QuestionVO QnAVO_read = questionProc.read(questionVO.getQuestno());
+    //QuestionVO questionVO_read = questionProc.read(questionVO.getQuestno());
     
     this.questionProc.delete(questionVO.getQuestno()); // DBMS 삭제
         
@@ -330,7 +328,7 @@ public class QuestionCont {
     // 마지막 페이지의 마지막 10번째 레코드를 삭제후
     // 하나의 페이지가 3개의 레코드로 구성되는 경우 현재 9개의 레코드가 남아 있으면
     // 페이지수를 4 -> 3으로 감소 시켜야함, 마지막 페이지의 마지막 레코드 삭제시 나머지는 0 발생
-    int now_page = questionVO.getNow_page();
+    /*int now_page = questionVO.getNow_page();
     
     HashMap<String, Object> hashMap = new HashMap<String, Object>();
     hashMap.put("questno", questionVO.getQuestno());
@@ -340,12 +338,13 @@ public class QuestionCont {
       if (now_page < 1) {
         now_page = 1; // 시작 페이지
       }
-    }
+    }*/
     // -------------------------------------------------------------------------------------
 
     mav.addObject("questno", questionVO.getQuestno());
-    mav.addObject("now_page", now_page);
-    mav.setViewName("redirect:/question/list_by_tcateno.do"); 
+    //mav.addObject("now_page", now_page);
+    //mav.setViewName("redirect:/question/list_by_tcateno.do");
+    mav.setViewName("redirect:/question/list_all.do");
     
     return mav;
   }

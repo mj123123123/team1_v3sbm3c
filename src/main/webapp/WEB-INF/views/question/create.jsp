@@ -58,7 +58,7 @@
     </div>
     <div>
        <label>내용</label>
-       <textarea name='content' required="required" class="form-control" rows="12" style='width: 100%;'></textarea>
+       <textarea name='quest' required="required" class="form-control" rows="12" style='width: 100%;'></textarea>
     </div>    
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-secondary btn-sm">등록</button>

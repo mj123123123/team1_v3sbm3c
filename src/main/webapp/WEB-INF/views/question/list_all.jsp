@@ -19,12 +19,34 @@
 <c:import url="/menu/top.do" />
 
   <div class='title_line'>질문 목록(전체)</div>
+  
+  <td><a href="../tcate/list_by_tcateno.do?tcateno=${tcateVO.tcateno }" class='title_link'>${tcateVO.name }</a></td>
 
   <aside class="aside_right">
     <a href="./create.do?tcateno=${tcateVO.tcateno }">등록</a>
     <span class='menu_divide' >│</span>
     <a href="javascript:location.reload();">새로고침</a>
   </aside>
+  
+    <div style="text-align: right; clear: both;">  
+    <form name='frm' id='frm' method='get' action='./list_all.do'>
+      <input type='hidden' name='tcateno' value='${tcateVO.tcateno }'>  <%-- 게시판의 구분 --%>
+      
+      <c:choose>
+        <c:when test="${param.quest != '' }"> <%-- 검색하는 경우 --%>
+          <input type='text' name='quest' id='quest' value='${param.quest }' class='input_word'>
+        </c:when>
+        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+          <input type='text' name='quest' id='quest' value='' class='input_word'>
+        </c:otherwise>
+      </c:choose>
+      <button type='submit' class='btn btn-info btn-sm'>검색</button>
+      <c:if test="${param.quest.length() > 0 }">
+        <button type='button' class='btn btn-info btn-sm' 
+                    onclick="location.href='./list_by_tcateno.do?tcateno=${tcateVO.tcateno}&word='">검색 취소</button>  
+      </c:if>    
+    </form>
+  </div>
   
   <div class="menu_line"></div>
 

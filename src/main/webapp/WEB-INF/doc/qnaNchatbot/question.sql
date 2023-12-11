@@ -50,7 +50,7 @@ SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcate
 SELECT questno, memberno, tcateno, title, quest, rdate FROM question WHERE tcateno = 2 AND quest LIKE '%내용%' ORDER BY questno ASC;
 
 -- DELETE
--- DELETE FROM question WHERE questno = 1;
+DELETE FROM question WHERE questno = 13;
 -- DELETE FROM question;
 -- commit;
 

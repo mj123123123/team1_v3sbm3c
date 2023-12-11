@@ -18,7 +18,7 @@
 
 <c:set var="code" value="${param.code }" /> <%--mav.addObject("code", "create_success"); --%>
 <c:set var="cnt" value="${param.cnt }" />     <%-- mav.addObject("cnt", cnt); --%>
-<c:set var="tcateno" value="${param.tcateno }" /> <%-- mav.addObject("tcateno", contentsVO.getCateno()); // redirect parameter 적용 --%>
+<c:set var="questno" value="${param.questno }" /> <%-- mav.addObject("tcateno", contentsVO.getCateno()); // redirect parameter 적용 --%>
 
 <DIV class='message'>
   <fieldset class='fieldset_basic'>
