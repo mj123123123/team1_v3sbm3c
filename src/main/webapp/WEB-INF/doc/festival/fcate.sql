@@ -40,7 +40,7 @@ INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '계절(�
 INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '문화관광 페스티벌', 0, sysdate); 
 INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '예술(춤/무용/전통공연) 페스티벌', 0, sysdate); 
 INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '체험 페스티벌', 0, sysdate); 
-INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '인생샷(꽃, 빛) 페스티벌', 0, sysdate); 
+INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '인생샷(꽃/빛) 페스티벌', 0, sysdate); 
 INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '뮤직(재즈, K-POP) 페스티벌', 0, sysdate); 
 
 ALTER TABLE FCATE MODIFY (NAME VARCHAR2(100));
