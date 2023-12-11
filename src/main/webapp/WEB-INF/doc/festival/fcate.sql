@@ -44,6 +44,7 @@ INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '인생�
 INSERT INTO FCATE(fcateno, name, cnt, rdate) VALUES(FCATE_seq.nextval, '뮤직(재즈, K-POP) 페스티벌', 0, sysdate); 
 
 ALTER TABLE FCATE MODIFY (NAME VARCHAR2(100));
+COMMIT;
 
 
 -- READ: LIST
