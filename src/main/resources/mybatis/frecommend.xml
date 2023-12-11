@@ -26,7 +26,7 @@
 	</select>
 
 	<!-- memberno(회원 번호)를 이용한 조회 -->
-	<select id="read_memberno"
+	<select id="read_memberno"  
 		resultType="dev.mvc.frecommend.FrecommendVO" parameterType="int">
 		SELECT frecommendno, memberno, fcateno, contentsno, seq, rdate
 		FROM frecommend
