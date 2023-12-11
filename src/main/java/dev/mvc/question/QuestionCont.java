@@ -57,13 +57,13 @@ public class QuestionCont {
   }
   
   // 등록 폼
-  // http://localhost:9093/question/create.do?questno=1
+  // http://localhost:9093/question/create.do?tcateno=1
   @RequestMapping(value="/question/create.do", method = RequestMethod.GET)
-  public ModelAndView create(int questno) {
+  public ModelAndView create(int tcateno) {
     ModelAndView mav = new ModelAndView();
 
-    QuestionVO questionVO = this.questionProc.read(questno);
-    mav.addObject("questionVO", questionVO);
+    //TcateVO tcateVO = this.questionProc.read(tcateno);
+    //mav.addObject("tcateVO", tcateVO);
     
     mav.setViewName("/question/create"); // /webapp/WEB-INF/views/question/create.jsp
     
@@ -79,7 +79,7 @@ public class QuestionCont {
   public ModelAndView create(HttpServletRequest request, HttpSession session, QuestionVO questionVO) {
     ModelAndView mav = new ModelAndView();
   
-    /*if(memberProc.isMember(session)) { //회원 로그인 - 회원 제작 시 테스트
+    if(memberProc.isMember(session)) { //회원 로그인 - 회원 제작 시 테스트
       // Call By Reference: 메모리 공유, Hashcode 전달
       int memberno = (int)session.getAttribute("memberno"); // memberno FK
       questionVO.setMemberno(memberno);
@@ -100,7 +100,7 @@ public class QuestionCont {
     } else {
       mav.addObject("url", "/member/login_need"); // /WEB-INF/views/member/login_need.jsp
       mav.setViewName("redirect:/question/msg.do"); 
-    }*/
+    }
      
     return mav;
   }
@@ -169,15 +169,15 @@ public class QuestionCont {
     
     mav.addObject("list", list);
   
-    /*TcateVO tcateVO = tcateProc.read(qnaVO.getTcateno());
-    mav.addObject("tcateVO", tcateVO);
+    //TcateVO tcateVO = tcateProc.read(questionVO.getTcateno());
+    //mav.addObject("tcateVO", tcateVO);
   
     HashMap<String, Object> hashMap = new HashMap<String, Object>();
     hashMap.put("tcateno", questionVO.getTcateno());
     //hashMap.put("word", questionVO.getWord());
     
     int search_count = this.questionProc.search_count(hashMap);  // 검색된 레코드 갯수 ->  전체 페이지 규모 파악
-    mav.addObject("search_count", search_count);*/
+    mav.addObject("search_count", search_count);
     
     /*
      * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
@@ -188,10 +188,10 @@ public class QuestionCont {
      * @param list_file 목록 파일명
      * @return 페이징용으로 생성된 HTML/CSS tag 문자열
      */
-    //String paging = questionProc.pagingBox(questionProc.getTcateno(), questionProc.getNow_page(), questionProc.getWord(), "list_by_tcateno.do", search_count);
-    //mav.addObject("paging", paging);
+    String paging = questionProc.pagingBox(questionVO.getTcateno(), questionVO.getNow_page(), "list_by_tcateno.do", search_count);
+    mav.addObject("paging", paging);
   
-    // mav.addObject("now_page", now_page);
+    //mav.addObject("now_page", now_page);
     
     mav.setViewName("/question/list_by_tcateno");  // /question/list_by_tcateno.jsp
   

@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, width=device-width" /> 
-<title>Festival Question</title>
+<title>Festival Answer</title>
 <link rel="shortcut icon" href="/images/star.png" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css"> <!-- /static 기준 -->
 
@@ -18,10 +18,10 @@
 <body>
 <c:import url="/menu/top.do" />
 
-  <div class='title_line'>질문 목록(전체)</div>
+  <div class='title_line'>답변 목록(전체)</div>
 
   <aside class="aside_right">
-    <a href="./create.do?tcateno=${tcateVO.tcateno }">등록</a>
+    <a href="./create.do?questno=${questionVO.questno }">등록</a>
     <span class='menu_divide' >│</span>
     <a href="javascript:location.reload();">새로고침</a>
   </aside>
@@ -42,29 +42,28 @@
       </tr>
     </thead>
     <tbody>
-        <c:forEach var="questionVO" items="${list }" varStatus="info">
+        <c:forEach var="answerVO" items="${list }" varStatus="info">
           <c:set var="questno" value="${questionVO.questno }" />
           <c:set var="title" value="${questionVO.title }" />
     
-          <tr onclick="location.href='./read.do?questno=${questno}'" style="cursor: pointer;">
+          <tr onclick="location.href='./read.do?ansno=${ansno}'" style="cursor: pointer;">
             <td class="td_bs">
               <span style="font-weight: bold;">${questionVO.title }</span><br>
             </td>
             <td class="td_bs">
               <c:choose>
-                <c:when test="${questionVO.quest.length() > 160 }">
-                  ${questionVO.quest.substring(0, 160) }...
+                <c:when test="${answerVO.ans.length() > 160 }">
+                  ${answerVO.ans.substring(0, 160) }...
                 </c:when>
                 <c:otherwise>
-                  ${questionVO.quest }
+                  ${answerVO.ans }
                 </c:otherwise>
               </c:choose>
-              (${questionVO.rdate.substring(0, 16) })
+              (${answerVO.rdate.substring(0, 16) })
             </td>
             <td class="td_bs">
-              <a href="../answer/create.do?questno=${questno }&now_page=${param.now_page}" title="등록"><img src="/question/images/create.png" class="icon"></a>
-              <a href="/question/update_quest.do?questno=${questno }&tcateno=${tcateno}&now_page=${param.now_page}" title="수정"><img src="/question/images/update.png" class="icon"></a>
-              <a href="/question/delete.do?questno=${questno }&tcateno=${tcateno}&now_page=${param.now_page}" title="삭제"><img src="/question/images/delete.png" class="icon"></a>
+              <a href="/answer/update_answer.do?ansno=${ansno }&questno=${questno}&now_page=${param.now_page}" title="수정"><img src="/answer/images/update.png" class="icon"></a>
+              <a href="/answer/delete.do?ansno=${ansno }&questno=${questno}&now_page=${param.now_page}" title="삭제"><img src="/answer/images/delete.png" class="icon"></a>
             </td>
           </tr>
         </c:forEach>

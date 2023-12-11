@@ -33,13 +33,16 @@ commit;
 
 
 -- INSERT
-INSERT INTO answer(ansno, questno, ans, adminno, rdate) VALUES (answer_seq.nextval, 1, '카드, 무통장입금, 계좌이체 등', 1, sysdate);
+INSERT INTO answer(ansno, questno, ans, adminno, rdate) VALUES (answer_seq.nextval, 1, '[등록]을 눌러 글을 입력할 수 있습니다.', 1, sysdate);
+INSERT INTO answer(ansno, questno, ans, adminno, rdate) VALUES (answer_seq.nextval, 2, '수정하였습니다. 불편을 드려 죄송합니다.', 1, sysdate);
+INSERT INTO answer(ansno, questno, ans, adminno, rdate) VALUES (answer_seq.nextval, 3, '네. 휴양지 관련 글이면 내용 상관없이 등록 가능합니다.', 1, sysdate);
+INSERT INTO answer(ansno, questno, ans, adminno, rdate) VALUES (answer_seq.nextval, 4, '수정하였습니다. 불편을 드려 죄송합니다.', 1, sysdate);
 
 
 -- SELECT
 SELECT ansno, questno, ans, adminno, rdate FROM answer ORDER BY ansno DESC;
-SELECT ansno, questno, ans, adminno, rdate FROM answer WHERE adminno = 2 ORDER BY ansno DESC;
-SELECT ansno, questno, ans, adminno, rdate FROM answer WHERE adminno = 2 AND ans LIKE '%카드%' ORDER BY ansno DESC;
+SELECT ansno, questno, ans, adminno, rdate FROM answer WHERE adminno = 1 ORDER BY ansno DESC;
+SELECT ansno, questno, ans, adminno, rdate FROM answer WHERE adminno = 1 AND ans LIKE '%수정%' ORDER BY ansno DESC;
 
 -- DELETE
 -- DELETE FROM answer WHERE ansno = 1;

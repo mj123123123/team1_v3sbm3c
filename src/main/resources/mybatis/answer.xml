@@ -3,24 +3,24 @@
 
 <mapper namespace="dev.mvc.answer.AnswerDAOInter">
   <insert id="create" parameterType="dev.mvc.answer.AnswerVO">
-    INSERT INTO answer(ansno, qnano, ans, adminno, rdate) VALUES (answer_seq.nextval, #{qnano}, #{ans}, #{adminno}, sysdate)
+    INSERT INTO answer(ansno, questno, ans, adminno, rdate) VALUES (answer_seq.nextval, #{questno}, #{ans}, #{adminno}, sysdate)
   </insert>
 
   <!-- 모든 질문목록 -->
   <select id="list_all" resultType="dev.mvc.answer.AnswerVO">
-    SELECT ansno, qnano, ans, adminno, rdate FROM answer ORDER BY ansno DESC
+    SELECT ansno, questno, ans, adminno, rdate FROM answer ORDER BY ansno DESC
   </select>
   
   <!-- 특정 관리자가 작성한 답글 -->
   <select id="list_by_adminno" resultType="dev.mvc.answer.AnswerVO" parameterType="int">
-    SELECT ansno, qnano, ans, adminno, rdate FROM answer
+    SELECT ansno, questno, ans, adminno, rdate FROM answer
     WHERE adminno = #{adminno}
     ORDER BY ansno DESC
   </select> 
   
   <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.answer.AnswerVO" parameterType="int">
-    SELECT ansno, qnano, ans, adminno, rdate FROM answer
+    SELECT ansno, questno, ans, adminno, rdate FROM answer
     WHERE ansno = #{ansno}
   </select>
     

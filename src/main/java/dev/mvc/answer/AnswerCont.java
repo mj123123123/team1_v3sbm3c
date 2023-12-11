@@ -43,34 +43,34 @@ public class AnswerCont {
    * POST → url → GET → 데이터 전송
    * @return
    */
-  /*@RequestMapping(value="/answer/msg.do", method=RequestMethod.GET)
+  @RequestMapping(value="/answer/msg.do", method=RequestMethod.GET)
   public ModelAndView msg(String url){
     ModelAndView mav = new ModelAndView();
 
     mav.setViewName(url); // forward
     
     return mav; // forward
-  }*/
+  }
   
-  //http://localhost:9093/answer/create.do?answerno=1
-  /*@RequestMapping(value="/answer/create.do", method = RequestMethod.GET)
-  public ModelAndView create(int ansno) {
+  //http://localhost:9093/answer/create.do?questno=1
+  @RequestMapping(value="/answer/create.do", method = RequestMethod.GET)
+  public ModelAndView create(int questno) {
     ModelAndView mav = new ModelAndView();
 
-    AnswerVO answerVO = this.answerProc.read(ansno);
+    AnswerVO answerVO = this.answerProc.read(questno);
     mav.addObject("answerVO", answerVO);
    
     mav.setViewName("/answer/create"); // /webapp/WEB-INF/views/answer/create.jsp
     
     return mav;
-  }*/
+  }
  
    /**
     * 등록 처리 http://localhost:9093/answer/create.do
     * 
     * @return
     */
-   /*@RequestMapping(value="/answer/create.do", method = RequestMethod.GET)
+   @RequestMapping(value="/answer/create.do", method = RequestMethod.POST)
    public ModelAndView create(HttpServletRequest request, HttpSession session, AnswerVO answerVO) {
      ModelAndView mav = new ModelAndView();
    
@@ -98,7 +98,7 @@ public class AnswerCont {
      }
         
      return mav;
-   }*/
+   }
  
    
    /**
@@ -107,7 +107,7 @@ public class AnswerCont {
     * 
     * @return
     */
-   /*@RequestMapping(value = "/answer/update_answer.do", method = RequestMethod.GET)
+   @RequestMapping(value = "/answer/update_answer.do", method = RequestMethod.GET)
    public ModelAndView update_answer(HttpSession session, int ansno) {
      ModelAndView mav = new ModelAndView();
      
@@ -123,7 +123,7 @@ public class AnswerCont {
      }
   
      return mav; // forward
-   }*/
+   }
    
    /**
     * 수정 처리
@@ -131,7 +131,7 @@ public class AnswerCont {
     * 
     * @return
     */
-   /*@RequestMapping(value = "/answer/update_answer.do", method = RequestMethod.POST)
+   @RequestMapping(value = "/answer/update_answer.do", method = RequestMethod.POST)
    public ModelAndView update_answer(HttpSession session, AnswerVO answerVO) {
      ModelAndView mav = new ModelAndView();
      
@@ -152,15 +152,15 @@ public class AnswerCont {
      //mav.addObject("now_page", answerVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★     
      
      return mav; // forward
-   }*/
+   }
    
    /**
-    * 파일 삭제 폼
+    * 삭제 폼
     * http://localhost:9093/answer/delete.do?ansno=1
     * 
     * @return
     */
-   /*@RequestMapping(value = "/question/delete.do", method = RequestMethod.GET)
+   @RequestMapping(value = "/answer/delete.do", method = RequestMethod.GET)
    public ModelAndView delete(HttpSession session, int ansno) {
      ModelAndView mav = new ModelAndView();
      
@@ -177,14 +177,14 @@ public class AnswerCont {
   
   
      return mav; // forward
-   }*/
+   }
    
    /**
     * 삭제 처리 http://localhost:9093/answer/delete.do
     * 
     * @return
     */
-   /*@RequestMapping(value = "/answer/delete.do", method = RequestMethod.POST)
+   @RequestMapping(value = "/answer/delete.do", method = RequestMethod.POST)
    public ModelAndView delete(AnswerVO answerVO) {
      ModelAndView mav = new ModelAndView();
      
@@ -200,8 +200,8 @@ public class AnswerCont {
      hashMap.put("ansno", answerVO.getAnsno());
   
      mav.addObject("ansno", answerVO.getAnsno());
-     //mav.setViewName("redirect:../question/list_by_tcateno.do");  //답변 삭제 후 해당 질문 글로 이동
+     mav.setViewName("redirect:../question/list_all.do");  //답변 삭제 후 해당 질문 글로 이동
      
      return mav;
-   }*/
+   }
 }

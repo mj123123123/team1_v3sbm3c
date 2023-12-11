@@ -21,14 +21,14 @@
     <div class='title_line'>질문 등록</div>
   
   <aside class="aside_right">
-    <a href="./create.do?tcateno=${questionVO.tcateno }">등록</a>
+    <a href="./create.do?tcateno=${tcateVO.tcateno }">등록</a>
     <span class='menu_divide' >│</span>
     <a href="javascript:location.reload();">새로고침</a>
   </aside>
   
   <div style="text-align: right; clear: both;">  
     <form name='frm' id='frm' method='get' action='./list_all.do'>
-      <input type='hidden' name='questno' value='${questionVO.questno }'>  <%-- 게시판의 구분 --%>
+      <input type='hidden' name='tcateno' value='${tcateVO.tcateno }'>  <%-- 게시판의 구분 --%>
       
       <c:choose>
         <c:when test="${param.quest != '' }"> <%-- 검색하는 경우 --%>
@@ -41,7 +41,7 @@
       <button type='submit' class='btn btn-info btn-sm'>검색</button>
       <c:if test="${param.quest.length() > 0 }">
         <button type='button' class='btn btn-info btn-sm' 
-                    onclick="location.href='./list_by_tcateno.do?tcateno=${questionVO.tcateno}&word='">검색 취소</button>  
+                    onclick="location.href='./list_by_tcateno.do?tcateno=${tcateVO.tcateno}&word='">검색 취소</button>  
       </c:if>    
     </form>
   </div>
@@ -49,7 +49,7 @@
   <div class='menu_line'></div>
   
   <form name='frm' method='post' action='./create.do' enctype="multipart/form-data">
-    <input type="hidden" name="questno" value="${param.questno }">
+    <input type="hidden" name="tcateno" value="${param.tcateno }">
     
     <div>
        <label>제목</label>

@@ -23,7 +23,7 @@
   </div>
   
   <aside class="aside_right">
-    <a href="./create.do?questno=${questionVO.questno }">등록</a>
+    <a href="./create.do?tcateno=${tcateVO.tcateno }">등록</a>
     <span class='menu_divide' >│</span>
     <a href="javascript:location.reload();">새로고침</a>
   </aside>
@@ -70,8 +70,8 @@
               (${questionVO.rdate.substring(0, 16) })
             </td>
             <td class="td_bs">
-              <a href="/festival/update_quest.do?questno=${questno }&tcateno=${tcateno}&now_page=${param.now_page}" title="수정"><img src="/question/images/update.png" class="icon"></a>
-              <a href="/festival/delete.do?questno=${questno }&tcateno=${tcateno}&now_page=${param.now_page}" title="삭제"><img src="/question/images/delete.png" class="icon"></a>
+              <a href="/question/update_quest.do?questno=${questno }&tcateno=${tcateno}&now_page=${param.now_page}" title="수정"><img src="/question/images/update.png" class="icon"></a>
+              <a href="/question/delete.do?questno=${questno }&tcateno=${tcateno}&now_page=${param.now_page}" title="삭제"><img src="/question/images/delete.png" class="icon"></a>
             </td>
           </tr>
         </c:forEach>

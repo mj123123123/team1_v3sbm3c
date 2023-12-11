@@ -11,7 +11,7 @@ package dev.mvc.answer;
 
 public class AnswerVO {
   private int ansno;
-  private int qnano;
+  private int questno;
   private String ans = "";
   private int adminno;
   private String rdate = "";
@@ -22,11 +22,11 @@ public class AnswerVO {
   public void setAnsno(int ansno) {
     this.ansno = ansno;
   }
-  public int getQnano() {
-    return qnano;
+  public int getQuestno() {
+    return questno;
   }
-  public void setQnano(int qnano) {
-    this.qnano = qnano;
+  public void setQuestno(int questno) {
+    this.questno = questno;
   }
   public String getAns() {
     return ans;
@@ -49,7 +49,7 @@ public class AnswerVO {
   
   @Override
   public String toString() {
-    return "AnswerVO [ansno=" + ansno + ", qnano=" + qnano + ", ans=" + ans + ", adminno=" + adminno + ", rdate="
+    return "AnswerVO [ansno=" + ansno + ", questno=" + questno + ", ans=" + ans + ", adminno=" + adminno + ", rdate="
         + rdate + "]";
   }
 }
