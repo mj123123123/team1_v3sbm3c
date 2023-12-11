@@ -105,7 +105,6 @@ public class FrecommendCont {
 
 		if (this.memberProc.isMember(session) == true) {
 			mav.setViewName("/frecommend/list_all"); // /WEB-INF/views/frecommend/list_all.jsp
-			System.out.println("-> customer");
 			ArrayList<FrecommendVO> list = this.frecommendProc.list_all();
 
 			mav.addObject("list", list);
