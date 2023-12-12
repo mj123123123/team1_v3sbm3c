@@ -37,6 +37,12 @@
 		<A href="./list_by_fcateno.do?fcateno=${fcateVO.fcateno }" class='title_link'>${fcateVO.name }</A>
 	</DIV>
 
+	<aside class="aside_left">
+		<button type="submit" class="btn btn-success btn-sm"
+			onclick="location.href='../freview/list_by_contentsno.do?contentsno=${param.contentsno}'"
+			style="font-weight: bold; text-align: left;">📰 후기 보러가기</button>
+	</aside>
+
 	<aside class="aside_right">
 		<%-- 관리자로 로그인해야 메뉴가 출력됨 --%>
 		<c:if test="${sessionScope.admin_id != null }">
@@ -59,10 +65,11 @@
 			<span class='menu_divide'>│</span>
 		</c:if>
 
-		<a href="javascript:location.reload();">새로고침</a> <span class='menu_divide'>│</span> <a
-			href="./list_by_fcateno.do?fcateno=${fcateno }&now_page=${param.now_page}&word=${param.word }">목록형</a> <span
-			class='menu_divide'>│</span> <a
-			href="./list_by_fcateno_grid.do?fcateno=${fcateno }&now_page=${param.now_page}&word=${param.word }">갤러리형</a>
+		<a href="javascript:location.reload();">새로고침</a>
+		<span class='menu_divide'>│</span>
+		<a href="./list_by_fcateno.do?fcateno=${fcateno }&now_page=${param.now_page}&word=${param.word }">목록형</a>
+		<span class='menu_divide'>│</span>
+		<a href="./list_by_fcateno_grid.do?fcateno=${fcateno }&now_page=${param.now_page}&word=${param.word }">갤러리형</a>
 	</aside>
 
 	<div style="text-align: right; clear: both;">
@@ -80,12 +87,10 @@
 					<input type='text' name='word' id='word' value=''>
 				</c:otherwise>
 			</c:choose>
-			<button type='submit' class='btn btn-dark btn-sm'
-				style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색</button>
+			<button type='submit' class='btn btn-dark btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색</button>
 			<c:if test="${param.word.length() > 0 }">
 				<%-- 검색 상태하면 '검색 취소' 버튼을 출력 --%>
-				<button type='button' class='btn btn-dark btn-sm'
-					style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;"
+				<button type='button' class='btn btn-dark btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;"
 					onclick="location.href='./list_by_fcateno.do?fcateno=${param.fcateno}&word='">검색 취소</button>
 			</c:if>
 		</form>
@@ -100,18 +105,17 @@
 					<c:choose>
 						<c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
 							<%-- /static/festival/storage/ --%>
-							<img src="/festival/storage/${file1saved }"
-								style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
+							<img src="/festival/storage/${file1saved }" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
 						</c:when>
 						<c:otherwise>
 							<!-- 기본 이미지 출력 -->
-							<img src="/festival/images/none1.png"
-								style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
+							<img src="/festival/images/none1.png" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
 						</c:otherwise>
 					</c:choose>
 
 
-					<span style="font-size: 1.5em; font-weight: bold;">${title}</span> <span style="font-size: 1em;">${rdate}</span>
+					<span style="font-size: 1.5em; font-weight: bold;">${title}</span>
+					<span style="font-size: 1em;">${rdate}</span>
 					<br> ${content}
 
 				</DIV>
@@ -143,8 +147,9 @@
 				<div>
 					<c:if test="${file1.trim().length() > 0 }">
             첨부 파일: <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label}) 
-            <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'><img
-							src="/festival/images/download.png" class="icon"></a>
+            <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'>
+							<img src="/festival/images/download.png" class="icon">
+						</a>
 					</c:if>
 				</div>
 			</li>

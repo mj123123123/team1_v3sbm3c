@@ -24,6 +24,12 @@
     </c:if>
 	</div>
 
+	<aside class="aside_left">
+		<button type="submit" class="btn btn-success btn-sm"
+			onclick="location.href='../freview/list_all.do'"
+			style="font-weight: bold; text-align: left;">📰 모든 후기 보러가기</button>
+	</aside>
+
 	<aside class="aside_right">
 		<%-- 관리자로 로그인해야 메뉴가 출력됨 --%>
 		<c:if test="${sessionScope.admin_id != null }">
@@ -54,12 +60,10 @@
 					<input type='text' name='word' id='word' value=''>
 				</c:otherwise>
 			</c:choose>
-			<button type='submit' class='btn btn-dark btn-sm'
-				style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색</button>
+			<button type='submit' class='btn btn-dark btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;">검색</button>
 			<c:if test="${param.word.length() > 0 }">
 				<%-- 검색 상태하면 '검색 취소' 버튼을 출력 --%>
-				<button type='button' class='btn btn-dark btn-sm'
-					style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;"
+				<button type='button' class='btn btn-dark btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;"
 					onclick="location.href='./list_by_fcateno.do?fcateno=${param.fcateno}&word='">검색 취소</button>
 			</c:if>
 		</form>
@@ -115,16 +119,14 @@
 						(${festivalVO.rdate.substring(0, 16) })
 					</td>
 					<td class="td_bs">
-						<a href="/festival/map.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}"
-							title="지도 설정">
+						<a href="/festival/map.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}" title="지도 설정">
 							<img src="/festival/images/map.png" class="icon">
 						</a>
 						<a href="/festival/youtube.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}"
 							title="Youtube 설정">
 							<img src="/festival/images/youtube.png" class="icon">
 						</a>
-						<a href="/festival/delete.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}"
-							title="삭제">
+						<a href="/festival/delete.do?fcateno=${fcateno }&contentsno=${contentsno}&now_page=${param.now_page}" title="삭제">
 							<img src="/festival/images/delete.png" class="icon">
 						</a>
 					</td>

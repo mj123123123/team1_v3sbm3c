@@ -58,13 +58,13 @@
   <div class="menu_line"></div> 
   
   <div style='width: 100%;'> <%-- 갤러리 Layout 시작 --%>
-    <c:forEach var="contentsVO" items="${list }" varStatus="status">
-      <c:set var="title" value="${contentsVO.title }" />
-      <c:set var="content" value="${contentsVO.content }" />
-      <c:set var="fcateno" value="${contentsVO.fcateno }" />
-      <c:set var="contentsno" value="${contentsVO.contentsno }" />
-      <c:set var="thumb1" value="${contentsVO.thumb1 }" />
-      <c:set var="size1" value="${contentsVO.size1 }" />
+    <c:forEach var="festivalVO" items="${list }" varStatus="status">
+      <c:set var="title" value="${festivalVO.title }" />
+      <c:set var="content" value="${festivalVO.content }" />
+      <c:set var="fcateno" value="${festivalVO.fcateno }" />
+      <c:set var="contentsno" value="${festivalVO.contentsno }" />
+      <c:set var="thumb1" value="${festivalVO.thumb1 }" />
+      <c:set var="size1" value="${festivalVO.size1 }" />
         
       <!-- 4기준 하나의 이미지, 24 * 4 = 96% -->
       <!-- 5기준 하나의 이미지, 19.2 * 5 = 96% -->
