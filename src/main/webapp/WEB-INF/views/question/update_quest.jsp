@@ -33,19 +33,20 @@
   </aside>
   <div class='menu_line'></div>
   
-  <form name='frm' method='post' action='./update_text.do'>
-    <input type="hidden" name="tcateno" value="${tcateno }">
+  <form name='frm' method='post' action='./update_quest.do'>
+    <!-- <input type="hidden" name="tcateno" value="${tcateno }"> 
+        <input type="hidden" name="now_page" value="${param.now_page }">-->
     <input type="hidden" name="questno" value="${questno }">
-    <input type="hidden" name="now_page" value="${param.now_page }">
+
     
     <div>
        <label>제목</label>
-       <input type='text' name='title' value='' required="required" 
+       <input type='text' name='title' value='${title }' required="required" 
                  autofocus="autofocus" class="form-control" style='width: 100%;'>
     </div>
     <div>
        <label>내용</label>
-       <textarea name='content' required="required" class="form-control" rows="12" style='width: 100%;'></textarea>
+       <textarea name='quest' required="required" class="form-control" rows="12" style='width: 100%;'>${quest }</textarea>
     </div>    
 
     <div class="content_body_bottom">

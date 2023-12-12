@@ -167,6 +167,12 @@ public class QuestionProc implements QuestionProcInter {
     int cnt = this.questionDAO.delete(questno);
     return cnt;
   }
+  
+  @Override
+  public int delete_by_tcateno(int tcateno) {
+    int cnt = this.questionDAO.delete_by_tcateno(tcateno);
+    return cnt;
+  }
 
   @Override
   public int update_quest(QuestionVO questionVO) {
