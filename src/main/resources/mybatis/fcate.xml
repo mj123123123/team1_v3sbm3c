@@ -21,6 +21,10 @@
 	<select id="list_all" resultType="dev.mvc.fcate.FcateVO">
 		SELECT fcateno, name, cnt, rdate, seqno, visible FROM fcate ORDER BY seqno ASC
 	</select>
+	
+	<!-- 전체 목록, SQL -> fcateVO -> ArrayList<fcateVO> return -->
+	<select id="list_all_member" resultType="dev.mvc.fcate.FcateVO"> SELECT fcateno, 
+		name, cnt, rdate FROM fcate ORDER BY fcateno ASC </select>
 
 	<!-- 비회원/회원 SELECT LIST -->
 	<select id="list_all_y" resultType="dev.mvc.fcate.FcateVO">
