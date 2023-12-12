@@ -46,12 +46,12 @@
 			<ul class="navbar-nav mr-auto">
 				<%-- 게시판 목록 출력 --%>
 				<%-- <c:forEach var="fcateVO" items="${list_top}"> --%>
-					<c:set var="fcateno" value="${fcateVO.fcateno }" />
-					<c:set var="name" value="${fcateVO.name }" />
-					<li class="nav-item">
-						<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link"
-							href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
-					</li>
+				<c:set var="fcateno" value="${fcateVO.fcateno }" />
+				<c:set var="name" value="${fcateVO.name }" />
+				<li class="nav-item">
+					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link"
+						href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
+				</li>
 				<%-- </c:forEach> --%>
 
 				<li class="nav-item dropdown">
@@ -60,14 +60,15 @@
 						<c:choose>
 							<c:when test="${sessionScope.id == null }">
 								<a class="dropdown-item" href='/fcate/list_all_member.do' style="font-weight: bold;">[축제/행사] 카테고리</a>
-								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }" style="font-weight: bold;">
-									관심분야 등록하고 [페스티벌] 추천받기</a>
+								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }"
+									style="font-weight: bold;"> 관심분야 등록하고 [페스티벌] 추천받기</a>
 								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기)</a>
 							</c:when>
 							<c:otherwise>
-								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }">관심분야
-									등록하고 추천받기</a>
-								<a class="dropdown-item" href="../freview/list_all.do">리뷰(후기)</a>
+								<a class="dropdown-item" href='/fcate/list_all_member.do' style="font-weight: bold;">[축제/행사] 카테고리</a>
+								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }"
+									style="font-weight: bold;"> 관심분야 등록하고 [페스티벌] 추천받기</a>
+								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기)</a>
 							</c:otherwise>
 						</c:choose>
 					</div>
