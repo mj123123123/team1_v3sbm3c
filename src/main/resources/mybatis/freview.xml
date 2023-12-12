@@ -5,23 +5,24 @@
 	<!-- 등록한 레코드 갯수 1 리턴, #{reviewno}: public int getReviewno() 호출됨 -->
 	<insert id="create" parameterType="dev.mvc.freview.FreviewVO">
 		INSERT INTO freview(reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1)
+		file1, file1saved, thumb1, size1)
 		VALUES(review_seq.nextval, #{contentsno}, #{memberno}, #{nickname}, #{title}, #{content}, #{pwd},
-					sysdate, #{cnt}, #{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1})
+		sysdate, #{cnt}, #{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1})
 	</insert>
 
 	<!-- 모든 컨텐츠의 등록된 리뷰 목록 -->
 	<select id="list_all" resultType="dev.mvc.freview.FreviewVO">
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1
+		file1, file1saved, thumb1, size1
 		FROM freview
 		ORDER BY reviewno DESC
 	</select>
 
 	<!-- 특정 컨텐츠의 등록된 리뷰 목록 -->
 	<select id="list_by_contentsno" resultType="dev.mvc.freview.FreviewVO" parameterType="int">
-		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1
+		SELECT reviewno, contentsno, memberno, nickname, title,
+		content, pwd, rdate, cnt, word,
+		file1, file1saved, thumb1, size1
 		FROM freview
 		WHERE contentsno = #{contentsno}
 		ORDER BY reviewno DESC
@@ -29,8 +30,9 @@
 
 	<!-- 일반적인 조회 -->
 	<select id="read" resultType="dev.mvc.freview.FreviewVO" parameterType="int">
-		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1, map
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd,
+		rdate, cnt, word,
+		file1, file1saved, thumb1, size1, map
 		FROM freview
 		WHERE reviewno = #{reviewno}
 	</select>
@@ -43,7 +45,7 @@
 	<!-- 컨텐츠별 검색 목록 -->
 	<select id="list_by_contentsno_search" resultType="dev.mvc.freview.FreviewVO" parameterType="HashMap">
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1, map
+		file1, file1saved, thumb1, size1, map
 		FROM freview
 		<choose>
 			<when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
@@ -52,7 +54,8 @@
 			<otherwise> <!-- 검색하는 경우 -->
 				WHERE contentsno=#{contentsno} AND (UPPER(title) LIKE '%' || UPPER(#{word}) || '%'
 				OR UPPER(content) LIKE '%' || UPPER(#{word}) || '%'
-				OR UPPER(word) LIKE '%' || UPPER(#{word}) || '%')
+				OR
+				UPPER(word) LIKE '%' || UPPER(#{word}) || '%')
 			</otherwise>
 		</choose>
 		ORDER BY reviewno DESC
@@ -69,7 +72,8 @@
 			<otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
 				WHERE contentsno=#{contentsno} AND (UPPER(title) LIKE '%' || UPPER(#{word}) || '%'
 				OR UPPER(content) LIKE '%' || UPPER(#{word}) || '%'
-				OR UPPER(word) LIKE '%' || UPPER(#{word}) || '%')
+				OR
+				UPPER(word) LIKE '%' || UPPER(#{word}) || '%')
 			</otherwise>
 		</choose>
 	</select>
@@ -77,22 +81,23 @@
 	<!-- 카테고리별 검색 + 페이징 목록 -->
 	<select id="list_by_contentsno_search_paging" resultType="dev.mvc.freview.FreviewVO" parameterType="dev.mvc.freview.FreviewVO">
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1, map r
+		file1, file1saved, thumb1, size1, map r
 		FROM (
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1, map, rownum as r
+		file1, file1saved, thumb1, size1, map, rownum as r
 		FROM (
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-								file1, file1saved, thumb1, size1, map
+		file1, file1saved, thumb1, size1, map
 		FROM freview
-		<choose>                                       
+		<choose>
 			<when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
 				WHERE contentsno=#{contentsno}
 			</when>
 			<otherwise>
 				WHERE contentsno=#{contentsno} AND (UPPER(title) LIKE '%' || UPPER(#{word}) || '%'
 				OR UPPER(content) LIKE '%' || UPPER(#{word}) || '%'
-				OR UPPER(word) LIKE '%' || UPPER(#{word}) || '%')
+				OR
+				UPPER(word) LIKE '%' || UPPER(#{word}) || '%')
 			</otherwise>
 		</choose>
 		ORDER BY reviewno DESC
@@ -102,6 +107,26 @@
 
 		<!-- 1 page: WHERE r >= 1 AND r <= 10; 2 page: WHERE r >= 11 AND r <= 20; 3 page: WHERE r >= 21 AND r <= 30; -->
 	</select>
+
+	<!-- 글 수정 -->
+	<update id="update_text" parameterType="dev.mvc.freview.FreviewVO">
+		UPDATE freview
+		SET title=#{title}, content=#{content}, word=#{word}
+		WHERE reviewno = #{reviewno}
+	</update>
+
+
+	<!-- 파일 수정 -->
+	<update id="update_file" parameterType="dev.mvc.freview.FreviewVO">
+		UPDATE freview
+		SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
+		WHERE reviewno = #{reviewno}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM freview
+		WHERE reviewno=#{reviewno}
+	</delete>
 
 
 </mapper>
