@@ -37,7 +37,6 @@
 		<span class='menu_divide'>│</span>
 		<a
 			href="./list_by_fcateno_grid.do?fcateno=${param.fcateno }&now_page=${param.now_page == null ? 1 : param.now_page }&word=${param.word }">갤러리형</a>
-		<span class='menu_divide'>│</span>
 	</aside>
 
 	<div style="text-align: right; clear: both;">
