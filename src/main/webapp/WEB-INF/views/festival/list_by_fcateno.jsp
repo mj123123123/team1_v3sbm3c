@@ -25,9 +25,8 @@
 	</div>
 
 	<aside class="aside_left">
-		<button type="submit" class="btn btn-success btn-sm"
-			onclick="location.href='../freview/list_all.do'"
-			style="font-weight: bold; text-align: left;">📰 모든 후기 보러가기</button>
+		<button type="submit" class="btn btn-success btn-sm" onclick="location.href='../freview/list_all.do'"
+			style="font-weight: bold; text-align: left;">📰 모든 리뷰 보러가기</button>
 	</aside>
 
 	<aside class="aside_right">

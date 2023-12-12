@@ -40,7 +40,7 @@
 	<aside class="aside_left">
 		<button type="submit" class="btn btn-success btn-sm"
 			onclick="location.href='../freview/list_by_contentsno.do?contentsno=${param.contentsno}'"
-			style="font-weight: bold; text-align: left;">📰 후기 보러가기</button>
+			style="font-weight: bold; text-align: left;">📰 리뷰 보러가기</button>
 	</aside>
 
 	<aside class="aside_right">
