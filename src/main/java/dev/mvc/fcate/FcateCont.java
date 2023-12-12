@@ -96,6 +96,23 @@ public class FcateCont {
 	}
 
 	/**
+	 * 전체 목록 http://localhost:9093/fcate/list_all_member.do
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/fcate/list_all_member.do", method = RequestMethod.GET)
+	public ModelAndView list_all_member() {
+		ModelAndView mav = new ModelAndView();
+
+			mav.setViewName("/fcate/list_all_member"); // /WEB-INF/views/fcate/list_all_member.jsp
+
+			ArrayList<FcateVO> list = this.fcateProc.list_all_member();
+			mav.addObject("list", list);
+
+		return mav;
+	}
+	
+	/**
 	 * 조회 http://localhost:9093/fcate/read.do?fcateno=1
 	 * 
 	 * @return

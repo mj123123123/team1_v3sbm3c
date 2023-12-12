@@ -26,6 +26,13 @@ public class FcateProc implements FcateProcInter {
 	}
 
 	@Override
+	public ArrayList<FcateVO> list_all_member() {
+		ArrayList<FcateVO> list = this.fcateDAO.list_all();
+
+		return list;
+	}
+	
+	@Override
 	public FcateVO read(int fcateno) {
 		FcateVO fcateVO = this.fcateDAO.read(fcateno);
 

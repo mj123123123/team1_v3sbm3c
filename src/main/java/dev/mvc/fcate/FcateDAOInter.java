@@ -18,6 +18,13 @@ public interface FcateDAOInter {
 	 * @return
 	 */
 	public ArrayList<FcateVO> list_all();
+	
+	/**
+	 * 전체 목록
+	 * 
+	 * @return
+	 */
+	public ArrayList<FcateVO> list_all_member();
 
 	/**
 	 * 조회
