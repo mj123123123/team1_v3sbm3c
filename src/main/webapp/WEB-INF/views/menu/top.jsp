@@ -41,20 +41,40 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
+
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<%-- 게시판 목록 출력 --%>
-				<c:forEach var="fcateVO" items="${list_top}">
+				<%-- <c:forEach var="fcateVO" items="${list_top}"> --%>
 					<c:set var="fcateno" value="${fcateVO.fcateno }" />
 					<c:set var="name" value="${fcateVO.name }" />
 					<li class="nav-item">
 						<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link"
 							href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
 					</li>
-				</c:forEach>
+				<%-- </c:forEach> --%>
+
+				<li class="nav-item dropdown">
+					<%-- 축제/행사 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">페스티벌/행사</a>
+					<div class="dropdown-menu">
+						<c:choose>
+							<c:when test="${sessionScope.id == null }">
+								<a class="dropdown-item" href='/fcate/list_all_member.do' style="font-weight: bold;">[축제/행사] 카테고리</a>
+								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }" style="font-weight: bold;">
+									관심분야 등록하고 [페스티벌] 추천받기</a>
+								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기)</a>
+							</c:when>
+							<c:otherwise>
+								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }">관심분야
+									등록하고 추천받기</a>
+								<a class="dropdown-item" href="../freview/list_all.do">리뷰(후기)</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</li>
 
 				<li class="nav-item">
-					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/festival/list_all.do">축제/행사 전체 글 목록</a>
+					<%-- 서브 메뉴가 없는 독립메뉴 --%>
 				</li>
 				<li class="nav-item dropdown">
 					<%-- 회원 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">회원</a>
@@ -66,9 +86,8 @@
 								<a class="dropdown-item" href="#">비밀번호 찾기</a>
 							</c:when>
 							<c:otherwise>
-								<a class="dropdown-item"
-									href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }">관심분야 등록하고
-									추천받기</a>
+								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }">관심분야
+									등록하고 추천받기</a>
 								<a class="dropdown-item" href="/member/read.do">가입 정보</a>
 								<a class="dropdown-item" href="/member/passwd_update.do">비밀번호 변경</a>
 								<a class="dropdown-item" href="/member/read.do">회원 정보 수정</a>
@@ -85,10 +104,10 @@
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item dropdown">
-							<%-- 관리자 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown"
-								href="#">관리자</a>
+							<%-- 관리자 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">관리자</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href='/fcate/list_all.do'>축제/행사 카테고리 전체 목록</a>
+								<a class="dropdown-item" href='/fcate/list_all.do' style="font-weight: bold;">[축제/행사] 카테고리 (전체)</a>
+								<a class="dropdown-item" href="/festival/list_all.do" style="font-weight: bold;">[축제/행사] 컨텐츠 (전체)</a>
 								<a class="dropdown-item" href='/member/list.do'>회원 목록</a>
 								<a class="dropdown-item" href='/admin/logout.do'>관리자 ${sessionScope.admin_id } 로그아웃</a>
 							</div>
@@ -110,10 +129,10 @@
 				<li class="nav-item">
 					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/question/list_all.do">질문 목록</a>
 				</li>
-        
-        <li class="nav-item">
-          <%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/chatbot/chat.do">챗봇</a>
-        </li>
+
+				<li class="nav-item">
+					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link" href="/chatbot/chat.do">챗봇</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
