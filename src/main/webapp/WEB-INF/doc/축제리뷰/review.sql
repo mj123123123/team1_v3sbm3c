@@ -1,21 +1,27 @@
 /**********************************/
 /* Table Name: 축제/행사 리뷰 */
 /**********************************/
+DROP TABLE FREVIEW;
+
 CREATE TABLE FREVIEW(
 		reviewno NUMBER(10) NOT NULL PRIMARY KEY,
+        fcateno NUMBER(10),
 		contentsno NUMBER(10),
 		MEMBERNO NUMERIC(10),
 		title VARCHAR2(100) NOT NULL,
 		content CLOB NOT NULL,
         pwd VARCHAR2(10),
 		rdate DATE NOT NULL,
+        cnt NUMERIC(10),
+        word VARCHAR2(100),
 		file1 VARCHAR2(200),
         file1saved VARCHAR2(400),
 		thumb1 VARCHAR2(200),
 		size1 NUMBER(10),
 		map VARCHAR2(2000),
-  FOREIGN KEY (contentsno) REFERENCES FESTIVAL (contentsno),
-  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
+    FOREIGN KEY (fcateno) REFERENCES FCATE (fcateno),
+    FOREIGN KEY (contentsno) REFERENCES FESTIVAL (contentsno),
+    FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
 );
 
 DROP SEQUENCE review_seq;
@@ -28,17 +34,19 @@ CREATE SEQUENCE review_seq
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
   
   
-INSERT INTO FREVIEW (reviewno, contentsno, MEMBERNO, title, content, pwd, rdate, file1, file1saved, thumb1, size1, map) 
-VALUES (review_seq.nextval, 1, 3, '빛 축제', '처음 가봤는데 너무 이쁘고 좋았어요', '1234', sysdate, 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000, 'sample_map_url');
+INSERT INTO FREVIEW (reviewno, fcateno, contentsno, MEMBERNO, title, content, pwd, rdate, cnt, word, file1, file1saved, thumb1, size1, map) 
+VALUES (review_seq.nextval, 9, 1, 3, '빛 축제', '처음 가봤는데 너무 이쁘고 좋았어요', '1234', sysdate, 0, '서울, 청계천', 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000, 'sample_map_url');
 
-INSERT INTO FREVIEW (reviewno, contentsno, MEMBERNO, title, content, pwd, rdate, file1, file1saved, thumb1, size1, map) 
-VALUES (review_seq.nextval, 1, 3, '청계천 빛 축제', '가족들과 함께 갔는데,,,', '1234', sysdate, 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000, 'sample_map_url');
+INSERT INTO FREVIEW (reviewno, fcateno, contentsno, MEMBERNO, title, content, pwd, rdate,  cnt, word, file1, file1saved, thumb1, size1, map) 
+VALUES (review_seq.nextval, 9, 1, 3, '청계천 빛 축제', '가족들과 함께 갔는데,,,', '1234', sysdate, 0, '서울, 빛','space.jpg', 'space_1.jpg', 'space_t.jpg', 1000, 'sample_map_url');
 
-SELECT reviewno, contentsno, MEMBERNO, title, content, pwd, rdate, file1, file1saved, thumb1, size1, map 
+SELECT reviewno, fcateno, contentsno, MEMBERNO, title, content, pwd, rdate, cnt, word, file1, file1saved, thumb1, size1, map 
 FROM FREVIEW
 WHERE contentsno = 1;
 
 commit;
+  
+  
   
   
   
