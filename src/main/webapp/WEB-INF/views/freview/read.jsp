@@ -33,20 +33,35 @@
 
 <body>
 	<c:import url="/menu/top.do" />
-	<DIV class='title_line'>
-		<A href="./list_by_contentsno.do?contentsno=${festivalVO.contentsno }" class='title_link'> ${festivalVO.title }</A>
-	</DIV>
+	<div class='title_line'> ${festivalVO.title } > 리뷰</div>
 
 	<aside class="aside_right">
-		<%-- 회원으로 로그인해야 메뉴가 출력됨 --%> 
-		<c:if test="${sessionScope.member_id != null }">
-			<%--
-      http://localhost:9093/festival/create.do?contentsno=1
-      http://localhost:9093/festival/create.do?contentsno=2
-      http://localhost:9093/festival/create.do?contentsno=3
-      --%>
-			<a href="./create.do?contentsno=${contentsno }">등록</a>
-			<span class='menu_divide'>│</span>
+		<%-- 회원으로 로그인해야 메뉴가 출력됨 --%>
+		<c:if test="${sessionScope.id != null }">
+			<c:if test="${freviewVO.memberno eq sessionScope.memberno}">
+				<a href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}&word=${param.word }">글 수정</a>
+				<span class='menu_divide'>│</span>
+				<a href="./update_file.do?reviewno=${reviewno}&now_page=${param.now_page}">파일 수정</a>
+				<span class='menu_divide'>│</span>
+				<a href="./map.do?contentsno=${contentsno }&reviewno=${reviewno}">지도</a>
+				<span class='menu_divide'>│</span>
+				<a href="./delete.do?reviewno=${reviewno}&now_page=${param.now_page}&contentsno=${contentsno}">삭제</a>
+				<span class='menu_divide'>│</span>
+			</c:if>
+		</c:if>
+		<a href="./create.do?contentsno=${contentsno }">📝 리뷰 등록</a>
+		<span class='menu_divide'>│</span>
+		<a href="javascript:location.reload();">새로고침</a>
+	</aside>
+
+
+	<%-- <aside class="aside_right">
+		회원으로 로그인해야 메뉴가 출력됨
+		<c:if test="${sessionScope.id != null }">
+			http://localhost:9093/freview/create.do?reviewno=1
+      		http://localhost:9093/freview/create.do?reviewno=2
+      		http://localhost:9093/freview/create.do?reviewno=3
+
 			<a href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}&word=${param.word }">글 수정</a>
 			<span class='menu_divide'>│</span>
 			<a href="./update_file.do?reviewno=${reviewno}&now_page=${param.now_page}">파일 수정</a>
@@ -56,17 +71,14 @@
 			<a href="./delete.do?reviewno=${reviewno}&now_page=${param.now_page}&contentsno=${contentsno}">삭제</a>
 			<span class='menu_divide'>│</span>
 		</c:if>
-
+		<a href="./create.do?contentsno=${contentsno }">📝 리뷰 등록</a>
+		<span class='menu_divide'>│</span>
 		<a href="javascript:location.reload();">새로고침</a>
-		<span class='menu_divide'>│</span>
-		<a href="./list_by_fcateno.do?fcateno=${fcateno }&now_page=${param.now_page}&word=${param.word }">목록형</a>
-		<span class='menu_divide'>│</span>
-		<a href="./list_by_fcateno_grid.do?fcateno=${fcateno }&now_page=${param.now_page}&word=${param.word }">갤러리형</a>
-	</aside>
+	</aside> --%>
 
 	<div style="text-align: right; clear: both;">
-		<form name='frm' id='frm' method='get' action='./list_by_fcateno.do'>
-			<input type='hidden' name='fcateno' value='${param.fcateno }'>
+		<form name='frm' id='frm' method='get' action='./list_by_contentsno.do'>
+			<input type='hidden' name='contentsno' value='${param.contentsno }'>
 			<%-- 게시판의 구분 --%>
 
 			<c:choose>
@@ -83,64 +95,62 @@
 			<c:if test="${param.word.length() > 0 }">
 				<%-- 검색 상태하면 '검색 취소' 버튼을 출력 --%>
 				<button type='button' class='btn btn-dark btn-sm' style="padding: 2px 8px 3px 8px; margin: 0px 0px 2px 0px;"
-					onclick="location.href='./list_by_fcateno.do?fcateno=${param.fcateno}&word='">검색 취소</button>
+					onclick="location.href='./list_by_contentsno.do?contentsno=${param.contentsno}&word='">검색 취소</button>
 			</c:if>
 		</form>
 	</div>
 
-	<DIV class='menu_line'></DIV>
+	<div class='menu_line'></div>
 
 	<fieldset class="fieldset_basic">
 		<ul>
 			<li class="li_none">
-				<DIV style="width: 100%; word-break: break-all;">
+				<div style="width: 100%; word-break: break-all;">
 					<c:choose>
 						<c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
 							<%-- /static/festival/storage/ --%>
-							<img src="/festival/storage/${file1saved }" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
+							<img src="/freview/storage/${file1saved }" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
 						</c:when>
 						<c:otherwise>
 							<!-- 기본 이미지 출력 -->
-							<img src="/festival/images/none1.png" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
+							<img src="/freview/images/none1.png" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'>
 						</c:otherwise>
 					</c:choose>
 
 
 					<span style="font-size: 1.5em; font-weight: bold;">${title}</span>
 					<br>
-					<span style="font-size: 0.9em; font-weight: bold;">
-						작성자: ${nickname}
-					</span>
+					<span style="font-size: 0.9em; font-weight: bold;"> 작성자: ${nickname} </span>
 					<br> <br>${content}
-				</DIV>
+				</div>
 			</li>
 
 			<c:if test="${map.trim().length() > 0 }">
 				<li class="li_none" style="clear: both; padding-top: 5px; padding-bottom: 5px;">
-					<DIV style='text-align: center; width: 640px; height: 360px; margin: 0px auto;'>${map }</DIV>
+					<div style='text-align: center; width: 640px; height: 360px; margin: 0px auto;'>${map }</div>
 				</li>
 			</c:if>
 
 			<br>
 
 			<li class="li_none" style="clear: both;">
-				<DIV style='text-decoration: none;'>
+				<div style='text-decoration: none;'>
 					<span style="font-size: 1em;">
 						<br> <br>등록일: ${rdate}
 					</span>
-				</DIV>
+				</div>
 			</li>
 
 			<li class="li_none" style="clear: both;">
-				<DIV style='text-decoration: none;'>검색어(키워드): ${word }</DIV>
+				<div style='text-decoration: none;'>검색어(키워드): ${word }</div>
 			</li>
 
 			<li class="li_none">
 				<div>
 					<c:if test="${file1.trim().length() > 0 }">
-            첨부 파일: <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label}) 
-            <a href='/download?dir=/festival/storage&filename=${file1saved}&downname=${file1}'>
-							<img src="/festival/images/download.png" class="icon">
+            첨부 파일: <a href='/download?dir=/freview/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label}) 
+            <a href='/download?dir=/freview/storage&filename=${file1saved}&downname=${file1}'>
+							<img src="/freview/images/download.png" class="icon">
 						</a>
 					</c:if>
 				</div>
@@ -148,7 +158,7 @@
 		</ul>
 	</fieldset>
 
-	</DIV>
+	</div>
 
 	<jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

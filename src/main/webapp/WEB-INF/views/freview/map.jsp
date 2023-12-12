@@ -21,12 +21,13 @@
 	<c:import url="/menu/top.do" />
 
 	<div class='title_line'>
-		<a href="/festival/list_by_contentsno.do?fcateno=${festivalVO.contentsno }" class="title_link">${festivalVO.title }</a> >
-		${contentsVO.title } > 지도 등록/수정/삭제
+		<a href="/festival/list_by_contentsno.do?fcateno=${festivalVO.contentsno }" class="title_link">${festivalVO.title }</a>
+		> ${contentsVO.title } > 지도 등록/수정/삭제
 	</div>
 
 	<aside class="aside_right">
-		<a href="javascript:location.reload();">새로고침</a> 
+		<a href="javascript:location.reload();">새로고침</a>
+	</aside>
 
 	<div style="text-align: right; clear: both;">
 		<form name='frm' id='frm' method='get' action='./list_by_contentsno.do'>
@@ -62,8 +63,7 @@
 		</div>
 		<div class="content_body_bottom">
 			<button type="submit" class="btn btn-dark btn-sm">저장</button>
-			<button type="button" onclick="frm_map.map.value=''; frm_map.submit();" class="btn btn-dark btn-sm">지도
-				삭제</button>
+			<button type="button" onclick="frm_map.map.value=''; frm_map.submit();" class="btn btn-dark btn-sm">지도 삭제</button>
 			<button type="button" onclick="history.back();" class="btn btn-dark btn-sm">취소</button>
 		</div>
 
@@ -72,11 +72,16 @@
 	<hr>
 	<div style="text-align: center;">
 		<H4>[참고] 다음 지도의 등록 방법</H4>
-		<img src='/festival/images/map01.jpg' style='width: 60%;'><br>
-		<br> <img src='/festival/images/map02.jpg' style='width: 60%;'><br>
-		<br> <img src='/festival/images/map03.jpg' style='width: 60%;'><br>
-		<br> <img src='/festival/images/map04.jpg' style='width: 60%;'><br>
-		<br> <img src='/festival/images/map05.jpg' style='width: 60%;'><br>
+		<img src='/festival/images/map01.jpg' style='width: 60%;'>
+		<br> <br>
+		<img src='/festival/images/map02.jpg' style='width: 60%;'>
+		<br> <br>
+		<img src='/festival/images/map03.jpg' style='width: 60%;'>
+		<br> <br>
+		<img src='/festival/images/map04.jpg' style='width: 60%;'>
+		<br> <br>
+		<img src='/festival/images/map05.jpg' style='width: 60%;'>
+		<br>
 	</div>
 
 	<jsp:include page="../menu/bottom.jsp" />

@@ -113,10 +113,7 @@
 				</tr>
 			</c:forEach>
 		</tbody>
-
-		<!-- 페이지 목록 출력 부분 시작 -->
-		<DIV class='bottom_menu'>
-
-			<!-- 페이지 목록 출력 부분 종료 -->
+	</table>
+	<jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
 </html>
