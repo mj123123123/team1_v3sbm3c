@@ -23,15 +23,16 @@
 	<div class='title_line'>카테고리</div>
 
 	<aside class="aside_right">
-		<a href="./create.do?fcateno=${fcateVO.fcateno }">등록</a> <span class='menu_divide'>│</span> <a
-			href="javascript:location.reload();">새로고침</a>
+		<a href="./create.do?fcateno=${fcateVO.fcateno }">등록</a>
+		<span class='menu_divide'>│</span>
+		<a href="javascript:location.reload();">새로고침</a>
 	</aside>
 	<div class="menu_line"></div>
 
 	<form name='frm' method='post' action='/fcate/create.do'>
 		<div style="text-align: center;">
-			<label>카테고리 이름</label> <input type="text" name="name" value="" required="required" autofocus="autofocus"
-				class="" style="width: 50%">
+			<label>카테고리 이름</label> <input type="text" name="name" value="" required="required" autofocus="autofocus" class=""
+				style="width: 50%">
 			<button type="submit" class="btn btn-dark btn-sm" style="height: 28px; margin-bottom: 5px;">등록</button>
 			<button type="button" onclick="location.href='./list_all.do'" class="btn btn-dark btn-sm"
 				style="height: 28px; margin-bottom: 5px;">목록</button>
