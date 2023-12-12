@@ -1,13 +1,12 @@
-package dev.mvc.freiview;
+package dev.mvc.freview;
 
-public class FreivewVO {
+public class FreviewVO {
 	/*
 	 * reviewno NUMBER(10) NOT NULL PRIMARY KEY,
 		contentsno NUMBER(10),
 		MEMBERNO NUMERIC(10),
 		title VARCHAR2(100) NOT NULL,
 		content CLOB NOT NULL,
-		cnt NUMBER(10),
         pwd VARCHAR2(10),
 		rdate DATE NOT NULL,
 		file1 VARCHAR2(200),
@@ -22,7 +21,6 @@ public class FreivewVO {
 	private int memberno;
 	private String title;
 	private String content;
-	private int cnt;
 	private String pwd;
 	private String file1;
 	private String file1saved;
@@ -59,12 +57,6 @@ public class FreivewVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public int getCnt() {
-		return cnt;
-	}
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
 	}
 	public String getPwd() {
 		return pwd;
@@ -106,10 +98,9 @@ public class FreivewVO {
 	@Override
 	public String toString() {
 		return "FreivewVO [reviewno=" + reviewno + ", contentsno=" + contentsno + ", memberno=" + memberno + ", title="
-				+ title + ", content=" + content + ", cnt=" + cnt + ", pwd=" + pwd + ", file1=" + file1
-				+ ", file1saved=" + file1saved + ", thumb1=" + thumb1 + ", size1=" + size1 + ", map=" + map + "]";
+				+ title + ", content=" + content + ", pwd=" + pwd + ", file1=" + file1 + ", file1saved=" + file1saved
+				+ ", thumb1=" + thumb1 + ", size1=" + size1 + ", map=" + map + "]";
 	}
 	
-	
-	
+
 }
