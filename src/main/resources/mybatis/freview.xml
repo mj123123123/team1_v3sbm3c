@@ -4,15 +4,15 @@
 <mapper namespace="dev.mvc.freview.FreviewDAOInter">
 	<!-- 등록한 레코드 갯수 1 리턴, #{reviewno}: public int getReviewno() 호출됨 -->
 	<insert id="create" parameterType="dev.mvc.freview.FreviewVO">
-		INSERT INTO freview(reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		INSERT INTO freview(reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1)
-		VALUES(review_seq.nextval, #{contentsno}, #{memberno}, #{title}, #{content}, #{pwd},
-					sysdate, #{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1})
+		VALUES(review_seq.nextval, #{contentsno}, #{memberno}, #{nickname}, #{title}, #{content}, #{pwd},
+					sysdate, #{cnt}, #{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1})
 	</insert>
 
 	<!-- 모든 컨텐츠의 등록된 리뷰 목록 -->
 	<select id="list_all" resultType="dev.mvc.freview.FreviewVO">
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1
 		FROM freview
 		ORDER BY reviewno DESC
@@ -20,7 +20,7 @@
 
 	<!-- 특정 컨텐츠의 등록된 리뷰 목록 -->
 	<select id="list_by_contentsno" resultType="dev.mvc.freview.FreviewVO" parameterType="int">
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1
 		FROM freview
 		WHERE contentsno = #{contentsno}
@@ -29,7 +29,7 @@
 
 	<!-- 일반적인 조회 -->
 	<select id="read" resultType="dev.mvc.freview.FreviewVO" parameterType="int">
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1, map
 		FROM freview
 		WHERE reviewno = #{reviewno}
@@ -42,7 +42,7 @@
 
 	<!-- 컨텐츠별 검색 목록 -->
 	<select id="list_by_contentsno_search" resultType="dev.mvc.freview.FreviewVO" parameterType="HashMap">
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1, map
 		FROM freview
 		<choose>
@@ -61,7 +61,7 @@
 	<!-- 카테고리별 검색 레코드 갯수 -->
 	<select id="search_count" resultType="int" parameterType="HashMap">
 		SELECT COUNT(*) as cnt
-		FROM festival
+		FROM freview
 		<choose>
 			<when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
 				WHERE contentsno=#{contentsno}
@@ -76,16 +76,16 @@
 
 	<!-- 카테고리별 검색 + 페이징 목록 -->
 	<select id="list_by_contentsno_search_paging" resultType="dev.mvc.freview.FreviewVO" parameterType="dev.mvc.freview.FreviewVO">
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1, map r
 		FROM (
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1, map, rownum as r
 		FROM (
-		SELECT reviewno, contentsno, memberno, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 								file1, file1saved, thumb1, size1, map
-		FROM review
-		<choose>
+		FROM freview
+		<choose>                                       
 			<when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
 				WHERE contentsno=#{contentsno}
 			</when>
