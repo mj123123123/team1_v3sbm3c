@@ -4,9 +4,9 @@
 <mapper namespace="dev.mvc.freview.FreviewDAOInter">
 	<!-- 등록한 레코드 갯수 1 리턴, #{contentsno}: public int getContentsno() 호출됨 -->
 	<insert id="create" parameterType="dev.mvc.freview.FreviewVO">
-		INSERT INTO freviews(reviewno, contentsno, memberno, title, content, pwd, rdate,
+		INSERT INTO freview(reviewno, fcateno, contentsno, memberno, title, content, pwd, rdate,
 		file1, file1saved, thumb1, size1)
-		VALUES(review_seq.nextval, #{contentsno}, #{memberno}, #{title}, #{content}, #{pwd},
+		VALUES(review_seq.nextval, #{fcateno}, #{contentsno}, #{memberno}, #{title}, #{content}, #{pwd},
 		sysdate, #{file1}, #{file1saved}, #{thumb1}, #{size1})
 	</insert>
 	
