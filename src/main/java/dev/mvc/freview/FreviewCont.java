@@ -275,7 +275,7 @@ public class FreviewCont {
 	@RequestMapping(value = "/freview/read.do", method = RequestMethod.GET)
 	public ModelAndView read(int reviewno) { // int reviewno = (int)request.getParameter("reviewno");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/freview/read"); // /WEB-INF/views/review/read.jsp
+		mav.setViewName("/freview/read"); // /WEB-INF/views/freview/read.jsp
 
 		FreviewVO freviewVO = this.freviewProc.read(reviewno);
 
@@ -343,6 +343,78 @@ public class FreviewCont {
 		// /webapp/WEB-INF/views/freview/read.jsp
 
 		return mav;
+	}
+
+	/**
+	 * 수정 폼 http://localhost:9093/freview/update_text.do?reviewno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/freview/update_text.do", method = RequestMethod.GET)
+	public ModelAndView update_text(HttpSession session, int reviewno) {
+		ModelAndView mav = new ModelAndView();
+
+		if (memberProc.isMember(session)) { // 회원 로그인한경우
+			FreviewVO freviewVO = this.freviewProc.read(reviewno);
+			mav.addObject("freviewVO", freviewVO);
+
+			FestivalVO festivalVO = this.festivalProc.read(freviewVO.getContentsno());
+			mav.addObject("festivalVO", festivalVO);
+
+			mav.setViewName("/freview/update_text"); // /WEB-INF/views/freview/update_text.jsp
+			// String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
+			// mav.addObject("content", content);
+
+		} else {
+			mav.addObject("url", "/member/login_need"); // /WEB-INF/views/member/login_need.jsp
+			mav.setViewName("redirect:/freview/msg.do");
+		}
+
+		return mav; // forward
+	}
+
+	/**
+	 * 수정 처리 http://localhost:9093/freview/update_text.do?reviewno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/freview/update_text.do", method = RequestMethod.POST)
+	public ModelAndView update_text(HttpSession session, FreviewVO freviewVO) {
+		ModelAndView mav = new ModelAndView();
+
+		// System.out.println("-> word: " + contentsVO.getWord());
+
+		if (this.memberProc.isMember(session)) { // 회원 로그인 확인
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("reviewno", freviewVO.getReviewno());
+			hashMap.put("pwd", freviewVO.getPwd());
+
+			if (this.freviewProc.password_check(hashMap) == 1) { // 패스워드 일치
+				this.freviewProc.update_text(freviewVO); // 글수정
+
+				// mav 객체 이용
+				mav.addObject("reviewno", freviewVO.getReviewno());
+				mav.addObject("contentsno", freviewVO.getContentsno());
+				mav.setViewName("redirect:/freview/read.do"); // 페이지 자동 이동
+
+			} else { // 패스워드 불일치
+				mav.addObject("code", "passwd_fail");
+				mav.addObject("cnt", 0);
+				mav.addObject("url", "/freview/msg"); // msg.jsp, redirect parameter 적용
+				mav.setViewName("redirect:/freview/msg.do"); // POST -> GET -> JSP 출력
+			}
+		} else { // 정상적인 로그인이 아닌 경우 로그인 유도
+			mav.addObject("url", "/member/login_need"); // /WEB-INF/views/member/login_need.jsp
+			mav.setViewName("redirect:/freview/msg.do");
+		}
+
+		mav.addObject("now_page", freviewVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시한번 데이터 저장 ★
+
+		// URL에 파라미터의 전송
+		// mav.setViewName("redirect:/freviewVO/read.do?reviewno=" +
+		// freviewVO.getReviewno() + "&contentsno=" + freviewVO.getContentsno());
+
+		return mav; // forward
 	}
 
 }

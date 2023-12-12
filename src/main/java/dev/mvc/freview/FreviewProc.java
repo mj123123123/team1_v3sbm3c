@@ -6,8 +6,6 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import dev.mvc.festival.Festival;
-
 @Component("dev.mvc.freview.FreviewProc")
 public class FreviewProc implements FreviewProcInter {
 	@Autowired // FreviewDAOInter interface를 구현한 클래스의 객체를 만들어 자동으로 할당해라.
@@ -81,7 +79,7 @@ public class FreviewProc implements FreviewProcInter {
 		// 1 페이지 = 0 + 10: 10
 		// 2 페이지 = 10 + 10: 20
 		// 3 페이지 = 20 + 10: 30
-		int end_num = begin_of_page + Festival.RECORD_PER_PAGE;
+		int end_num = begin_of_page + Freview.RECORD_PER_PAGE;
 		/*
 		 * 1 페이지: WHERE r >= 1 AND r <= 10 2 페이지: WHERE r >= 11 AND r <= 20 3 페이지: WHERE
 		 * r >= 21 AND r <= 30
@@ -236,6 +234,30 @@ public class FreviewProc implements FreviewProcInter {
 		str.append("</DIV>");
 
 		return str.toString();
+	}
+
+	@Override
+	public int password_check(HashMap<String, Object> hashMap) {
+		int cnt = this.freviewDAO.password_check(hashMap);
+		return cnt;
+	}
+
+	@Override
+	public int update_text(FreviewVO freviewVO) {
+		int cnt = this.freviewDAO.update_text(freviewVO);
+		return cnt;
+	}
+
+	@Override
+	public int update_file(FreviewVO freviewVO) {
+		int cnt = this.freviewDAO.update_file(freviewVO);
+		return cnt;
+	}
+
+	@Override
+	public int delete(int reviewno) {
+		int cnt = this.freviewDAO.delete(reviewno);
+		return cnt;
 	}
 
 }

@@ -48,7 +48,7 @@ public interface FreviewProcInter {
 	/**
 	 * 컨텐츠별 검색 목록
 	 * 
-	 * @param 
+	 * @param
 	 * @return
 	 */
 	public ArrayList<FreviewVO> list_by_contentsno_search(HashMap<String, Object> hashMap);
@@ -56,7 +56,7 @@ public interface FreviewProcInter {
 	/**
 	 * 컨텐츠별 검색된 레코드 갯수
 	 * 
-	 * @param 
+	 * @param
 	 * @return
 	 */
 	public int search_count(HashMap<String, Object> hashMap);
@@ -82,4 +82,35 @@ public interface FreviewProcInter {
 	 */
 	public String pagingBox(int contentsno, int now_page, String word, String list_file, int search_count);
 
+	/**
+	 * 패스워드 검사
+	 * 
+	 * @param hashMap
+	 * @return
+	 */
+	public int password_check(HashMap<String, Object> hashMap);
+
+	/**
+	 * 글 정보 수정
+	 * 
+	 * @param freviewVO
+	 * @return 처리된 레코드 갯수
+	 */
+	public int update_text(FreviewVO freviewVO);
+
+	/**
+	 * 파일 정보 수정
+	 * 
+	 * @param freviewVO
+	 * @return 처리된 레코드 갯수
+	 */
+	public int update_file(FreviewVO freviewVO);
+
+	/**
+	 * 삭제
+	 * 
+	 * @param contentsno
+	 * @return 삭제된 레코드 갯수
+	 */
+	public int delete(int reviewno);
 }
