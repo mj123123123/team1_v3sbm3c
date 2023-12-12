@@ -277,14 +277,14 @@ public class QuestionCont {
       mav.setViewName("redirect:/question/msg.do"); 
     }
     
-    mav.addObject("now_page", questionVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장     
+    //mav.addObject("now_page", questionVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장     
     
     return mav; // forward
   }
   
   /**
    * 파일 삭제 폼
-   * http://localhost:9093/question/delete.do?questno=1
+   * http://localhost:9093/question/delete.do?questno=17
    * 
    * @return
    */
@@ -319,9 +319,8 @@ public class QuestionCont {
     ModelAndView mav = new ModelAndView();
    
     //QuestionVO questionVO_read = questionProc.read(questionVO.getQuestno());
-    
     this.questionProc.delete(questionVO.getQuestno()); // DBMS 삭제
-        
+    
     // -------------------------------------------------------------------------------------
     // 마지막 페이지의 마지막 레코드 삭제시의 페이지 번호 -1 처리
     // -------------------------------------------------------------------------------------    
@@ -342,10 +341,25 @@ public class QuestionCont {
     // -------------------------------------------------------------------------------------
 
     mav.addObject("questno", questionVO.getQuestno());
+    
     //mav.addObject("now_page", now_page);
     //mav.setViewName("redirect:/question/list_by_tcateno.do");
+    
     mav.setViewName("redirect:/question/list_all.do");
     
     return mav;
+  }
+  
+  //http://localhost:9093/question/delete_by_tcateno.do?cateno=1
+  // 파일 삭제 -> 레코드 삭제
+  @RequestMapping(value = "/contents/delete_by_tcateno.do", method = RequestMethod.GET)
+  public String delete_by_tcateno(int tcateno) {
+    ArrayList<QuestionVO> list = this.questionProc.list_by_tcateno(tcateno);
+     
+    int cnt = this.questionProc.delete_by_tcateno(tcateno);
+    System.out.println("-> count: " + cnt);
+     
+    return "";
+   
   }
 }

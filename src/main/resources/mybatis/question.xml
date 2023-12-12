@@ -44,6 +44,12 @@
   <!-- 레코드 삭제 -->
   <delete id="delete" parameterType="int">
     DELETE FROM question
+    WHERE questno=#{questno}
+  </delete>
+  
+  <!-- 특정 카테고리에 속한 모든 레코드 삭제 -->
+  <delete id="delete_by_tcateno" parameterType="int">
+    DELETE FROM question
     WHERE tcateno=#{tcateno}
   </delete>
   
