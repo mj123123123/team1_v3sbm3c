@@ -5,11 +5,7 @@ import java.util.HashMap;
 
 import dev.mvc.festival.FestivalVO;
 
-/**
- * Spring Boot가 자동 구현
- *
- */
-public interface FreviewDAOInter {
+public interface FreviewProcInter {
 	/**
 	 * 등록, 추상 메소드
 	 * 
@@ -72,5 +68,18 @@ public interface FreviewDAOInter {
 	 * @return
 	 */
 	public ArrayList<FreviewVO> list_by_contentsno_search_paging(FreviewVO freviewVO);
+
+	/**
+	 * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
+	 * 18 19 20 [다음]
+	 *
+	 * @param contentsno   컨텐츠 번호
+	 * @param now_page     현재 페이지
+	 * @param word         검색어
+	 * @param list_file    목록 파일명
+	 * @param search_count 검색 레코드수
+	 * @return 페이징 생성 문자열
+	 */
+	public String pagingBox(int contentsno, int now_page, String word, String list_file, int search_count);
 
 }
