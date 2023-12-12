@@ -1664,8 +1664,8 @@
                                                             <constraint>
                                                               <height>-1</height>
                                                               <width>-1</width>
-                                                              <x>1249</x>
-                                                              <y>1076</y>
+                                                              <x>1199</x>
+                                                              <y>1077</y>
                                                             </constraint>
                                                             <sourceConnections>
                                                               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -1706,7 +1706,7 @@
                                                               </net.java.amateras.db.visual.model.ColumnModel>
                                                               <net.java.amateras.db.visual.model.ColumnModel>
                                                                 <columnName>IP</columnName>
-                                                                <logicalName>아이피</logicalName>
+                                                                <logicalName>접속 IP</logicalName>
                                                                 <columnType class="net.java.amateras.db.dialect.ColumnType">
                                                                   <name>VARCHAR2</name>
                                                                   <logicalName>String</logicalName>
@@ -1759,8 +1759,13 @@
                                                         <net.java.amateras.db.visual.model.ColumnModel>
                                                           <columnName>ADMINNO</columnName>
                                                           <logicalName>관리자 번호</logicalName>
-                                                          <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../../../../../../../../../../../../net.java.amateras.db.visual.model.ForeignKeyModel[2]/source/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel/target/targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel/source/columns/net.java.amateras.db.visual.model.ColumnModel/columnType"/>
-                                                          <size>5</size>
+                                                          <columnType class="net.java.amateras.db.dialect.ColumnType">
+                                                            <name>NUMBER</name>
+                                                            <logicalName>Numeric</logicalName>
+                                                            <supportSize>true</supportSize>
+                                                            <type>2</type>
+                                                          </columnType>
+                                                          <size>10</size>
                                                           <notNull>true</notNull>
                                                           <primaryKey>true</primaryKey>
                                                           <description></description>
@@ -2686,8 +2691,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>948</x>
-                                      <y>1057</y>
+                                      <x>953</x>
+                                      <y>1079</y>
                                     </constraint>
                                     <sourceConnections>
                                       <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -2728,13 +2733,8 @@
                                       </net.java.amateras.db.visual.model.ColumnModel>
                                       <net.java.amateras.db.visual.model.ColumnModel>
                                         <columnName>IP</columnName>
-                                        <logicalName>아이피</logicalName>
-                                        <columnType class="net.java.amateras.db.dialect.ColumnType">
-                                          <name>VARCHAR2</name>
-                                          <logicalName>String</logicalName>
-                                          <supportSize>true</supportSize>
-                                          <type>12</type>
-                                        </columnType>
+                                        <logicalName>접속 IP</logicalName>
+                                        <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../../../net.java.amateras.db.visual.model.ForeignKeyModel[5]/source/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/target/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel/target/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/target/targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel[4]/source/columns/net.java.amateras.db.visual.model.ColumnModel[3]/columnType"/>
                                         <size>15</size>
                                         <notNull>true</notNull>
                                         <primaryKey>false</primaryKey>
