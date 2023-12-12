@@ -16,11 +16,11 @@
 	<c:import url="/menu/top.do" />
 
 	<div class='title_line'>
-		${fcateVO.name } > ${festivalVO.title } > 후기 등록하기
+		${festivalVO.title } > 리뷰 등록하기
 	</div>
 
 	<aside class="aside_right">
-		<a href="./list_by_contentsno.do?contentsno=${param.contentsno}">후기 목록</a>
+		<a href="./list_by_contentsno.do?contentsno=${param.contentsno}">리뷰 목록</a>
 		<span class='menu_divide'>│</span>
 		<a href="javascript:location.reload();">새로고침</a>
 	</aside>
@@ -50,7 +50,7 @@
 
 	<div class='menu_line'></div>
 
-	<form name='frm' method='post' action='./create.do' enctype="multipart/form-data">
+	<form name='frm' method='post' action='./create.do?contentsno=${param.contentsno}' enctype="multipart/form-data">
 		<input type="hidden" name="contentsno" value="${param.contentsno }">
 
 		<div>
@@ -63,7 +63,7 @@
 				class="form-control" style='width: 100%; color: #8B4513;'>
 		</div>
 		<div>
-			<label>리뷰(후기)</label>
+			<label>리뷰(리뷰)</label>
 			<textarea name='content' required="required" class="form-control" rows="5" style='width: 100%;'></textarea>
 		</div>
 		<div>

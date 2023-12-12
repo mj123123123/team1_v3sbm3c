@@ -25,7 +25,7 @@
 	<aside class="aside_left">
 		<button type="submit" class="btn btn-success btn-sm"
 			onclick="location.href='./create.do?contentsno=${festivalVO.contentsno}'"
-			style="font-weight: bold; text-align: left;">📰 후기 등록하기</button>
+			style="font-weight: bold; text-align: left;">📰 리뷰 등록하기</button>
 	</aside>
 
 	<aside class="aside_right">

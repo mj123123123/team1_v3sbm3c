@@ -32,7 +32,7 @@
         
         <c:when test="${code == 'create_success'}"> <%-- Java if --%>
           <li class='li_none'>
-            <span class="span_success">새로운 후기를 등록했습니다.</span>
+            <span class="span_success">새로운 리뷰를 등록했습니다.</span>
           </li> 
         </c:when>
 
@@ -45,25 +45,25 @@
                 
         <c:when test="${code == 'create_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">새로운 후기 등록에 실패했습니다.</span>
+            <span class="span_fail">새로운 리뷰 등록에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>
         
         <c:when test="${code == 'update_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">후기 수정에 실패했습니다.</span>
+            <span class="span_fail">리뷰 수정에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>
         
         <c:when test="${code == 'delete_success'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_success">후기 삭제에 성공했습니다.</span>
+            <span class="span_success">리뷰 삭제에 성공했습니다.</span>
           </LI>                                                                      
         </c:when>        
         
         <c:when test="${code == 'delete_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">후기 삭제에 실패했습니다.</span>
+            <span class="span_fail">리뷰 삭제에 실패했습니다.</span>
           </LI>                                                                      
         </c:when> 
         
@@ -86,7 +86,7 @@
             </c:when>
         </c:choose>
         
-        <button type='button' onclick="location.href='./list_by_contentsno.do?contentsno=${param.contentsno}'" class="btn btn-dark btn-sm">후기 목록</button>
+        <button type='button' onclick="location.href='./list_by_contentsno.do?contentsno=${param.contentsno}'" class="btn btn-dark btn-sm">리뷰 목록</button>
       </li>
     </UL>
   </fieldset>
