@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import dev.mvc.admin.AdminProcInter;
 import dev.mvc.fcate.FcateProcInter;
 import dev.mvc.fcate.FcateVO;
+import dev.mvc.freview.FreviewProc;
+import dev.mvc.freview.FreviewVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
