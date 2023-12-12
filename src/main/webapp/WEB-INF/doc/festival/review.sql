@@ -29,6 +29,19 @@ CREATE SEQUENCE review_seq
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
   
   
+INSERT INTO FREVIEW (reviewno, contentsno, MEMBERNO, title, content, cnt, pwd, rdate, file1, file1saved, thumb1, size1, map) 
+VALUES (review_seq.nextval, 1, 3, '빛 축제', '처음 가봤는데 너무 이쁘고 좋았어요', 0, '1234', sysdate, 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000, 'sample_map_url');
+
+INSERT INTO FREVIEW (reviewno, contentsno, MEMBERNO, title, content, cnt, pwd, rdate, file1, file1saved, thumb1, size1, map) 
+VALUES (review_seq.nextval, 1, 3, '청계천 빛 축제', '가족들과 함께 갔는데,,,', 0, '1234', sysdate, 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000, 'sample_map_url');
+
+SELECT reviewno, contentsno, MEMBERNO, title, content, cnt, pwd, rdate, file1, file1saved, thumb1, size1, map 
+FROM FREVIEW
+WHERE contentsno = 1;
+
+commit;
+  
+  
   
   
   
