@@ -41,6 +41,9 @@
 		<button type="submit" class="btn btn-success btn-sm"
 			onclick="location.href='../freview/list_by_contentsno.do?contentsno=${param.contentsno}'"
 			style="font-weight: bold; text-align: left;">📰 리뷰 보러가기</button>
+			<button type="submit" class="btn btn-success btn-sm"
+			onclick="location.href='../freview/create.do?contentsno=${param.contentsno}'"
+			style="font-weight: bold; text-align: left;">📝 리뷰 등록하기</button>
 	</aside>
 
 	<aside class="aside_right">
