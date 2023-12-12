@@ -20,7 +20,7 @@
 <body>
 	<c:import url="/menu/top.do" />
 
-	<div class='title_line'>카테고리</div>
+	<div class='title_line'>[축제/행사] 카테고리</div>
 
 	<aside class="aside_right">
 		<a href="javascript:location.reload();">새로고침</a>
