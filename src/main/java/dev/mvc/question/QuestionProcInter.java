@@ -81,6 +81,13 @@ public interface QuestionProcInter {
   public int delete(int questno);
   
   /**
+   * 특정 카테고리에 속한 모든 레코드 삭제
+   * @param tcateno
+   * @return 삭제된 레코드 갯수
+   */
+  public int delete_by_tcateno(int tcateno);
+  
+  /**
    * 글 수정
    * @param questionVO
    * @return
