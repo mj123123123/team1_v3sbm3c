@@ -33,7 +33,7 @@
 
 <body>
 	<c:import url="/menu/top.do" />
-	<div class='title_line'> ${festivalVO.title } > 리뷰</div>
+	<div class='title_line'>${festivalVO.title } > 리뷰</div>
 
 	<aside class="aside_right">
 		<%-- 회원으로 로그인해야 메뉴가 출력됨 --%>
@@ -50,6 +50,8 @@
 			</c:if>
 		</c:if>
 		<a href="./create.do?contentsno=${contentsno }">📝 리뷰 등록</a>
+		<span class='menu_divide'>│</span>
+		<a href="./list_by_contentsno.do?contentsno=${contentsno }">📰 리뷰 목록</a>
 		<span class='menu_divide'>│</span>
 		<a href="javascript:location.reload();">새로고침</a>
 	</aside>

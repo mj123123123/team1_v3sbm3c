@@ -7,7 +7,7 @@
 <c:set var="title" value="${freviewVO.title }" />
 <c:set var="content" value="${freviewVO.content }" />
 <c:set var="word" value="${freviewVO.word }" />
-   
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,7 +26,7 @@
 <body>
 	<c:import url="/menu/top.do" />
 
-	<DIV class='title_line'>${festivalVO.title } > 리뷰 수정</DIV>
+	<DIV class='title_line'>${festivalVO.title }> ${title } > 리뷰 수정</DIV>
 
 	<aside class="aside_right">
 		<a href="./create.do?contentsno=${contentsno }">등록</a>
@@ -61,9 +61,9 @@
 	<div class='menu_line'></div>
 
 	<form name='frm' method='post' action='./update_text.do'>
-		<input type="hidden" name="contentsno" value="${contentsno }"> <input type="hidden" name="reviewno"
-			value="${reviewno }"> <input type="hidden" name="now_page" value="${param.now_page }">
-
+		<input type="hidden" name="contentsno" value="${contentsno }"> 
+		<input type="hidden" name="reviewno" value="${reviewno }"> 
+		<input type="hidden" name="now_page" value="${param.now_page }">
 		<div>
 			<label>제목</label> <input type='text' name='title' value='${title }' required="required" autofocus="autofocus"
 				class="form-control" style='width: 100%;'>
@@ -78,7 +78,7 @@
 		</div>
 
 		<div>
-			<label>패스워드</label> <input type='password' name='passwd' value='' required="required" class="form-control"
+			<label>패스워드</label> <input type='password' name='pwd' value='' required="required" class="form-control"
 				style='width: 50%;'>
 		</div>
 
