@@ -8,6 +8,7 @@ CREATE TABLE REPLY(
 		content CLOB NOT NULL,
         passwd VARCHAR2(20) NOT NULL,
 		rdate DATE NOT NULL,
+        visible CHAR(1)          DEFAULT 'N' NOT NULL, 
   FOREIGN KEY (contentsno) REFERENCES festival (contentsno),
   FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
 );
@@ -19,6 +20,8 @@ COMMENT ON COLUMN reply.memberno is '회원 번호';
 COMMENT ON COLUMN reply.content is '내용';
 COMMENT ON COLUMN reply.passwd is '비밀번호';
 COMMENT ON COLUMN reply.rdate is '등록일';
+COMMENT ON COLUMN reply.visible is '출력 모드';
+
 
 DROP SEQUENCE reply_seq;
 CREATE SEQUENCE reply_seq
@@ -30,15 +33,15 @@ CREATE SEQUENCE reply_seq
 
 
 -- 1) 등록
-INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate)
-VALUES(reply_seq.nextval, 1, 3, '꼭 가보고 싶네요!', '1234', sysdate);
-INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate)
-VALUES(reply_seq.nextval, 1, 3, '작년에 가봤는데 너무 좋았어요!', '1234', sysdate);
-INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate)
-VALUES(reply_seq.nextval, 1, 3, '무료라서 좋네요 꼭 가봐야겠어요!', '1234', sysdate);             
+INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate, visible)
+VALUES(reply_seq.nextval, 1, 3, '꼭 가보고 싶네요!', '1234', sysdate, 'N');
+INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate, visible)
+VALUES(reply_seq.nextval, 1, 3, '작년에 가봤는데 너무 좋았어요!', '1234', sysdate, 'N');
+INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate, visible)
+VALUES(reply_seq.nextval, 1, 3, '무료라서 좋네요 꼭 가봐야겠어요!', '1234', sysdate, 'N');             
 
 -- 2) 전체 목록
-SELECT replyno, contentsno, memberno, content, passwd, rdate
+SELECT replyno, contentsno, memberno, content, passwd, rdate, visible
 FROM reply
 ORDER BY replyno DESC;
 
@@ -50,16 +53,15 @@ ORDER BY replyno DESC;
        
 -- 3) reply + member join 목록
 SELECT m.id,
-          r.replyno, r.contentsno, r.memberno, r.content, r.passwd, r.rdate
+          r.replyno, r.contentsno, r.memberno, r.content, r.passwd, r.rdate, r.visible 
 FROM member m,  reply r
 WHERE m.memberno = r.memberno
 ORDER BY r.replyno DESC;
 
 -- 4) reply + member join + 특정 contentsno 별 목록
-SELECT m.id,
-           r.replyno, r.contentsno, r.memberno, r.content, r.passwd, r.rdate
+SELECT r.replyno, r.contentsno, r.memberno, r.content, r.passwd, r.rdate, r.visible 
 FROM member m,  reply r
-WHERE (m.memberno = r.memberno) AND r.contentsno=5
+WHERE (m.memberno = r.memberno) AND r.contentsno=1
 ORDER BY r.replyno DESC;
 
  ID    REPLYNO CONTENTSNO MEMBERNO CONTENT                                                                                                                                                                         PASSWD RDATE
@@ -98,7 +100,7 @@ WHERE contentsno=1;
 -- 7) memberno에 해당하는 댓글 수 확인 및 삭제
 SELECT COUNT(*) as cnt
 FROM reply
-WHERE memberno=1;
+WHERE memberno=3;
 
  CNT
  ---
@@ -119,3 +121,13 @@ WHERE replyno=1 AND passwd='1234';
 -- 9) 삭제
 DELETE FROM reply
 WHERE replyno=1;
+
+-- 카테고리 공개 설정
+UPDATE reply SET visible='Y' WHERE replyno=1;
+SELECT replyno, contentsno, memberno, content, passwd, rdate, visible FROM reply ORDER BY replyno ASC;
+
+-- 카테고리 비공개 설정
+UPDATE reply SET visible='N' WHERE replyno=2;
+SELECT replyno, contentsno, memberno, content, passwd, rdate, visible FROM reply ORDER BY replyno ASC;
+
+COMMIT;
