@@ -240,6 +240,9 @@ public class FreviewVO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+	public void setNow_page(int now_page) {
+		this.now_page = now_page;
+	}
 
 	@Override
 	public String toString() {
@@ -251,4 +254,5 @@ public class FreviewVO {
 				+ now_page + "]";
 	}
 
+	
 }
