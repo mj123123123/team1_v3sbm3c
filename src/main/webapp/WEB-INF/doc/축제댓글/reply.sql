@@ -1,22 +1,25 @@
 /**********************************/
 /* Table Name: 댓글 */
 /**********************************/
+DROP TABLE REPLY;
 CREATE TABLE REPLY(
 		replyno NUMBER(10) NOT NULL PRIMARY KEY,
 		contentsno NUMBER(10),
 		MEMBERNO NUMERIC(10),
+        nickname VARCHAR2(30) NOT NULL,
 		content CLOB NOT NULL,
         passwd VARCHAR2(20) NOT NULL,
 		rdate DATE NOT NULL,
         visible CHAR(1)          DEFAULT 'N' NOT NULL, 
   FOREIGN KEY (contentsno) REFERENCES festival (contentsno),
   FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
-);
+  );
 
 COMMENT ON TABLE reply is '댓글';
 COMMENT ON COLUMN reply.replyno is '댓글번호';
 COMMENT ON COLUMN reply.contentsno is '컨텐츠번호';
 COMMENT ON COLUMN reply.memberno is '회원 번호';
+COMMENT ON COLUMN reply.mname is '작성자';
 COMMENT ON COLUMN reply.content is '내용';
 COMMENT ON COLUMN reply.passwd is '비밀번호';
 COMMENT ON COLUMN reply.rdate is '등록일';
@@ -33,12 +36,12 @@ CREATE SEQUENCE reply_seq
 
 
 -- 1) 등록
-INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate, visible)
-VALUES(reply_seq.nextval, 1, 3, '꼭 가보고 싶네요!', '1234', sysdate, 'N');
-INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate, visible)
-VALUES(reply_seq.nextval, 1, 3, '작년에 가봤는데 너무 좋았어요!', '1234', sysdate, 'N');
-INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate, visible)
-VALUES(reply_seq.nextval, 1, 3, '무료라서 좋네요 꼭 가봐야겠어요!', '1234', sysdate, 'N');             
+INSERT INTO reply(replyno, contentsno, memberno, nickname, content, passwd, rdate, visible)
+VALUES(reply_seq.nextval, 1, 3, '투투투', '꼭 가보고 싶네요!','1234', sysdate, 'N');
+INSERT INTO reply(replyno, contentsno, memberno, nickname, content, passwd, rdate, visible)
+VALUES(reply_seq.nextval, 1, 4, '아로미', '작년에 가봤는데 너무 좋았어요!', '1234', sysdate, 'N');
+INSERT INTO reply(replyno, contentsno, memberno, nickname, content, passwd, rdate, visible)
+VALUES(reply_seq.nextval, 1, 5, '도로시', '무료라서 좋네요 꼭 가봐야겠어요!', '1234', sysdate, 'N');             
 
 -- 2) 전체 목록
 SELECT replyno, contentsno, memberno, content, passwd, rdate, visible
