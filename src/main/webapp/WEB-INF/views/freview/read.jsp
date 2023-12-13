@@ -37,7 +37,7 @@
 
 	<aside class="aside_right">
 		<%-- 회원으로 로그인해야 메뉴가 출력됨 --%>
-		<c:if test="${sessionScope.id != null }">
+		<c:if test="${sessionScope.mname != null }">
 			<c:if test="${freviewVO.memberno eq sessionScope.memberno}">
 				<a href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}&word=${param.word }">글 수정</a>
 				<span class='menu_divide'>│</span>
