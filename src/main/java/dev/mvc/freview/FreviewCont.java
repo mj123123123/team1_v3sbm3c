@@ -88,7 +88,7 @@ public class FreviewCont {
 	public ModelAndView create(HttpServletRequest request, HttpSession session, FreviewVO freviewVO) {
 		ModelAndView mav = new ModelAndView();
 
-		if (memberProc.isMember(session)) { // 
+		if (memberProc.isMember(session)) { //
 			// ------------------------------------------------------------------------------
 			// 파일 전송 코드 시작
 			// ------------------------------------------------------------------------------
@@ -524,6 +524,115 @@ public class FreviewCont {
 		mav.addObject("now_page", freviewVO.getNow_page());
 
 		return mav; // forward
+	}
+	
+	/**
+	 * 파일 삭제 폼 http://localhost:9093/freview/delete.do?reviewno=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/freview/delete.do", method = RequestMethod.GET)
+	public ModelAndView delete(HttpSession session, int reviewno) {
+		ModelAndView mav = new ModelAndView();
+
+		if (memberProc.isMember(session)) { // 관리자로 로그인한경우
+			FreviewVO freviewVO = this.freviewProc.read(reviewno);
+			mav.addObject("freviewVO", freviewVO);
+
+			FestivalVO festivalVO = this.festivalProc.read(freviewVO.getContentsno());
+			mav.addObject("festivalVO", festivalVO);
+
+			mav.setViewName("/freview/delete"); // /WEB-INF/views/freview/delete.jsp
+
+		} else {
+			mav.addObject("url", "/member/login_need"); // /WEB-INF/views/member/login_need.jsp
+			mav.setViewName("redirect:/freview/msg.do");
+		}
+
+		return mav; // forward
+	}
+
+	/**
+	 * 삭제 처리 http://localhost:9093/freview/delete.do
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/freview/delete.do", method = RequestMethod.POST)
+	public ModelAndView delete(FreviewVO freviewVO) {
+		ModelAndView mav = new ModelAndView();
+
+		// -------------------------------------------------------------------
+		// 파일 삭제 시작
+		// -------------------------------------------------------------------
+		// 삭제할 파일 정보를 읽어옴.
+		FreviewVO freviewVO_read = freviewProc.read(freviewVO.getReviewno());
+
+		String file1saved = freviewVO.getFile1saved();
+		String thumb1 = freviewVO.getThumb1();
+		
+
+		String uploadDir = Freview.getUploadDir();
+		Tool.deleteFile(uploadDir, file1saved); // 실제 저장된 파일삭제
+		Tool.deleteFile(uploadDir, thumb1); // preview 이미지 삭제
+		// -------------------------------------------------------------------
+		// 파일 삭제 종료
+		// -------------------------------------------------------------------
+
+		this.freviewProc.delete(freviewVO.getReviewno()); // DBMS 삭제
+
+		// -------------------------------------------------------------------------------------
+		// 마지막 페이지의 마지막 레코드 삭제시의 페이지 번호 -1 처리
+		// -------------------------------------------------------------------------------------
+		// 마지막 페이지의 마지막 10번째 레코드를 삭제후
+		// 하나의 페이지가 3개의 레코드로 구성되는 경우 현재 9개의 레코드가 남아 있으면
+		// 페이지수를 4 -> 3으로 감소 시켜야함, 마지막 페이지의 마지막 레코드 삭제시 나머지는 0 발생
+		int now_page = freviewVO.getNow_page();
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("contentsno", freviewVO.getContentsno());
+		hashMap.put("word", freviewVO.getWord());
+
+		if (freviewProc.search_count(hashMap) % Festival.RECORD_PER_PAGE == 0) {
+			now_page = now_page - 1; // 삭제시 DBMS는 바로 적용되나 크롬은 새로고침등의 필요로 단계가 작동 해야함.
+			if (now_page < 1) {
+				now_page = 1; // 시작 페이지
+			}
+		}
+		// -------------------------------------------------------------------------------------
+
+		mav.addObject("contentsno", freviewVO.getContentsno());
+		mav.addObject("now_page", now_page);
+		mav.setViewName("redirect:/freview/list_by_contentsno.do");
+
+		return mav;
+	}
+
+	// http://localhost:9093/freview/delete_by_contentsno.do?contentsno=1
+	// 파일 삭제 -> 레코드 삭제
+	@RequestMapping(value = "/freview/delete_by_contentsno.do", method = RequestMethod.GET)
+	public String delete_by_contentsno(int contentsno) {
+		ArrayList<FreviewVO> list = this.freviewProc.list_by_contentsno(contentsno);
+
+		for (FreviewVO freviewVO : list) {
+			// -------------------------------------------------------------------
+			// 파일 삭제 시작
+			// -------------------------------------------------------------------
+			String file1saved = freviewVO.getFile1saved();
+			String thumb1 = freviewVO.getThumb1();
+
+			String uploadDir = Freview.getUploadDir();
+			Tool.deleteFile(uploadDir, file1saved); // 실제 저장된 파일삭제
+			Tool.deleteFile(uploadDir, thumb1); // preview 이미지 삭제
+			// -------------------------------------------------------------------
+			// 파일 삭제 종료
+			// -------------------------------------------------------------------
+		}
+
+		int cnt = this.freviewProc.delete_by_contentsno(contentsno);
+		System.out.println("-> count: " + cnt);
+
+		return "";
+
 	}
 
 }
