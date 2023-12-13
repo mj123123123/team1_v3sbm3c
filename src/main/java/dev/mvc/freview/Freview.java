@@ -17,12 +17,12 @@ public class Freview {
      String path = "";
      if (File.separator.equals("\\")) { // windows, 개발 환경의 파일 업로드 폴더
          // path = "C:/kd/deploy/team1_v4sbm3c/contents/storage/";
-         path="C:\\kd\\deploy\\team1_v3sbm3c\\freivew\\storage\\";
+         path="C:\\kd\\deploy\\team1_v3sbm3c\\freview\\storage\\";
          // System.out.println("Windows 10: " + path);
          
      } else { // Linux, AWS, 서비스용 배치 폴더 
          // System.out.println("Linux");
-         path = "/home/ubuntu/deploy/team1_v3sbm3c/freivew/storage/";
+         path = "/home/ubuntu/deploy/team1_v3sbm3c/freview/storage/";
      }
      
      return path;
