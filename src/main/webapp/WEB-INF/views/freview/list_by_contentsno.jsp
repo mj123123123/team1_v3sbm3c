@@ -73,7 +73,9 @@
 				<c:set var="reviewno" value="${freviewVO.reviewno }" />
 				<c:set var="thumb1" value="${freviewVO.thumb1 }" />
 
-				<tr onclick="location.href='./read.do?reviewno=${reviewno}'" style="cursor: pointer;">
+				<tr
+					onclick="location.href='./read.do?reviewno=${reviewno}&word=${param.word }&now_page=${param.now_page == null ? 1 : param.now_page }&contentsno=${param.contentsno }'"
+					style="cursor: pointer;">
 					<td>
 						<c:choose>
 							<c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
