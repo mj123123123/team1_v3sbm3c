@@ -3,18 +3,18 @@
 
 <mapper namespace="dev.mvc.freply.ReplyDAOInter">
 	<insert id="create">
-		INSERT INTO reply(replyno, contentsno, memberno, content, passwd, rdate)
-		VALUES(reply_seq.nextval, #{contentsno}, #{memberno}, #{content}, #{passwd}, sysdate)
+		INSERT INTO reply(replyno, contentsno, memberno, nickname, content, passwd, rdate)
+		VALUES(reply_seq.nextval, #{contentsno}, #{memberno}, #{nickname}, #{content}, #{passwd}, sysdate)
 	</insert>
 
-	<select id="list" resultType="dev.mvc.freply.ReplyVO">
-		SELECT replyno, contentsno, memberno, content, passwd, rdate
+	<select id="list_all" resultType="dev.mvc.freply.ReplyVO">
+		SELECT replyno, contentsno, memberno, nickname, content, passwd, rdate
 		FROM reply
 		ORDER BY replyno DESC
 	</select>
 
-	<select id="list_by_contentsno" resultType="dev.mvc.freply.ReplyVO" parameterType="int">
-		SELECT replyno, contentsno, memberno, content, passwd, rdate
+	<select id="list_by_rcontentsno" resultType="dev.mvc.freply.ReplyVO" parameterType="int">
+		SELECT replyno, contentsno, memberno, nickname, content, passwd, rdate
 		FROM reply
 		WHERE contentsno=#{contentsno}
 		ORDER BY replyno DESC
@@ -22,7 +22,7 @@
 
 	<select id="list_by_contentsno_join" resultType="dev.mvc.freply.ReplyMemberVO" parameterType="int">
 		SELECT m.id,
-		r.replyno, r.contentsno, r.memberno, r.content, r.passwd, r.rdate
+		r.replyno, r.contentsno, r.memberno, r.nickname, r.content, r.passwd, r.rdate
 		FROM member m, reply r
 		WHERE (m.memberno = r.memberno) AND r.contentsno=#{contentsno}
 		ORDER BY r.replyno DESC
