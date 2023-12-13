@@ -140,6 +140,12 @@
 		DELETE FROM freview
 		WHERE reviewno=#{reviewno}
 	</delete>
+	
+	 <!-- 특정 컨텐츠에 속한 모든 레코드 삭제 -->
+  <delete id="delete_by_contentsno" parameterType="int">
+    DELETE FROM freview
+    WHERE contentsno=#{contentsno}
+  </delete>
 
 
 </mapper>
