@@ -5,15 +5,18 @@
 	<!-- 등록한 레코드 갯수 1 리턴, #{reviewno}: public int getReviewno() 호출됨 -->
 	<insert id="create" parameterType="dev.mvc.freview.FreviewVO">
 		INSERT INTO freview(reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-		file1, file1saved, thumb1, size1)
+		file1,
+		file1saved, thumb1, size1)
 		VALUES(review_seq.nextval, #{contentsno}, #{memberno}, #{nickname}, #{title}, #{content}, #{pwd},
-		sysdate, #{cnt}, #{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1})
+		sysdate, #{cnt}, #{word},
+		#{file1}, #{file1saved}, #{thumb1}, #{size1})
 	</insert>
 
 	<!-- 모든 컨텐츠의 등록된 리뷰 목록 -->
 	<select id="list_all" resultType="dev.mvc.freview.FreviewVO">
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
-		file1, file1saved, thumb1, size1
+		file1, file1saved,
+		thumb1, size1
 		FROM freview
 		ORDER BY reviewno DESC
 	</select>
@@ -83,10 +86,12 @@
 		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 		file1, file1saved, thumb1, size1, map r
 		FROM (
-		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno,
+		contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 		file1, file1saved, thumb1, size1, map, rownum as r
 		FROM (
-		SELECT reviewno, contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
+		SELECT reviewno,
+		contentsno, memberno, nickname, title, content, pwd, rdate, cnt, word,
 		file1, file1saved, thumb1, size1, map
 		FROM freview
 		<choose>
@@ -108,6 +113,13 @@
 		<!-- 1 page: WHERE r >= 1 AND r <= 10; 2 page: WHERE r >= 11 AND r <= 20; 3 page: WHERE r >= 21 AND r <= 30; -->
 	</select>
 
+	<!-- 패스워드 검사 -->
+	<select id="password_check" resultType="int" parameterType="HashMap">
+		SELECT COUNT(*) as cnt
+		FROM freview
+		WHERE reviewno = #{reviewno} AND pwd=#{pwd}
+	</select>
+
 	<!-- 글 수정 -->
 	<update id="update_text" parameterType="dev.mvc.freview.FreviewVO">
 		UPDATE freview
@@ -120,7 +132,8 @@
 	<update id="update_file" parameterType="dev.mvc.freview.FreviewVO">
 		UPDATE freview
 		SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
-		WHERE reviewno = #{reviewno}
+		WHERE
+		reviewno = #{reviewno}
 	</update>
 
 	<delete id="delete" parameterType="int">
