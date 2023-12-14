@@ -78,11 +78,11 @@ String name = (String)request.getAttribute("name");
           <%
           if (cnt == 0) {
           %>
-            <button type="button" onclick="history.back()" class="btn btn-dark btn-sm">다시 시도</button>
+            <button type="button" onclick="history.back()" class="btn btn-primary btn-sm">다시 시도</button>
           <%  
           }
           %>
-          <button type="button" onclick="location.href='./list_all.do'" class="btn btn-dark btn-sm">전체 목록</button>
+          <button type="button" onclick="location.href='./list_all.do'" class="btn btn-primary btn-sm">전체 목록</button>
         </li>
         
     </ul>

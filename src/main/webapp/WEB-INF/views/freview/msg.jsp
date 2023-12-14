@@ -82,11 +82,11 @@
         <br>
         <c:choose>
             <c:when test="${cnt == 0 }">
-                <button type='button' onclick="history.back()" class="btn btn-dark btn-sm">다시 시도</button>    
+                <button type='button' onclick="history.back()" class="btn btn-primary btn-sm">다시 시도</button>    
             </c:when>
         </c:choose>
         
-        <button type='button' onclick="location.href='./list_by_contentsno.do?contentsno=${param.contentsno}'" class="btn btn-dark btn-sm">리뷰 목록</button>
+        <button type='button' onclick="location.href='./list_by_contentsno.do?contentsno=${param.contentsno}'" class="btn btn-primary btn-sm">리뷰 목록</button>
       </li>
     </UL>
   </fieldset>

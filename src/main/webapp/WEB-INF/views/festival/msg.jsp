@@ -80,13 +80,13 @@
         <br>
         <c:choose>
             <c:when test="${cnt == 0 }">
-                <button type='button' onclick="history.back()" class="btn btn-dark btn-sm">다시 시도</button>    
+                <button type='button' onclick="history.back()" class="btn btn-primary btn-sm">다시 시도</button>    
             </c:when>
         </c:choose>
         
-        <button type='button' onclick="location.href='./create.do?fcateno=${fcateno}'" class="btn btn-dark btn-sm">새로운 컨텐츠 등록</button>
-        <button type='button' onclick="location.href='./list_by_fcateno.do?fcateno=${fcateno}'" class="btn btn-dark btn-sm">목록</button>
-        <button type='button' onclick="location.href='./list_by_fcateno_grid.do?fcateno=${fcateno}'" class="btn btn-dark btn-sm">갤러리 목록</button>
+        <button type='button' onclick="location.href='./create.do?fcateno=${fcateno}'" class="btn btn-primary btn-sm">새로운 컨텐츠 등록</button>
+        <button type='button' onclick="location.href='./list_by_fcateno.do?fcateno=${fcateno}'" class="btn btn-primary btn-sm">목록</button>
+        <button type='button' onclick="location.href='./list_by_fcateno_grid.do?fcateno=${fcateno}'" class="btn btn-primary btn-sm">갤러리 목록</button>
       </li>
     </UL>
   </fieldset>
