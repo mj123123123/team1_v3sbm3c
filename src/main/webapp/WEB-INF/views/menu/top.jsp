@@ -52,7 +52,7 @@
 					<%-- 서브 메뉴가 없는 독립메뉴 --%> <a class="nav-link top_menu_link"
 						href="/festival/list_by_fcateno.do?fcateno=${fcateVO.fcateno }&now_page=1">${fcateVO.name }</a>
 				</li>
-				<%-- </c:forEach> --%>
+				<%-- </c:forEach> --%>   
 
 				<li class="nav-item dropdown">
 					<%-- 축제/행사 서브 메뉴 --%> <a class="nav-link top_menu_link dropdown-toggle" data-bs-toggle="dropdown" href="#">페스티벌/행사</a>
