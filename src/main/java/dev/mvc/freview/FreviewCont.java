@@ -68,13 +68,19 @@ public class FreviewCont {
 	// http://localhost:9093/freview/create.do?contentsno=2
 	// http://localhost:9093/freview/create.do?contentsno=3
 	@RequestMapping(value = "/freview/create.do", method = RequestMethod.GET)
-	public ModelAndView create(int contentsno) {
+	public ModelAndView create(HttpSession session, int contentsno) {
 		ModelAndView mav = new ModelAndView();
+		
+		if (memberProc.isMember(session)) {
+			FestivalVO festivalVO = this.festivalProc.read(contentsno); // create.jsp에 카테고리 정보를 출력하기위한 목적
+			mav.addObject("festivalVO", festivalVO);
 
-		FestivalVO festivalVO = this.festivalProc.read(contentsno); // create.jsp에 카테고리 정보를 출력하기위한 목적
-		mav.addObject("festivalVO", festivalVO);
+			mav.setViewName("/freview/create"); // /webapp/WEB-INF/views/freview/create.jsp
+			
+		} else {
+			mav.setViewName("/member/login_need"); // /WEB-INF/views/admin/login_need.jsp
 
-		mav.setViewName("/freview/create"); // /webapp/WEB-INF/views/freview/create.jsp
+		}
 
 		return mav;
 	}
