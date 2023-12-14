@@ -255,8 +255,13 @@ public class FestivalVO {
 		return now_page;
 	}
 
-	public void setNow_page(int now_page) {
-		this.now_page = now_page;
+//	public void setNow_page(int now_page) {
+//		this.now_page = now_page;
+//	}
+	public void setNow_page(String now_page) {
+		if (!now_page.isEmpty()) {
+			this.now_page = Integer.parseInt(now_page);
+		}
 	}
 
 	@Override
