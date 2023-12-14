@@ -14,7 +14,7 @@ public class ReplyVO {
 	/** 등록일 */
 	private String rdate = "";
 	/** 공개여부 */
-	private String visible;
+	private String visible = "";
 	
 	public int getReplyno() {
 		return replyno;
