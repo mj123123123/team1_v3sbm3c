@@ -62,13 +62,13 @@
 								<a class="dropdown-item" href='/fcate/list_all_member.do' style="font-weight: bold;">[축제/행사] 카테고리</a>
 								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }"
 									style="font-weight: bold;"> 관심분야 등록하고 [페스티벌] 추천받기</a>
-								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기)</a>
+								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기) 모음</a>
 							</c:when>
 							<c:otherwise>
 								<a class="dropdown-item" href='/fcate/list_all_member.do' style="font-weight: bold;">[축제/행사] 카테고리</a>
 								<a class="dropdown-item" href="http://localhost:8000/ais/recommend_form/?memberno=${sessionScope.memberno }"
 									style="font-weight: bold;"> 관심분야 등록하고 [페스티벌] 추천받기</a>
-								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기)</a>
+								<a class="dropdown-item" href="../freview/list_all.do" style="font-weight: bold;">리뷰(후기) 모음</a>
 							</c:otherwise>
 						</c:choose>
 					</div>
